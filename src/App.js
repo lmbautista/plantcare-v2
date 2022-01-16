@@ -106,10 +106,19 @@ const features = (
       </Grid>
     </Grid>
     <Grid container direction="row" justifyContent="center" alignItems="stretch" mb="40px">
-      <Grid item xs={12} sm={4} lg={3} sx={styles.home.features.img}>
+      <Grid item xs={12} sm={3} sx={styles.home.features.img}>
         <img src={featureOneImg} alt="feature-one-image" height={'100%'} />
       </Grid>
-      <Grid item direction="column" justifyContent="center" display="flex" xs={12} sm={4}>
+      <Grid
+        item
+        direction="column"
+        justifyContent="center"
+        display="flex"
+        xs={12}
+        sm={6}
+        md={5}
+        lg={4}
+      >
         <Typography variant="h4" sx={{ fontWeight: 'medium' }}>
           {enLocale.features.featureOne.title}
         </Typography>
@@ -119,10 +128,19 @@ const features = (
       </Grid>
     </Grid>
     <Grid container direction="row" justifyContent="center" alignItems="stretch" mb="40px">
-      <Grid item xs={12} sm={4} lg={3} sx={styles.home.features.img}>
+      <Grid item xs={12} sm={3} sx={styles.home.features.img}>
         <img src={featureTwoImg} alt="feature-two-image" height={'100%'} />
       </Grid>
-      <Grid item direction="column" justifyContent="center" display="flex" xs={12} sm={4}>
+      <Grid
+        item
+        direction="column"
+        justifyContent="center"
+        display="flex"
+        xs={12}
+        sm={6}
+        md={5}
+        lg={4}
+      >
         <Typography variant="h4" sx={{ fontWeight: 'medium' }}>
           {enLocale.features.featureTwo.title}
         </Typography>
@@ -132,10 +150,19 @@ const features = (
       </Grid>
     </Grid>
     <Grid container direction="row" justifyContent="center" alignItems="stretch" mb="40px">
-      <Grid item xs={12} sm={4} lg={3} sx={styles.home.features.img}>
+      <Grid item xs={12} sm={3} sx={styles.home.features.img}>
         <img src={featureThreeImg} alt="feature-three-image" height={'100%'} />
       </Grid>
-      <Grid item direction="column" justifyContent="center" display="flex" xs={12} sm={4}>
+      <Grid
+        item
+        direction="column"
+        justifyContent="center"
+        display="flex"
+        xs={12}
+        sm={6}
+        md={5}
+        lg={4}
+      >
         <Typography variant="h4" sx={{ fontWeight: 'medium' }}>
           {enLocale.features.featureThree.title}
         </Typography>
