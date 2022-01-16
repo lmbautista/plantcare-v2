@@ -4,9 +4,9 @@ const themeOptions = {
   palette: {
     type: 'light',
     primary: { main: '#107a79' },
-    light: { main: '#fff' },
     secondary: { main: '#441d38' },
     ternary: { main: '#fed8a3' },
+    light: { main: '#fff' },
     warning: { main: '#ff9800' }
   },
   typography: {
