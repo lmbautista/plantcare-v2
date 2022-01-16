@@ -24,13 +24,13 @@ const styles = {
         backgroundSize: 'cover',
         mixBlendMode: 'darken'
       },
-      mobile: [
-        { display: { xs: 'flex', lg: 'none' } },
-        { textAlign: { xs: 'center', md: 'left' } },
-        { alignItems: { xs: 'center', md: 'flex-start' } },
-        { padding: '20px 10px 0 10px' }
-      ],
-      desktop: [{ display: { xs: 'none', lg: 'flex' } }, { minHeight: '93vmin' }]
+      mobile: {
+        display: { xs: 'flex', lg: 'none' },
+        textAlign: { xs: 'center', md: 'left' },
+        alignItems: { xs: 'center', md: 'flex-start' },
+        padding: '20px 10px 0 10px'
+      },
+      desktop: { display: { xs: 'none', lg: 'flex' }, minHeight: '93vmin' }
     },
     features: {
       main: {
@@ -58,7 +58,7 @@ const home = (
       xs={12}
       md={4}
       lg={5}
-      sx={styles.home.content.desktop.concat(styles.home.content.main)}
+      sx={{ ...styles.home.content.desktop, ...styles.home.content.main }}
     >
       <Typography fontFamily={'Pacifico'} color="secondary" variant="h1">
         {enLocale.home.title}
@@ -78,7 +78,7 @@ const home = (
       direction="column"
       justifyContent="center"
       textAlign={'center'}
-      sx={styles.home.content.mobile.concat(styles.home.content.main)}
+      sx={{ ...styles.home.content.mobile, ...styles.home.content.main }}
     >
       <Typography fontFamily={'Pacifico'} color="secondary" variant="h2">
         {enLocale.home.title}
