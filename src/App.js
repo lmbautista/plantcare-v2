@@ -4,19 +4,22 @@ import featureOneImg from './images/home/feature-one.png';
 import featureTwoImg from './images/home/feature-two.png';
 import featureThreeImg from './images/home/feature-three.png';
 import authorImg from './images/home/author.png';
+import contactImg from './images/home/contact.png';
 import logoImg from './images/logo.png';
 import enLocale from './locales/en.js';
 // UI components
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 import Header from './Header';
 import { ThemeProvider } from '@mui/material/styles';
 import Main from './themes/main';
 
 import './App.scss';
 
-const homePages = ['Features', 'About'];
+const homePages = ['Features', 'About', 'Contact'];
 const styles = {
   home: {
     content: {
@@ -60,6 +63,12 @@ const styles = {
         maxHeight: { xs: '50vmin', sm: '22vmin' },
         paddingRight: { xs: '0', sm: '30px' },
         marginBottom: { xs: '30px' }
+      }
+    },
+    contact: {
+      main: {
+        backgroundColor: `${Main.palette.primary.main}`,
+        padding: '60px 10px'
       }
     }
   }
@@ -252,6 +261,71 @@ const about = (
   </Box>
 );
 
+const contact = (
+  <Box sx={styles.home.contact.main}>
+    <Grid container direction="row" justifyContent="center" alignItems="stretch">
+      <Grid item xs={12} md={10} pb="40px">
+        <Typography fontFamily={'Pacifico'} color="white" variant="h3">
+          {enLocale.contact.title}
+        </Typography>
+      </Grid>
+    </Grid>
+    <Grid container direction="row" justifyContent="center" alignItems="stretch">
+      <Grid item direction="column" justifyContent="center" xs={10} md={3}>
+        <Box
+          component="form"
+          pb="60px"
+          sx={{
+            '& .MuiTextField-root': { m: 1, width: '100%', color: 'white' },
+            '& .MuiInputBase-input': { color: 'white' }
+          }}
+          noValidate
+          autoComplete="off"
+        >
+          <TextField
+            required
+            id="fullname"
+            label={`${enLocale.contact.form.fullName}`}
+            color="light"
+            focused
+          />
+          <TextField
+            required
+            id="email"
+            label={`${enLocale.contact.form.email}`}
+            color="light"
+            focused
+          />
+          <TextField
+            required
+            id="message"
+            label={`${enLocale.contact.form.message}`}
+            color="light"
+            focused
+            multiline
+            rows={6}
+            maxRows={6}
+          />
+          <Button
+            href="#"
+            key="contact-form-submit"
+            variant="contained"
+            color="secondary"
+            backgroundColor="light"
+            size="large"
+            sx={{ fontWeight: 'medium' }}
+          >
+            {enLocale.contact.form.submit}
+          </Button>
+        </Box>
+      </Grid>
+      <Grid item xs={12} md={6} lg={5} display="flex" justifyContent="center" alignItems="center">
+        <img src={contactImg} alt="contact-image" width={'90%'} />
+      </Grid>
+    </Grid>
+  </Box>
+);
+
 function App() {
   return (
     <ThemeProvider theme={Main}>
@@ -263,6 +337,7 @@ function App() {
       {home}
       {features}
       {about}
+      {contact}
     </ThemeProvider>
   );
 }

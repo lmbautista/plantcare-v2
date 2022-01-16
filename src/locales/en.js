@@ -41,5 +41,14 @@ export default {
         'This is an already working prototyped product based on Arduino microcontrollers. We build craft prototypes on demand. ' +
         'For further details, don´t hesitate to contact us'
     }
+  },
+  contact: {
+    title: 'Contact',
+    form: {
+      fullName: 'Full name',
+      email: 'Email',
+      message: 'Message',
+      submit: 'Submit'
+    }
   }
 };
