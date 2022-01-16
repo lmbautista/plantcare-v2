@@ -25,5 +25,21 @@ export default {
       description:
         "As plant lovers, we couldn't forget about helping our planet with green energies. Our board is assembled with sun panels so, you won't need to take care of our board maintenance"
     }
+  },
+  about: {
+    title: 'About',
+    author: {
+      title: 'Author',
+      subtitle: "Hey I'm Luismi Bautista!",
+      githubUser: '@lmbautista',
+      description:
+        "I'm a software developer. I love taking care of my plants, but also I'm in love with any tech-related stuff. When I mixed both pasions, this produt was born"
+    },
+    demo: {
+      title: 'Request demo',
+      description:
+        'This is an already working prototyped product based on Arduino microcontrollers. We build craft prototypes on demand. ' +
+        'For further details, don´t hesitate to contact us'
+    }
   }
 };

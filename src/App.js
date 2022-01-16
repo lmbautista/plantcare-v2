@@ -1,8 +1,10 @@
 import homeImg from './images/home/home.png';
+import circuitImg from './images/home/circuit.png';
 import featureOneImg from './images/home/feature-one.png';
 import featureTwoImg from './images/home/feature-two.png';
 import featureThreeImg from './images/home/feature-three.png';
-import circuitImg from './images/home/circuit.png';
+import authorImg from './images/home/author.png';
+import logoImg from './images/logo.png';
 import enLocale from './locales/en.js';
 // UI components
 import Box from '@mui/material/Box';
@@ -14,7 +16,7 @@ import Main from './themes/main';
 
 import './App.scss';
 
-const homePages = ['Features'];
+const homePages = ['Features', 'About'];
 const styles = {
   home: {
     content: {
@@ -35,6 +37,20 @@ const styles = {
     features: {
       main: {
         backgroundColor: 'ternary.main',
+        padding: '60px 10px'
+      },
+      img: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: { xs: 'center', sm: 'end' },
+        maxHeight: { xs: '50vmin', sm: '22vmin' },
+        paddingRight: { xs: '0', sm: '30px' },
+        marginBottom: { xs: '30px' }
+      }
+    },
+    about: {
+      main: {
+        backgroundColor: '#f6f3f3',
         padding: '60px 10px'
       },
       img: {
@@ -174,6 +190,68 @@ const features = (
   </Box>
 );
 
+const about = (
+  <Box sx={styles.home.about.main}>
+    <Grid container direction="row" justifyContent="center" alignItems="stretch">
+      <Grid item xs={12} md={10} pb="40px">
+        <Typography fontFamily={'Pacifico'} color="secondary" variant="h3">
+          {enLocale.about.title}
+        </Typography>
+      </Grid>
+    </Grid>
+    <Grid container direction="row" justifyContent="center" alignItems="stretch" mb="40px">
+      <Grid item xs={12} sm={3} sx={styles.home.about.img}>
+        <img src={authorImg} alt="author-image" height={'100%'} />
+      </Grid>
+      <Grid
+        item
+        direction="column"
+        justifyContent="center"
+        display="flex"
+        xs={12}
+        sm={6}
+        md={5}
+        lg={4}
+      >
+        <Typography variant="h4" sx={{ fontWeight: 'medium' }}>
+          {enLocale.about.author.title}
+        </Typography>
+        <Typography variant="h5" sx={{ fontWeight: 'light' }}>
+          {enLocale.about.author.subtitle}
+        </Typography>
+        <Typography variant="h6" color="primary" sx={{ fontWeight: 'medium' }}>
+          {enLocale.about.author.githubUser}
+        </Typography>
+        <Typography variant="h6" sx={{ fontWeight: 'light' }}>
+          {enLocale.about.author.description}
+        </Typography>
+      </Grid>
+    </Grid>
+    <Grid container direction="row" justifyContent="center" alignItems="stretch" mb="40px">
+      <Grid item xs={12} sm={3} sx={styles.home.about.img}>
+        <img src={logoImg} alt="logo-about-image" height={'100%'} />
+      </Grid>
+      <Grid
+        item
+        direction="column"
+        justifyContent="center"
+        display="flex"
+        xs={12}
+        sm={6}
+        md={5}
+        lg={4}
+      >
+        <Typography variant="h4" sx={{ fontWeight: 'medium' }}>
+          {enLocale.about.demo.title}
+        </Typography>
+        <Typography variant="h6" sx={{ fontWeight: 'light' }}>
+          {enLocale.about.demo.description}
+        </Typography>
+      </Grid>
+    </Grid>
+  </Box>
+);
+
 function App() {
   return (
     <ThemeProvider theme={Main}>
@@ -184,6 +262,7 @@ function App() {
       </Grid>
       {home}
       {features}
+      {about}
     </ThemeProvider>
   );
 }
