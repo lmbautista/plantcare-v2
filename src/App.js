@@ -304,14 +304,12 @@ const contact = (
             focused
             multiline
             rows={6}
-            maxRows={6}
           />
           <Button
             href="#"
             key="contact-form-submit"
             variant="contained"
             color="secondary"
-            backgroundColor="light"
             size="large"
             sx={{ fontWeight: 'medium' }}
           >
