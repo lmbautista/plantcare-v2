@@ -15,7 +15,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { ThemeProvider } from '@mui/material/styles';
 
-import Header from './Header';
+import Header from './components/header';
 import Main from './themes/main';
 
 import './App.scss';
