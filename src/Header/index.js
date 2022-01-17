@@ -1,5 +1,7 @@
 import * as React from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
+import AnchorLink from 'react-anchor-link-smooth-scroll';
 
 import LogoImg from '../images/logo.png';
 import AppBar from '@mui/material/AppBar';
@@ -14,22 +16,26 @@ import MenuItem from '@mui/material/MenuItem';
 import Stack from '@mui/material/Stack';
 
 export const Header = ({ pages }) => {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElNav, setAnchorElNav] = useState(null);
   const handleOpenNavMenu = (event) => setAnchorElNav(event.currentTarget);
   const handleCloseNavMenu = () => setAnchorElNav(null);
+  const [pageSelected, setPageSelected] = useState(null);
 
   return (
-    <AppBar position="static" color="light" elevation={0}>
-      <Toolbar disableGutters>
-        <Typography
-          variant="h6"
-          noWrap
-          component="div"
-          sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
-        >
-          <img src={LogoImg} alt="logo" width="50px" />
-        </Typography>
-        <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+    <AppBar position="fixed" color="light" elevation={0}>
+      <Toolbar disableGutters sx={{ padding: { xs: '0', md: '0px 40px' } }}>
+        <Box sx={{ flexGrow: 1, padding: '5.5px 0', display: { xs: 'none', md: 'flex' } }}>
+          <AnchorLink
+            key="link-home"
+            href="#home"
+            offset="64"
+            onClick={() => setPageSelected(null)}
+            style={{ textDecoration: 'none' }}
+          >
+            <img src={LogoImg} alt="logo" width="50px" />
+          </AnchorLink>
+        </Box>
+        <Box sx={{ flexGrow: 1, flex: 1, display: { xs: 'flex', md: 'none' } }}>
           <IconButton
             size="large"
             aria-label="appbar menu"
@@ -60,21 +66,25 @@ export const Header = ({ pages }) => {
           >
             {pages.map((page) => (
               <MenuItem key={page} onClick={handleCloseNavMenu}>
-                <Typography textAlign="center" color="primary" sx={{ fontWeight: 'medium' }}>
-                  {page}
-                </Typography>
+                <AnchorLink
+                  offset="64"
+                  key={`link-${page.toLowerCase()}`}
+                  href={`#${page.toLowerCase()}`}
+                  onClick={() => setPageSelected(page)}
+                  style={{ textDecoration: 'none' }}
+                >
+                  <Typography
+                    textAlign="center"
+                    color="primary"
+                    sx={{ fontWeight: pageSelected === page ? 'bold' : 'medium' }}
+                  >
+                    {page}
+                  </Typography>
+                </AnchorLink>
               </MenuItem>
             ))}
           </Menu>
         </Box>
-        <Typography
-          variant="h6"
-          noWrap
-          component="div"
-          sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
-        >
-          <img src={LogoImg} alt="logo" width="50px" />
-        </Typography>
         <Stack
           direction="row"
           spacing={3}
@@ -83,19 +93,41 @@ export const Header = ({ pages }) => {
           sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}
         >
           {pages.map((page) => (
-            <Button
-              href="#"
-              key={page}
-              onClick={handleCloseNavMenu}
-              color="primary"
-              underline="none"
-              size="large"
-              sx={{ fontWeight: 'medium' }}
+            <AnchorLink
+              offset="64"
+              key={`link-${page.toLowerCase()}`}
+              href={`#${page.toLowerCase()}`}
+              onClick={() => setPageSelected(page)}
+              style={{ textDecoration: 'none' }}
             >
-              {page}
-            </Button>
+              <Button
+                key={page}
+                onClick={handleCloseNavMenu}
+                color="primary"
+                underline="none"
+                size="large"
+                sx={{
+                  fontWeight: pageSelected === page ? 'bold' : 'medium',
+                  padding: '7px 21px'
+                }}
+                variant={pageSelected === page ? 'outlined' : 'text'}
+              >
+                {page}
+              </Button>
+            </AnchorLink>
           ))}
         </Stack>
+        <Box sx={{ flexGrow: 1, padding: '5.5px 0', display: { xs: 'flex', md: 'none' } }}>
+          <AnchorLink
+            key="link-home"
+            href="#home"
+            offset="64"
+            onClick={() => setPageSelected(null)}
+            style={{ textDecoration: 'none' }}
+          >
+            <img src={LogoImg} alt="logo" width="50px" />
+          </AnchorLink>
+        </Box>
       </Toolbar>
     </AppBar>
   );

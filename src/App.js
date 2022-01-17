@@ -13,8 +13,9 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import Header from './Header';
 import { ThemeProvider } from '@mui/material/styles';
+
+import Header from './Header';
 import Main from './themes/main';
 
 import './App.scss';
@@ -75,7 +76,7 @@ const styles = {
 };
 
 const home = (
-  <Grid container direction="row" justifyContent="center" alignItems="stretch">
+  <Grid container direction="row" justifyContent="center" alignItems="stretch" id="home">
     <Grid
       item
       direction="column"
@@ -102,7 +103,7 @@ const home = (
       lg={5}
       direction="column"
       justifyContent="center"
-      textAlign={'center'}
+      textAlign="center"
       sx={{ ...styles.home.content.mobile, ...styles.home.content.main }}
     >
       <Typography fontFamily={'Pacifico'} color="secondary" variant="h2">
@@ -122,7 +123,7 @@ const home = (
 );
 
 const features = (
-  <Box sx={styles.home.features.main}>
+  <Box sx={styles.home.features.main} id="features">
     <Grid container direction="row" justifyContent="center" alignItems="stretch">
       <Grid item xs={12} md={10} pb="40px">
         <Typography fontFamily={'Pacifico'} color="secondary" variant="h3">
@@ -200,7 +201,7 @@ const features = (
 );
 
 const about = (
-  <Box sx={styles.home.about.main}>
+  <Box sx={styles.home.about.main} id="about">
     <Grid container direction="row" justifyContent="center" alignItems="stretch">
       <Grid item xs={12} md={10} pb="40px">
         <Typography fontFamily={'Pacifico'} color="secondary" variant="h3">
@@ -262,7 +263,7 @@ const about = (
 );
 
 const contact = (
-  <Box sx={styles.home.contact.main}>
+  <Box sx={styles.home.contact.main} id="contact">
     <Grid container direction="row" justifyContent="center" alignItems="stretch">
       <Grid item xs={12} md={10} pb="40px">
         <Typography fontFamily={'Pacifico'} color="white" variant="h3">
@@ -327,15 +328,13 @@ const contact = (
 function App() {
   return (
     <ThemeProvider theme={Main}>
-      <Grid container direction="row" justifyContent="center" alignItems="stretch">
-        <Grid item xs={12} md={10}>
-          <Header pages={homePages} />
-        </Grid>
-      </Grid>
-      {home}
-      {features}
-      {about}
-      {contact}
+      <Header pages={homePages} />
+      <Box sx={{ mt: { xs: 5, sm: 8 } }}>
+        {home}
+        {features}
+        {about}
+        {contact}
+      </Box>
     </ThemeProvider>
   );
 }
