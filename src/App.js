@@ -16,6 +16,7 @@ import Button from '@mui/material/Button';
 import { ThemeProvider } from '@mui/material/styles';
 
 import Header from './components/header';
+import PanelWithImage from './components/panel-with-image';
 import Main from './themes/main';
 
 import './App.scss';
@@ -76,50 +77,14 @@ const styles = {
 };
 
 const home = (
-  <Grid container direction="row" justifyContent="center" alignItems="stretch" id="home">
-    <Grid
-      item
-      direction="column"
-      justifyContent="center"
-      xs={12}
-      md={4}
-      lg={5}
-      sx={{ ...styles.home.content.desktop, ...styles.home.content.main }}
-    >
-      <Typography fontFamily={'Pacifico'} color="secondary" variant="h1">
-        {enLocale.home.title}
-      </Typography>
-      <Typography variant="h2" sx={{ fontWeight: 'bold' }}>
-        {enLocale.home.subtitle}
-      </Typography>
-      <Typography variant="h5" pt="30px" sx={{ fontWeight: 'light' }}>
-        {enLocale.home.description}
-      </Typography>
-    </Grid>
-    <Grid
-      item
-      xs={12}
-      md={5}
-      lg={5}
-      direction="column"
-      justifyContent="center"
-      textAlign="center"
-      sx={{ ...styles.home.content.mobile, ...styles.home.content.main }}
-    >
-      <Typography fontFamily={'Pacifico'} color="secondary" variant="h2">
-        {enLocale.home.title}
-      </Typography>
-      <Typography color="secondary" variant="h3" sx={{ fontWeight: 'bold' }}>
-        {enLocale.home.subtitle}
-      </Typography>
-      <Typography variant="h6" pt="30px" sx={{ fontWeight: 'light' }}>
-        {enLocale.home.description}
-      </Typography>
-    </Grid>
-    <Grid item xs={12} md={6} lg={5} display="flex" justifyContent="center" alignItems="center">
-      <img src={homeImg} alt="home-image" width={'90%'} />
-    </Grid>
-  </Grid>
+  <PanelWithImage
+    id="home"
+    image={homeImg}
+    title={enLocale.home.title}
+    subtitle={enLocale.home.subtitle}
+    description={enLocale.home.description}
+    styles={styles.home.content.main}
+  />
 );
 
 const features = (
