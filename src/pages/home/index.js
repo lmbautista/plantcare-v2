@@ -291,15 +291,17 @@ const contact = (
 
 export const Home = ({}) => {
   return (
-    <ThemeProvider theme={Main}>
-      <Header pages={homePages} />
-      <Box sx={{ mt: { xs: 5, sm: 8 } }}>
-        {home}
-        {features}
-        {about}
-        {contact}
-      </Box>
-    </ThemeProvider>
+    <span data-testid="homepage">
+      <ThemeProvider theme={Main}>
+        <Header pages={homePages} />
+        <Box sx={{ mt: { xs: 5, sm: 8 } }}>
+          {home}
+          {features}
+          {about}
+          {contact}
+        </Box>
+      </ThemeProvider>
+    </span>
   );
 };
 

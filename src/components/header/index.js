@@ -22,7 +22,7 @@ export const Header = ({ pages }) => {
   const [pageSelected, setPageSelected] = useState(null);
 
   return (
-    <AppBar position="fixed" color="light" elevation={0}>
+    <AppBar position="fixed" color="light" elevation={0} data-testid="header">
       <Toolbar disableGutters sx={{ padding: { xs: '0', md: '0px 40px' } }}>
         <Box sx={{ flexGrow: 1, padding: '5.5px 0', display: { xs: 'none', md: 'flex' } }}>
           <AnchorLink
