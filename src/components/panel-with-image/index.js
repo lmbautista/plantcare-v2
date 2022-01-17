@@ -24,7 +24,7 @@ export const PanelWithImage = ({ id, image, title, subtitle, description, childr
         lg={5}
         sx={{ ...defaultStyles.desktop, ...styles }}
       >
-        <Typography fontFamily={'Pacifico'} color="secondary" variant="h1">
+        <Typography fontFamily={'Pacifico'} color="secondary" variant="h1" mb="18px">
           {title}
         </Typography>
         {subtitle && (
@@ -49,11 +49,11 @@ export const PanelWithImage = ({ id, image, title, subtitle, description, childr
         textAlign="center"
         sx={{ ...defaultStyles.mobile, ...styles }}
       >
-        <Typography fontFamily={'Pacifico'} color="secondary" variant="h2">
+        <Typography fontFamily={'Pacifico'} color="secondary" variant="h2" mb="12px">
           {title}
         </Typography>
         {subtitle && (
-          <Typography color="secondary" variant="h3" sx={{ fontWeight: 'bold' }}>
+          <Typography color="secondary" variant="h4" sx={{ fontWeight: 'bold' }}>
             {subtitle}
           </Typography>
         )}
@@ -62,6 +62,7 @@ export const PanelWithImage = ({ id, image, title, subtitle, description, childr
             {description}
           </Typography>
         )}
+        {children}
       </Grid>
       <Grid item xs={12} md={6} lg={5} display="flex" justifyContent="center" alignItems="center">
         <img src={image} alt="panel-image" width={'90%'} />
