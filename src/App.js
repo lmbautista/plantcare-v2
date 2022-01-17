@@ -41,7 +41,7 @@ const styles = {
     features: {
       main: {
         backgroundColor: 'ternary.main',
-        padding: '60px 10px'
+        padding: '30px 10px'
       },
       img: {
         display: 'flex',
@@ -55,7 +55,7 @@ const styles = {
     about: {
       main: {
         backgroundColor: '#f6f3f3',
-        padding: '60px 10px'
+        padding: '30px 10px'
       },
       img: {
         display: 'flex',
@@ -69,7 +69,7 @@ const styles = {
     contact: {
       main: {
         backgroundColor: `${Main.palette.primary.main}`,
-        padding: '60px 10px'
+        padding: '30px 10px'
       }
     }
   }
