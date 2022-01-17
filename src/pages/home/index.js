@@ -1,12 +1,11 @@
-import homeImg from '../../images/home/home.png';
-import circuitImg from '../../images/home/circuit.png';
-import featureOneImg from '../../images/home/feature-one.png';
-import featureTwoImg from '../../images/home/feature-two.png';
-import featureThreeImg from '../../images/home/feature-three.png';
-import authorImg from '../../images/home/author.png';
-import contactImg from '../../images/home/contact.png';
+import homeImg from './images/home.png';
+import circuitImg from './images/circuit.png';
+import featureOneImg from './images/feature-one.png';
+import featureTwoImg from './images/feature-two.png';
+import featureThreeImg from './images/feature-three.png';
+import authorImg from './images/author.png';
+import contactImg from './images/contact.png';
 import logoImg from '../../images/logo.png';
-import enLocale from '../../locales/en.js';
 // UI components
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -14,9 +13,11 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { ThemeProvider } from '@mui/material/styles';
-
+// Components
 import Header from '../../components/header';
 import PanelWithImage from '../../components/panel-with-image';
+// Others
+import enLocale from './locales/en.js';
 import Main from '../../themes/main';
 
 const homePages = ['Features', 'About', 'Contact'];
