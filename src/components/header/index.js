@@ -68,8 +68,8 @@ export const Header = ({ pages }) => {
               <MenuItem key={page} onClick={handleCloseNavMenu}>
                 <AnchorLink
                   offset="64"
-                  key={`link-${page.toLowerCase()}`}
-                  href={`#${page.toLowerCase()}`}
+                  key={`link-${page.toLowerCase().replace(/\s/g, '')}`}
+                  href={`#${page.toLowerCase().replace(/\s/g, '')}`}
                   onClick={() => setPageSelected(page)}
                   style={{ textDecoration: 'none' }}
                 >
@@ -95,8 +95,8 @@ export const Header = ({ pages }) => {
           {pages.map((page) => (
             <AnchorLink
               offset="64"
-              key={`link-${page.toLowerCase()}`}
-              href={`#${page.toLowerCase()}`}
+              key={`link-${page.toLowerCase().replace(/\s/g, '')}`}
+              href={`#${page.toLowerCase().replace(/\s/g, '')}`}
               onClick={() => setPageSelected(page)}
               style={{ textDecoration: 'none' }}
             >
