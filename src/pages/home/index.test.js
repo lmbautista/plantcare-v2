@@ -9,4 +9,6 @@ test('load and render component', () => {
   expect(container.querySelector('#features'));
   expect(container.querySelector('#about'));
   expect(container.querySelector('#contact'));
+  expect(container.querySelector('#signup'));
+  expect(container.querySelector('#signin'));
 });
