@@ -89,7 +89,7 @@ const home = (
 );
 
 const features = (
-  <Box sx={styles.home.features.main} id="features">
+  <Box sx={styles.home.features.main}>
     <Grid container direction="row" justifyContent="center" alignItems="stretch">
       <Grid item xs={12} md={10} pb="40px">
         <Typography fontFamily={'Pacifico'} color="secondary" variant="h3">
@@ -167,7 +167,7 @@ const features = (
 );
 
 const about = (
-  <Box sx={styles.home.about.main} id="about">
+  <Box sx={styles.home.about.main}>
     <Grid container direction="row" justifyContent="center" alignItems="stretch">
       <Grid item xs={12} md={10} pb="40px">
         <Typography fontFamily={'Pacifico'} color="secondary" variant="h3">
@@ -229,7 +229,7 @@ const about = (
 );
 
 const contact = (
-  <Box sx={styles.home.contact.main} id="contact">
+  <Box sx={styles.home.contact.main}>
     <Grid container direction="row" justifyContent="center" alignItems="stretch">
       <Grid item xs={12} md={10} pb="40px">
         <Typography fontFamily={'Pacifico'} color="white" variant="h3">
@@ -297,10 +297,10 @@ export const Home = ({}) => {
       <ThemeProvider theme={Main}>
         <Header pages={homePages} />
         <Box sx={{ mt: { xs: 5, sm: 8 } }}>
-          {home}
-          {features}
-          {about}
-          {contact}
+          <span id="home">{home}</span>
+          <span id="features">{features}</span>
+          <span id="about">{about}</span>
+          <span id="contact">{contact}</span>
           <span id="signup">
             <Signup />
           </span>
