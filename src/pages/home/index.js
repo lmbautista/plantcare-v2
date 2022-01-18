@@ -12,9 +12,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { ThemeProvider } from '@mui/material/styles';
 // Components
-import Header from '../../components/header';
 import Signup from '../../pages/signup';
 import Signin from '../../pages/signin';
 import PanelWithImage from '../../components/panel-with-image';
@@ -22,7 +20,6 @@ import PanelWithImage from '../../components/panel-with-image';
 import enLocale from './locales/en.js';
 import Main from '../../themes/main';
 
-const homePages = ['Features', 'About', 'Contact', 'Sign up', 'Sign in'];
 const styles = {
   home: {
     content: {
@@ -294,21 +291,18 @@ const contact = (
 export const Home = ({}) => {
   return (
     <span data-testid="homepage">
-      <ThemeProvider theme={Main}>
-        <Header pages={homePages} />
-        <Box sx={{ mt: { xs: 5, sm: 8 } }}>
-          <span id="home">{home}</span>
-          <span id="features">{features}</span>
-          <span id="about">{about}</span>
-          <span id="contact">{contact}</span>
-          <span id="signup">
-            <Signup />
-          </span>
-          <span id="signin">
-            <Signin />
-          </span>
-        </Box>
-      </ThemeProvider>
+      <Box sx={{ mt: { xs: 5, sm: 8 } }}>
+        <span id="home">{home}</span>
+        <span id="features">{features}</span>
+        <span id="about">{about}</span>
+        <span id="contact">{contact}</span>
+        <span id="signup">
+          <Signup />
+        </span>
+        <span id="signin">
+          <Signin />
+        </span>
+      </Box>
     </span>
   );
 };
