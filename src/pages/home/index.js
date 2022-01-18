@@ -98,7 +98,7 @@ const features = (
       </Grid>
     </Grid>
     <Grid container direction="row" justifyContent="center" alignItems="stretch" mb="40px">
-      <Grid item xs={12} sm={3} sx={styles.home.features.img}>
+      <Grid item xs={12} sm={3} md={2} sx={styles.home.features.img}>
         <img src={featureOneImg} alt="feature-one-image" height={'100%'} />
       </Grid>
       <Grid
@@ -120,7 +120,7 @@ const features = (
       </Grid>
     </Grid>
     <Grid container direction="row" justifyContent="center" alignItems="stretch" mb="40px">
-      <Grid item xs={12} sm={3} sx={styles.home.features.img}>
+      <Grid item xs={12} sm={3} md={2} sx={styles.home.features.img}>
         <img src={featureTwoImg} alt="feature-two-image" height={'100%'} />
       </Grid>
       <Grid
@@ -142,7 +142,7 @@ const features = (
       </Grid>
     </Grid>
     <Grid container direction="row" justifyContent="center" alignItems="stretch" mb="40px">
-      <Grid item xs={12} sm={3} sx={styles.home.features.img}>
+      <Grid item xs={12} sm={3} md={2} sx={styles.home.features.img}>
         <img src={featureThreeImg} alt="feature-three-image" height={'100%'} />
       </Grid>
       <Grid
