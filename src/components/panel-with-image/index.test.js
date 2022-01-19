@@ -14,7 +14,7 @@ const testProps = {
 test('load and render component', () => {
   const { container } = render(<PanelWithImage {...testProps} />);
 
-  expect(container.querySelector('#id'));
+  expect(container.querySelector('#id')).not.toBeNull();
 
   const titleTags = screen.getAllByText('title');
   expect(titleTags).toBeDefined();

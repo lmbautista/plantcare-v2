@@ -5,10 +5,10 @@ import Home from './index.js';
 test('load and render component', () => {
   const { container } = render(<Home />);
 
-  expect(container.querySelector('#home'));
-  expect(container.querySelector('#features'));
-  expect(container.querySelector('#about'));
-  expect(container.querySelector('#contact'));
-  expect(container.querySelector('#signup'));
-  expect(container.querySelector('#signin'));
+  expect(container.querySelector('#home')).not.toBeNull();
+  expect(container.querySelector('#features')).not.toBeNull();
+  expect(container.querySelector('#about')).not.toBeNull();
+  expect(container.querySelector('#contact')).not.toBeNull();
+  expect(container.querySelector('#signup')).not.toBeNull();
+  expect(container.querySelector('#signin')).not.toBeNull();
 });
