@@ -1,35 +1,63 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 import CustomAnchorLink from './index.js';
 
+const onClickHandler = jest.fn();
 const testProps = {
   id: 'home',
   title: 'Homepage',
   to: '/home',
   active: true,
-  className: 'CustomLink-class'
+  className: 'CustomLink-class',
+  onClickHandler
 };
 
+beforeEach(() => jest.resetAllMocks());
+
 test('load and render active component', () => {
-  const { container } = render(<CustomAnchorLink {...testProps} />);
+  window.scroll = jest.fn();
+  const { container } = render(
+    <>
+      <CustomAnchorLink {...testProps} />
+      <span id="home"></span>
+    </>
+  );
 
-  const link = screen.getByRole('link');
-
-  expect(link).toBeInTheDocument();
-  expect(screen.getByText(/Homepage/i)).toBeInTheDocument();
   expect(container.querySelector('.CustomLink-class')).not.toBeNull();
   expect(container.querySelector('.MuiButton-outlined')).not.toBeNull();
+
+  const link = screen.getByRole('link');
+  expect(link).toBeInTheDocument();
+
+  const button = screen.getByText(/Homepage/i);
+  expect(button).toBeInTheDocument();
+
+  fireEvent(button, new MouseEvent('click', { bubbles: true, cancelable: true }));
+
+  expect(onClickHandler).toHaveBeenCalledTimes(1);
 });
 
 test('load and render inactive component', () => {
+  window.scroll = jest.fn();
   const combinedProps = { ...testProps, active: false };
-  const { container } = render(<CustomAnchorLink {...combinedProps} />);
+  const { container } = render(
+    <>
+      <CustomAnchorLink {...combinedProps} />
+      <span id="home"></span>
+    </>
+  );
 
-  const link = screen.getByRole('link');
-
-  expect(link).toBeInTheDocument();
-  expect(screen.getByText(/Homepage/i)).toBeInTheDocument();
   expect(container.querySelector('.CustomLink-class')).not.toBeNull();
   expect(container.querySelector('.MuiButton-outlined')).toBeNull();
+
+  const link = screen.getByRole('link');
+  expect(link).toBeInTheDocument();
+
+  const button = screen.getByText(/Homepage/i);
+  expect(button).toBeInTheDocument();
+
+  fireEvent(button, new MouseEvent('click', { bubbles: true, cancelable: true }));
+
+  expect(onClickHandler).toHaveBeenCalledTimes(1);
 });

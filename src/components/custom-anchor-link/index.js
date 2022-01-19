@@ -7,13 +7,7 @@ export const CustomAnchorLink = ({ id, title, to, active, onClickHandler, ...pro
   const headerHeight = '64';
 
   return (
-    <AnchorLink
-      style={{ textDecoration: 'none' }}
-      offset={headerHeight}
-      href={to}
-      onClick={() => onClickHandler(id)}
-      {...otherProps}
-    >
+    <AnchorLink style={{ textDecoration: 'none' }} offset={headerHeight} href={to} {...otherProps}>
       <Button
         color={color}
         underline="none"
@@ -23,6 +17,7 @@ export const CustomAnchorLink = ({ id, title, to, active, onClickHandler, ...pro
           padding: '7px 21px'
         }}
         variant={active ? 'outlined' : 'text'}
+        onClick={onClickHandler}
       >
         {title}
       </Button>
