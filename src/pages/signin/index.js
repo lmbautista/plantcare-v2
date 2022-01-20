@@ -1,4 +1,5 @@
 import signinImg from './images/signin.png';
+import { Link } from 'react-router-dom';
 // UI components
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -10,6 +11,7 @@ import PanelWithImage from '../../components/panel-with-image';
 // Others
 import enLocale from './locales/en.js';
 import Main from '../../themes/main';
+import routes from '../../routes';
 
 const signInForm = (
   <Grid container direction="row" justifyContent="center" alignItems="stretch" pt="40px">
@@ -42,6 +44,18 @@ const signInForm = (
         >
           {enLocale.form.submit}
         </Button>
+      </Box>
+      <Box pb="60px">
+        <Link
+          style={{
+            color: `${Main.palette.primary.main}`,
+            textDecoration: 'none',
+            fontWeight: 'bold'
+          }}
+          to={routes.resetPassword}
+        >
+          {enLocale.forgotPassword}
+        </Link>
       </Box>
     </Grid>
   </Grid>
