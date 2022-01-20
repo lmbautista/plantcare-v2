@@ -13,12 +13,9 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 // Components
-import Signup from '../../pages/signup';
-import Signin from '../../pages/signin';
 import PanelWithImage from '../../components/panel-with-image';
 // Others
 import enLocale from './locales/en.js';
-import Main from '../../themes/main';
 
 const styles = {
   home: {
@@ -297,12 +294,6 @@ export const Home = ({}) => {
         <span id="features">{features}</span>
         <span id="about">{about}</span>
         <span id="contact">{contact}</span>
-        <span id="signup">
-          <Signup />
-        </span>
-        <span id="signin">
-          <Signin />
-        </span>
       </Box>
     </span>
   );
