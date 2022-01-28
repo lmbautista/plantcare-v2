@@ -12,6 +12,7 @@ import PanelWithImage from '../../components/panel-with-image';
 // Others
 import enLocale from './locales/en.js';
 import Main from '../../themes/main';
+import routes from '../../routes';
 import { fieldElementProps } from '../../utils';
 
 import { FormContainer, TextFieldElement, PasswordElement } from 'react-hook-form-mui';
@@ -38,7 +39,7 @@ export const Signup = ({}) => {
     httClient
       .post('users', { ...httpParams, locale: 'en' })
       .then(function (response) {
-        // redirect to success
+        window.location.replace(routes.signupConfirmation);
       })
       .catch(function (error) {
         const { message: responseMessage, errors: responseErrors } = error.response.data;
