@@ -62,10 +62,21 @@ export const PanelWithImage = ({ id, image, title, subtitle, description, childr
             {description}
           </Typography>
         )}
-        {children}
       </Grid>
       <Grid item xs={12} md={6} lg={5} display="flex" justifyContent="center" alignItems="center">
         <img src={image} alt="panel-image" width={'90%'} />
+      </Grid>
+      <Grid
+        item
+        xs={12}
+        md={5}
+        lg={5}
+        direction="column"
+        justifyContent="center"
+        textAlign="center"
+        sx={{ ...defaultStyles.mobile, ...styles }}
+      >
+        {children}
       </Grid>
     </Grid>
   );
