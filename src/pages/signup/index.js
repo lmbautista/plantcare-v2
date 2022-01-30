@@ -1,6 +1,8 @@
 import { useState } from 'react';
-import signupImg from './images/signup.png';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+
+import signupImg from './images/signup.png';
 // UI components
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -22,7 +24,8 @@ const httClient = axios.create({
   timeout: 1000
 });
 
-export const Signup = ({}) => {
+export const Signup = () => {
+  const history = useNavigate();
   const [errorMessage, setErrorMessage] = useState(undefined);
   const [errors, setErrors] = useState({});
   const formLocales = enLocale.form;
@@ -38,8 +41,8 @@ export const Signup = ({}) => {
 
     httClient
       .post('users', { ...httpParams, locale: 'en' })
-      .then(function (response) {
-        window.location.replace(routes.signupConfirmation);
+      .then(function () {
+        history(routes.signupConfirmation);
       })
       .catch(function (error) {
         const { message: responseMessage, errors: responseErrors } = error.response.data;

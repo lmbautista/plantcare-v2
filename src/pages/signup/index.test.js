@@ -1,11 +1,27 @@
 import React from 'react';
+import { createMemoryHistory } from 'history';
+import { Route, Router, Routes } from 'react-router-dom';
 import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import axios from 'axios';
 
 import Signup from './index.js';
 
+const App = () => (
+  <>
+    <Routes>
+      <Route exact path="/signup" element={<Signup />} />
+    </Routes>
+  </>
+);
+const history = createMemoryHistory();
+history.push('/signup');
+
 test('load and render component', () => {
-  render(<Signup />);
+  render(
+    <Router location={history.location} navigator={history}>
+      <App />
+    </Router>
+  );
 
   expect(screen.getAllByText('Sign up')).toBeDefined();
   expect(screen.getAllByText("Let's join the team!")).toBeDefined();
@@ -22,7 +38,11 @@ test('render and submit form', async () => {
     password_confirmation: '12345'
   };
 
-  render(<Signup />);
+  render(
+    <Router location={history.location} navigator={history}>
+      <App />
+    </Router>
+  );
 
   axios.post.mockResolvedValueOnce(() => Promise.resolve({ data: {} }));
 

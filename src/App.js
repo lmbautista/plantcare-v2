@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Router } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 // UI components
 import { ThemeProvider } from '@mui/material/styles';
 // Components
@@ -15,8 +16,11 @@ import routes from './routes';
 import './App.scss';
 
 function App() {
+  const history = createBrowserHistory();
+
   return (
     <>
+      <Router location={history.location} navigator={history}></Router>
       <ThemeProvider theme={Main}>
         <BrowserRouter>
           <Header />
