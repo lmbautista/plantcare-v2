@@ -45,9 +45,14 @@ export const Signup = () => {
         history(routes.signupConfirmation);
       })
       .catch(function (error) {
-        const { message: responseMessage, errors: responseErrors } = error.response.data;
-        setErrorMessage(responseMessage);
-        setErrors(responseErrors);
+        if (error.response.status === 422) {
+          const { message: responseMessage, errors: responseErrors } = error.response.data;
+          setErrorMessage(responseMessage);
+          setErrors(responseErrors);
+        } else {
+          const responseMessage = error.response.statusText;
+          setErrorMessage(`HTTP error: ${responseMessage}`);
+        }
       });
   };
 
