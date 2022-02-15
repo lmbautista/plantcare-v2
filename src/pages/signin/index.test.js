@@ -38,11 +38,9 @@ test('render and submit form', async () => {
     email: 'luihbautista@gmail.com',
     password: '12345'
   };
-  const errorResponse = {
-    response: {
-      status: 404,
-      data: {}
-    }
+  const response = {
+    status: 200,
+    data: { email: 'luihbautista@gmail.com', api_token: 'abc123' }
   };
 
   const history = createMemoryHistory();
@@ -54,7 +52,7 @@ test('render and submit form', async () => {
     </Router>
   );
 
-  axios.get.mockResolvedValueOnce(() => Promise.resolve({ data: {} }));
+  axios.get.mockResolvedValueOnce(response);
 
   const emailInput = screen.getAllByTestId('email-input')[0];
   const passwordInput = screen.getAllByTestId('password-input')[0];

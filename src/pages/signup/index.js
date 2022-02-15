@@ -45,12 +45,12 @@ export const Signup = () => {
         history(routes.signupConfirmation);
       })
       .catch(function (error) {
-        if (error.response.status === 422) {
+        if (error.response && error.response.status === 422) {
           const { message: responseMessage, errors: responseErrors } = error.response.data;
           setErrorMessage(responseMessage);
           setErrors(responseErrors);
         } else {
-          const responseMessage = error.response.statusText;
+          const responseMessage = (error.response && error.response.statusText) || error.message;
           setErrorMessage(`HTTP error: ${responseMessage}`);
         }
       });
