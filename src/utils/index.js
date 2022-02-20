@@ -20,8 +20,9 @@ export const fieldElementProps = (fieldName, errors, locales) => {
 
 import Cookies from 'js-cookie';
 import CryptoJS from 'crypto-js';
-import routes from '../routes';
 
+export const USER = 'user';
+export const TOKEN = 'token';
 const pass = 'my-secret-pass'; // TODO: move to env var
 const sessionExpiredIn30minutes = 1 / 48;
 
@@ -29,28 +30,23 @@ const encrypt = (value) => (value === undefined ? undefined : CryptoJS.AES.encry
 const decrypt = (value) =>
   value === undefined ? undefined : CryptoJS.enc.Utf8.stringify(CryptoJS.AES.decrypt(value, pass));
 
-export const setSessionCookies = (session, history) => {
-  const { email, api_token: apiToken } = session;
+export const setSessionCookies = (userData) => {
+  const { email: user, api_token: apiToken } = userData;
 
-  Cookies.set('user', encrypt(email), { expires: sessionExpiredIn30minutes });
-  Cookies.set('token', encrypt(apiToken), { expires: sessionExpiredIn30minutes });
-
-  history(routes.signupConfirmation);
+  Cookies.set(USER, encrypt(user), { expires: sessionExpiredIn30minutes });
+  Cookies.set(TOKEN, encrypt(apiToken), { expires: sessionExpiredIn30minutes });
 };
 
 export const getSessionCookies = () => {
   const sessionCookie = {
-    email: decrypt(Cookies.get('user')),
-    token: decrypt(Cookies.get('token'))
+    user: decrypt(Cookies.get(USER)),
+    token: decrypt(Cookies.get(TOKEN))
   };
 
   return JSON.stringify(sessionCookie) === JSON.stringify({}) ? {} : sessionCookie;
 };
 
-export const removeSessionCookies = (history) => {
-  Cookies.remove('user');
-  Cookies.remove('token');
-  history(routes.home);
+export const removeSessionCookies = () => {
+  Cookies.remove(USER);
+  Cookies.remove(TOKEN);
 };
-
-export const hasSession = () => JSON.stringify(getSessionCookies()) !== JSON.stringify({});
