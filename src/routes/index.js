@@ -1,7 +1,9 @@
 export default {
-  home: '/',
+  root: '/',
+  home: '/home',
   signup: '/signup',
   signin: '/signin',
   resetPassword: '/reset-password',
-  signupConfirmation: '/signup-confirmation'
+  signupConfirmation: '/signup-confirmation',
+  plantcares: '/plantcares'
 };
