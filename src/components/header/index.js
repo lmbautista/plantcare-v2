@@ -1,35 +1,89 @@
-import * as React from 'react';
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 import AnchorLink from 'react-anchor-link-smooth-scroll';
 import { useLocation, useResolvedPath, useMatch, Link } from 'react-router-dom';
+
 import LogoImg from '../../images/logo.png';
+import profileImg from './images/user-profile.png';
 // UI components
 import AppBar from '@mui/material/AppBar';
+import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
+import Tooltip from '@mui/material/Tooltip';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
-import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import Stack from '@mui/material/Stack';
 // Components
 import CustomLink from '../custom-link';
 import CustomAnchorLink from '../custom-anchor-link';
 // Others
+import enLocale from './locales/en.js';
 import routes from '../../routes';
 import sections from './sections.js';
 import pages from './pages.js';
 
-export const Header = () => {
+export const Header = ({ userLogged, userProfile, signOutHandler }) => {
+  const allowedSections = userLogged ? sections.logged : sections.public;
+  const allowedPages = userLogged ? pages.logged : pages.public;
+
   const [anchorElNav, setAnchorElNav] = useState(null);
   const handleOpenNavMenu = (event) => setAnchorElNav(event.currentTarget);
   const handleCloseNavMenu = () => setAnchorElNav(null);
-  const [sectionSelected, setSectionSelected] = useState(null);
 
+  const [sectionSelected, setSectionSelected] = useState(null);
   const location = useLocation().pathname;
-  const currentSections = sections.public[location] || [];
+  const currentSections = allowedSections[location] || [];
+
+  const [anchorElUser, setAnchorElUser] = useState(null);
+  const handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
+  const handleCloseUserMenu = () => setAnchorElUser(null);
+
+  const color = 'primary';
+
+  const profileMenu = () => {
+    const links = [
+      { title: enLocale.profile, onClick: () => {} },
+      { title: enLocale.signout, onClick: signOutHandler }
+    ];
+
+    return (
+      <Box sx={{ flexGrow: 0 }}>
+        <Tooltip title="Open settings">
+          <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+            <Avatar alt={`${userProfile && userProfile.user}`} src={profileImg} />
+          </IconButton>
+        </Tooltip>
+        <Menu
+          sx={{ mt: '45px' }}
+          id="menu-appbar"
+          anchorEl={anchorElUser}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right'
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right'
+          }}
+          open={Boolean(anchorElUser)}
+          onClose={handleCloseUserMenu}
+        >
+          {links.map((link) => (
+            <MenuItem key={link.title} onClick={handleCloseUserMenu}>
+              <Typography textAlign="center" onClick={link.onClick}>
+                {link.title}
+              </Typography>
+            </MenuItem>
+          ))}
+        </Menu>
+      </Box>
+    );
+  };
 
   const logo = () => {
     if (currentSections.length > 0) {
@@ -53,10 +107,8 @@ export const Header = () => {
     }
   };
 
-  const menuLinks = () => {
-    const color = 'primary';
-
-    const pagesMenu = pages.public.map((page) => {
+  const menu = () => {
+    const pagesMenu = allowedPages.map((page) => {
       const { id, title, path: to } = page;
       const resolved = useResolvedPath(to);
       const match = useMatch({ path: resolved.pathname, end: true });
@@ -101,7 +153,7 @@ export const Header = () => {
             aria-controls="menu-appbar"
             aria-haspopup="true"
             onClick={handleOpenNavMenu}
-            color="primary"
+            color={color}
           >
             <MenuIcon />
           </IconButton>
@@ -134,7 +186,7 @@ export const Header = () => {
                 >
                   <Typography
                     textAlign="center"
-                    color="primary"
+                    color={color}
                     sx={{ fontWeight: sectionSelected === section.id ? 'bold' : 'medium' }}
                   >
                     {section.title}
@@ -142,7 +194,7 @@ export const Header = () => {
                 </AnchorLink>
               </MenuItem>
             ))}
-            {pages.public.map((page) => (
+            {allowedPages.map((page) => (
               <MenuItem key={page.id} onClick={handleCloseNavMenu}>
                 <Link
                   offset="64"
@@ -153,7 +205,7 @@ export const Header = () => {
                 >
                   <Typography
                     textAlign="center"
-                    color="primary"
+                    color={color}
                     sx={{ fontWeight: sectionSelected === page.id ? 'bold' : 'medium' }}
                   >
                     {page.title}
@@ -170,7 +222,8 @@ export const Header = () => {
           alignItems="right"
           sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}
         >
-          {menuLinks()}
+          {menu()}
+          {userLogged && profileMenu()}
         </Stack>
         <Box sx={{ flexGrow: 1, padding: '5.5px 0', display: { xs: 'flex', md: 'none' } }}>
           {logo()}
@@ -181,3 +234,15 @@ export const Header = () => {
 };
 
 export default Header;
+
+Header.propTypes = {
+  userLogged: PropTypes.bool,
+  userProfile: PropTypes.object,
+  signOutHandler: PropTypes.func
+};
+
+Header.defaultProps = {
+  userLogged: false,
+  userProfile: {},
+  signOutHandler: () => {}
+};
