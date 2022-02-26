@@ -4,12 +4,17 @@ import { Route, Router, Routes } from 'react-router-dom';
 import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import axios from 'axios';
 
+import User from '../../components/user';
+
 import Signin from './index.js';
+
+const history = createMemoryHistory();
+const signInHandler = jest.fn();
 
 const App = () => (
   <>
     <Routes>
-      <Route exact path="/signin" element={<Signin />} />
+      <Route exact path="/signin" element={<Signin signInHandler={signInHandler} />} />
     </Routes>
   </>
 );
@@ -43,7 +48,6 @@ test('render and submit form', async () => {
     data: { email: 'luihbautista@gmail.com', api_token: 'abc123' }
   };
 
-  const history = createMemoryHistory();
   history.push('/signin');
 
   render(
@@ -69,6 +73,7 @@ test('render and submit form', async () => {
   });
 
   expect(axios.get).toHaveBeenCalledWith('users/signin', { params: formParams });
+  expect(signInHandler).toHaveBeenCalledTimes(1);
 });
 
 test('render and submit form fails', async () => {

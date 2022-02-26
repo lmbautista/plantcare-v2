@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 
 import signinImg from './images/signin.png';
@@ -9,6 +10,7 @@ import Grid from '@mui/material/Grid';
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import { ThemeProvider } from '@mui/material/styles';
+import { FormContainer, TextFieldElement, PasswordElement } from 'react-hook-form-mui';
 // Components
 import PanelWithImage from '../../components/panel-with-image';
 // Others
@@ -17,34 +19,32 @@ import Main from '../../themes/main';
 import routes from '../../routes';
 import { fieldElementProps } from '../../utils';
 
-import { FormContainer, TextFieldElement, PasswordElement } from 'react-hook-form-mui';
-
 const httClient = axios.create({
   baseURL: 'http://dev.api.yourplantcare.com/v1',
   timeout: 1000
 });
 
-export const Signin = ({}) => {
-  const history = useNavigate();
+export const Signin = ({ signInHandler }) => {
   const [errorMessage, setErrorMessage] = useState(undefined);
   const [errors, setErrors] = useState({});
   const formLocales = enLocale.form;
+
   const submit = (data) => {
     const { email, password } = data;
     const params = { email, password, locale: 'en' };
 
     httClient
       .get('users/signin', { params })
-      .then(function () {
-        history(routes.signupConfirmation);
+      .then(function (response) {
+        signInHandler(response.data);
       })
       .catch(function (error) {
-        if (error.response.status === 422) {
+        if (error.response && error.response.status === 422) {
           const { message: responseMessage, errors: responseErrors } = error.response.data;
           setErrorMessage(responseMessage);
           setErrors(responseErrors);
         } else {
-          const responseMessage = error.response.statusText;
+          const responseMessage = (error.response && error.response.statusText) || error.message;
           setErrorMessage(`HTTP error: ${responseMessage}`);
         }
       });
@@ -119,3 +119,11 @@ export const Signin = ({}) => {
 };
 
 export default Signin;
+
+Signin.propTypes = {
+  signInHandler: PropTypes.func
+};
+
+Signin.defaultProps = {
+  signInHandler: () => {}
+};
