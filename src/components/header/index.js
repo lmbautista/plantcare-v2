@@ -54,7 +54,11 @@ export const Header = ({ userLogged, userProfile, signOutHandler }) => {
       <Box sx={{ flexGrow: 0 }}>
         <Tooltip title="Open settings">
           <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-            <Avatar alt={`${userProfile && userProfile.user}`} src={profileImg} />
+            <Avatar
+              alt={`${userProfile && userProfile.user}`}
+              src={profileImg}
+              sx={{ width: 50, height: 50 }}
+            />
           </IconButton>
         </Tooltip>
         <Menu
@@ -219,7 +223,7 @@ export const Header = ({ userLogged, userProfile, signOutHandler }) => {
           direction="row"
           spacing={3}
           justifyContent="right"
-          alignItems="right"
+          alignItems="center"
           sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}
         >
           {menu()}
