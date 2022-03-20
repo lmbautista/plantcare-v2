@@ -289,7 +289,7 @@ const contact = (
 export const Home = ({}) => {
   return (
     <span data-testid="homepage">
-      <Box sx={{ mt: { xs: 5, sm: 8 } }}>
+      <Box sx={{ mt: { xs: 6, sm: 10 } }}>
         <span id="home">{home}</span>
         <span id="features">{features}</span>
         <span id="about">{about}</span>
