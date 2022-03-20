@@ -21,7 +21,7 @@ import { fieldElementProps } from '../../utils';
 
 const httClient = axios.create({
   baseURL: 'http://dev.api.yourplantcare.com/v1',
-  timeout: 1000
+  timeout: 5000
 });
 
 export const Signin = ({ signInHandler }) => {
