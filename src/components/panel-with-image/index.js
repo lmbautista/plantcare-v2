@@ -12,9 +12,16 @@ const defaultStyles = {
   desktop: { display: { xs: 'none', lg: 'flex' }, minHeight: '93vmin' }
 };
 
+const defaultImgStyles = {
+  maxWidth: '100%',
+  maxHeight: '90vh'
+};
+
 export const PanelWithImage = ({ id, image, title, subtitle, description, children, styles }) => {
+  const { imgStyles, ...otherStyles } = styles;
+
   return (
-    <Grid container direction="row" justifyContent="center" alignItems="stretch" id={id}>
+    <Grid container direction="row" justifyContent="space-around" id={id}>
       <Grid
         item
         direction="column"
@@ -22,7 +29,7 @@ export const PanelWithImage = ({ id, image, title, subtitle, description, childr
         xs={12}
         md={4}
         lg={5}
-        sx={{ ...defaultStyles.desktop, ...styles }}
+        sx={{ ...defaultStyles.desktop, ...otherStyles }}
       >
         <Typography fontFamily={'Pacifico'} color="secondary" variant="h1" mb="18px">
           {title}
@@ -33,7 +40,7 @@ export const PanelWithImage = ({ id, image, title, subtitle, description, childr
           </Typography>
         )}
         {description && (
-          <Typography variant="h5" pt="30px" sx={{ fontWeight: 'light' }}>
+          <Typography variant="h5" pt="20px" sx={{ fontWeight: 'light' }}>
             {description}
           </Typography>
         )}
@@ -47,7 +54,7 @@ export const PanelWithImage = ({ id, image, title, subtitle, description, childr
         direction="column"
         justifyContent="center"
         textAlign="center"
-        sx={{ ...defaultStyles.mobile, ...styles }}
+        sx={{ ...defaultStyles.mobile, ...otherStyles }}
       >
         <Typography fontFamily={'Pacifico'} color="secondary" variant="h2" mb="12px">
           {title}
@@ -58,13 +65,18 @@ export const PanelWithImage = ({ id, image, title, subtitle, description, childr
           </Typography>
         )}
         {description && (
-          <Typography variant="h6" pt="30px" sx={{ fontWeight: 'light' }}>
+          <Typography
+            variant="h6"
+            pt="20px"
+            pb="20px"
+            sx={{ fontWeight: 'light', lineHeight: '1.2' }}
+          >
             {description}
           </Typography>
         )}
       </Grid>
       <Grid item xs={12} md={6} lg={5} display="flex" justifyContent="center" alignItems="center">
-        <img src={image} alt="panel-image" width={'90%'} />
+        <img src={image} alt="panel-image" style={{ ...defaultImgStyles, ...imgStyles }} />
       </Grid>
       <Grid
         item
