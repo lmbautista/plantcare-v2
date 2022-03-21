@@ -17,6 +17,8 @@ import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { List, ListItem, ListItemAvatar, ListItemText } from '@mui/material';
+// Others
+import enLocale from './locales/en.js';
 
 export default function PlantcareCard() {
   const wetStatuses = [
@@ -46,21 +48,21 @@ export default function PlantcareCard() {
   const wateredAt = (
     <>
       <Typography variant="subtitle1" color="secondary" sx={{ fontWeight: 'light' }}>
-        Watered at 03/03/2022
+        {`${enLocale.wateredAt} 03/03/2022`}
       </Typography>
     </>
   );
   const scheduledAt = (
     <>
       <Typography variant="subtitle1" color="secondary" sx={{ fontWeight: 'light' }}>
-        Scheduled at 03/03/2022
+        {`${enLocale.scheduledAt} 03/03/2022`}
       </Typography>
     </>
   );
   const plantedAt = (
     <>
       <Typography variant="subtitle1" color="secondary" sx={{ fontWeight: 'light' }}>
-        Planted at 03/03/2022
+        {`${enLocale.plantedAt} 03/03/2022`}
       </Typography>
     </>
   );

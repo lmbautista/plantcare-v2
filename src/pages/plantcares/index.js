@@ -12,7 +12,7 @@ const styles = {
   minHeight: '95vmin',
   display: 'flex',
   alignItems: 'center',
-  padding: '40px 0'
+  padding: '80px 0'
 };
 
 const gardenStyles = { background: '#fafafa' };
@@ -60,16 +60,16 @@ export const Plantcares = ({}) => {
               justifyContent="center"
               alignItems="stretch"
             >
-              <Grid item direction="column" justifyContent="center" xs={12} sm={12} md={6} lg={3}>
+              <Grid item direction="column" justifyContent="center" xs={12} sm={12} md={6} xl={3}>
                 <Card />
               </Grid>
-              <Grid item direction="column" justifyContent="center" xs={12} sm={12} md={6} lg={3}>
+              <Grid item direction="column" justifyContent="center" xs={12} sm={12} md={6} xl={3}>
                 <Card />
               </Grid>
-              <Grid item direction="column" justifyContent="center" xs={12} sm={12} md={6} lg={3}>
+              <Grid item direction="column" justifyContent="center" xs={12} sm={12} md={6} xl={3}>
                 <Card />
               </Grid>
-              <Grid item direction="column" justifyContent="center" xs={12} sm={12} md={6} lg={3}>
+              <Grid item direction="column" justifyContent="center" xs={12} sm={12} md={6} xl={3}>
                 <Card />
               </Grid>
             </Grid>
