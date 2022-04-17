@@ -103,7 +103,7 @@ export const Signin = ({ signInHandler }) => {
 
   return (
     <ThemeProvider theme={Main}>
-      <Box sx={{ mt: { xs: 5, sm: 8 } }}>
+      <Box sx={{ mt: { xs: 5, sm: 8 }, padding: '30px' }}>
         <PanelWithImage
           image={signinImg}
           title={enLocale.title}

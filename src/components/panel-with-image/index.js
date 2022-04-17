@@ -21,7 +21,7 @@ export const PanelWithImage = ({ id, image, title, subtitle, description, childr
   const { imgStyles, ...otherStyles } = styles;
 
   return (
-    <Grid container direction="row" justifyContent="space-around" id={id}>
+    <Grid container direction="row" justifyContent="space-between" id={id}>
       <Grid
         item
         direction="column"

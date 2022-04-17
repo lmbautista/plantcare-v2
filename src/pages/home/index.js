@@ -19,6 +19,7 @@ import enLocale from './locales/en.js';
 
 const styles = {
   home: {
+    main: { padding: '30px' },
     content: {
       main: {
         backgroundImage: `url(${circuitImg})`,
@@ -31,13 +32,12 @@ const styles = {
         textAlign: { xs: 'center', md: 'left' },
         alignItems: { xs: 'center', md: 'flex-start' },
         padding: '20px 10px 0 10px'
-      },
-      desktop: { display: { xs: 'none', lg: 'flex' }, minHeight: '93vmin' }
+      }
     },
     features: {
       main: {
         backgroundColor: 'ternary.main',
-        padding: '30px 10px'
+        padding: '30px'
       },
       img: {
         display: 'flex',
@@ -51,7 +51,7 @@ const styles = {
     about: {
       main: {
         backgroundColor: '#f6f3f3',
-        padding: '30px 10px'
+        padding: '30px'
       },
       img: {
         display: 'flex',
@@ -63,19 +63,21 @@ const styles = {
       }
     },
     contact: {
-      main: { padding: '30px 10px' }
+      main: { padding: '30px' }
     }
   }
 };
 
 const home = (
-  <PanelWithImage
-    image={homeImg}
-    title={enLocale.home.title}
-    subtitle={enLocale.home.subtitle}
-    description={enLocale.home.description}
-    styles={styles.home.content.main}
-  />
+  <Box sx={styles.home.main}>
+    <PanelWithImage
+      image={homeImg}
+      title={enLocale.home.title}
+      subtitle={enLocale.home.subtitle}
+      description={enLocale.home.description}
+      styles={styles.home.content.main}
+    />
+  </Box>
 );
 
 const features = (

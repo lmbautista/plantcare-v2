@@ -101,7 +101,7 @@ export const Signup = () => {
 
   return (
     <ThemeProvider theme={Main}>
-      <Box sx={{ mt: { xs: 5, sm: 8 } }}>
+      <Box sx={{ mt: { xs: 5, sm: 8 }, padding: '30px' }}>
         <PanelWithImage
           image={signupImg}
           title={enLocale.title}
