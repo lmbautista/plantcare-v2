@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Router, Navigate, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Router, Navigate } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 // UI components
 import { ThemeProvider } from '@mui/material/styles';
