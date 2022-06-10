@@ -45,7 +45,7 @@ const connectivityStyles = {
 
 export const Plantcares = ({}) => {
   const gardenButtons = (
-    <Stack direction="row" spacing={2} pt={10}>
+    <Stack direction="row" spacing={2} pt={6}>
       <Button component={Link} to="#" variant="outlined" color="primary" size="large">
         {enLocale.theGarden.new}
       </Button>
@@ -58,23 +58,25 @@ export const Plantcares = ({}) => {
   return (
     <span data-testid="plantcares">
       <div id="garden" style={{ ...styles, ...gardenStyles }}>
-        <Box sx={{ mt: { xs: 5, sm: 8 }, padding: '30px' }}>
-          <PanelWithImage
-            image={gardenImg}
-            styles={{ imgStyles: { maxHeight: '45vh' }, minHeight: '1vmin' }}
-            title={enLocale.theGarden.title}
-            subtitle={enLocale.theGarden.subtitle}
-            description={enLocale.theGarden.description}
-            children={gardenButtons}
-          />
+        <Box sx={{ mt: { xs: 5, sm: 8 }, padding: '30px', width: '100%' }}>
           <Grid
             container
             sx={{ margin: 'auto' }}
             direction="row"
             alignItems="center"
-            justifyContent="center"
+            justifyContent="space-between"
             maxWidth="xl"
           >
+            <Grid item direction="column" justifyContent="center" xs={12}>
+              <PanelWithImage
+                image={gardenImg}
+                styles={{ imgStyles: { maxHeight: '35vh' }, minHeight: '1vmin' }}
+                title={enLocale.theGarden.title}
+                subtitle={enLocale.theGarden.subtitle}
+                description={enLocale.theGarden.description}
+                children={gardenButtons}
+              />
+            </Grid>
             <Grid
               item
               direction="column"

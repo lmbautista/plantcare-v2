@@ -79,7 +79,7 @@ export default function PlantcareCard() {
         maxWidth: 300,
         textAlign: 'center',
         paddingTop: '0',
-        paddingLeft: '0',
+        paddingLeft: '15px',
         paddingBottom: '16px'
       }
     }),
@@ -170,7 +170,7 @@ export default function PlantcareCard() {
 
   return (
     <ThemeProvider theme={Main}>
-      <Card sx={{ maxWidth: 345, mt: { xs: 8, sm: 8 }, ml: 'auto', mr: 'auto' }}>
+      <Card sx={{ maxWidth: 325, mt: { xs: 8, sm: 8 }, ml: 'auto', mr: 'auto' }}>
         <Box sx={{ position: 'relative' }}>
           <CardMedia component="img" height="250" image={defaultImg} alt="Plant" />
           <Box sx={styles.cardImageOverlay}>
