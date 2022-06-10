@@ -1,7 +1,8 @@
 export default {
   wetPercentage: (percentage) => `${percentage}%`,
-  ofPercentage: 'of wet',
+  ofWet: 'of wet',
   wateredAt: 'Watered at',
-  scheduledAt: 'Scheduled at',
-  plantedAt: 'Planted at'
+  scheduledAt: 'Watering at',
+  plantedAt: 'Planted at',
+  syncedAt: 'Synced at'
 };
