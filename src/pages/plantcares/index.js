@@ -1,21 +1,25 @@
+import { Link } from 'react-router-dom';
 import gardenImg from './images/garden.png';
 // UI components
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 // Components
 import Card from './card';
 import PanelWithImage from '../../components/panel-with-image';
+// Others
+import enLocale from './locales/en.js';
 
 const styles = {
   minHeight: '95vmin',
   display: 'flex',
-  alignItems: 'center',
-  padding: '80px 0'
+  alignItems: 'center'
 };
 
-const gardenStyles = { background: '#fafafa' };
+const gardenStyles = { background: 'rgb(16, 122, 121, 0.02)' };
 
 const wateringStyles = {
   background:
@@ -40,64 +44,110 @@ const connectivityStyles = {
 };
 
 export const Plantcares = ({}) => {
+  const gardenButtons = (
+    <Stack direction="row" spacing={2} pt={10}>
+      <Button component={Link} to="#" variant="outlined" color="primary" size="large">
+        {enLocale.theGarden.new}
+      </Button>
+      <Button component={Link} to="#" variant="outlined" color="primary" size="large">
+        {enLocale.theGarden.howTo}
+      </Button>
+    </Stack>
+  );
+
   return (
     <span data-testid="plantcares">
-      <Box sx={{ mt: { xs: 8, sm: 8.5 } }}>
-        <div id="garden" style={{ ...styles, ...gardenStyles }}>
-          <Container maxWidth="xl">
-            <PanelWithImage
-              image={gardenImg}
-              imageSize={'60%'}
-              title="The garden"
-              subtitle="Take care of your plants remotely"
-              description="Here you could manage each plantcare connected to the board: configure the soil moisture sensors, the waterpumps, check the watering status, schedule a seasonal watering and much more"
-              styles={{ minHeight: 'auto', imgStyles: { maxHeight: '50vh' } }}
-            />
+      <div id="garden" style={{ ...styles, ...gardenStyles }}>
+        <Box sx={{ mt: { xs: 5, sm: 8 }, padding: '30px' }}>
+          <PanelWithImage
+            image={gardenImg}
+            styles={{ imgStyles: { maxHeight: '45vh' }, minHeight: '1vmin' }}
+            title={enLocale.theGarden.title}
+            subtitle={enLocale.theGarden.subtitle}
+            description={enLocale.theGarden.description}
+            children={gardenButtons}
+          />
+          <Grid
+            container
+            sx={{ margin: 'auto' }}
+            direction="row"
+            alignItems="center"
+            justifyContent="center"
+            maxWidth="xl"
+          >
             <Grid
-              container
-              direction="row"
-              alignItems="center"
+              item
+              direction="column"
               justifyContent="center"
-              alignItems="stretch"
+              xs={12}
+              sm={6}
+              md={6}
+              lg={3}
+              xl={3}
             >
-              <Grid item direction="column" justifyContent="center" xs={12} sm={12} md={6} xl={3}>
-                <Card />
-              </Grid>
-              <Grid item direction="column" justifyContent="center" xs={12} sm={12} md={6} xl={3}>
-                <Card />
-              </Grid>
-              <Grid item direction="column" justifyContent="center" xs={12} sm={12} md={6} xl={3}>
-                <Card />
-              </Grid>
-              <Grid item direction="column" justifyContent="center" xs={12} sm={12} md={6} xl={3}>
-                <Card />
-              </Grid>
+              <Card />
             </Grid>
-          </Container>
-        </div>
-        <span id="watering" style={{ ...styles, ...wateringStyles }}>
-          <Container maxWidth="xl">
-            <Grid container direction="row" justifyContent="center" alignItems="stretch">
-              <Grid item xs={12} pb="40px" pt="20px">
-                <Typography fontFamily={'Pacifico'} color="secondary" variant="h2">
-                  The watering
-                </Typography>
-              </Grid>
+            <Grid
+              item
+              direction="column"
+              justifyContent="center"
+              xs={12}
+              sm={6}
+              md={6}
+              lg={3}
+              xl={3}
+            >
+              <Card />
             </Grid>
-          </Container>
-        </span>
-        <span id="connectivity" style={{ ...styles, ...connectivityStyles }}>
-          <Container maxWidth="xl">
-            <Grid container direction="row" justifyContent="center" alignItems="stretch">
-              <Grid item xs={12} pb="40px" pt="20px">
-                <Typography fontFamily={'Pacifico'} color="secondary" variant="h2">
-                  The connectivity
-                </Typography>
-              </Grid>
+            <Grid
+              item
+              direction="column"
+              justifyContent="center"
+              xs={12}
+              sm={6}
+              md={6}
+              lg={3}
+              xl={3}
+            >
+              <Card />
             </Grid>
-          </Container>
-        </span>
-      </Box>
+            <Grid
+              item
+              direction="column"
+              justifyContent="center"
+              xs={12}
+              sm={6}
+              md={6}
+              lg={3}
+              xl={3}
+            >
+              <Card />
+            </Grid>
+          </Grid>
+        </Box>
+      </div>
+      <span id="watering" style={{ ...styles, ...wateringStyles }}>
+        <Container maxWidth="xl">
+          <Grid container direction="row" justifyContent="center" alignItems="stretch">
+            <Grid item xs={12} pb="40px" pt="20px">
+              <Typography fontFamily={'Pacifico'} color="secondary" variant="h2">
+                The watering
+              </Typography>
+            </Grid>
+          </Grid>
+        </Container>
+      </span>
+      <span id="connectivity" style={{ ...styles, ...connectivityStyles }}>
+        <Container maxWidth="xl">
+          <Grid container direction="row" justifyContent="center" alignItems="stretch">
+            <Grid item xs={12} pb="40px" pt="20px">
+              <Typography fontFamily={'Pacifico'} color="secondary" variant="h2">
+                The connectivity
+              </Typography>
+            </Grid>
+          </Grid>
+        </Container>
+      </span>
     </span>
   );
 };
