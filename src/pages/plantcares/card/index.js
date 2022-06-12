@@ -63,7 +63,6 @@ export default function PlantcareCard() {
         left: 0,
         width: '100%',
         height: '250px',
-        bgcolor: 'rgba(0, 0, 0, 0.05)',
         color: 'white'
       },
       cardImage: {
