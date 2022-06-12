@@ -103,6 +103,6 @@ Panel.defaultProps = {
   id: Math.random().toString(36).slice(2), //Ramdom alphanumeric value
   subtitle: null,
   description: null,
-  children: <></>,
+  children: null,
   styles: {}
 };
