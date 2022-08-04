@@ -21,7 +21,7 @@ export const PanelWithImage = ({ id, image, title, subtitle, description, childr
   const { imgStyles, ...otherStyles } = styles;
 
   return (
-    <Grid container direction="row" justifyContent="center" id={id}>
+    <Grid container direction="row" justifyContent="space-around" id={id}>
       <Grid
         item
         direction="column"
@@ -49,6 +49,7 @@ export const PanelWithImage = ({ id, image, title, subtitle, description, childr
       <Grid
         item
         xs={12}
+        sm={6}
         md={5}
         lg={5}
         direction="column"
@@ -75,7 +76,16 @@ export const PanelWithImage = ({ id, image, title, subtitle, description, childr
           </Typography>
         )}
       </Grid>
-      <Grid item xs={12} md={6} lg={5} display="flex" justifyContent="center" alignItems="center">
+      <Grid
+        item
+        xs={12}
+        sm={4}
+        md={5}
+        lg={5}
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+      >
         <img src={image} alt="panel-image" style={{ ...defaultImgStyles, ...imgStyles }} />
       </Grid>
       <Grid

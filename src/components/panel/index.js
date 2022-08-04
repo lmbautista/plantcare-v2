@@ -6,7 +6,7 @@ const defaultStyles = {
   mobile: {
     display: { xs: 'flex', lg: 'none' },
     textAlign: { xs: 'center', md: 'left' },
-    alignItems: { xs: 'center', md: 'flex-start' },
+    alignItems: { xs: 'center', md: 'center' },
     padding: '20px 10px 0 10px'
   },
   desktop: { display: { xs: 'none', lg: 'flex' } }
@@ -44,7 +44,8 @@ export const Panel = ({ id, title, subtitle, description, children, styles }) =>
       <Grid
         item
         xs={12}
-        md={5}
+        sm={10}
+        md={children ? 5 : 10}
         lg={5}
         direction="column"
         justifyContent="center"
@@ -74,6 +75,7 @@ export const Panel = ({ id, title, subtitle, description, children, styles }) =>
         <Grid
           item
           xs={12}
+          sm={10}
           md={5}
           lg={5}
           direction="column"

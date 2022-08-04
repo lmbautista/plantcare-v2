@@ -87,23 +87,17 @@ export const Plantcares = ({}) => {
       <Grid item direction="column" justifyContent="center" xs={12}>
         <PanelWithImage
           image={gardenImg}
-          styles={{ imgStyles: { maxHeight: '35vh' }, minHeight: '1vmin' }}
+          styles={{ imgStyles: { maxHeight: '25vh' }, minHeight: '1vmin' }}
           title={enLocale.theGarden.title}
           subtitle={enLocale.theGarden.subtitle}
           description={enLocale.theGarden.description}
           children={gardenButtons}
         />
       </Grid>
-      <Grid item direction="column" justifyContent="center" xs={12} sm={6} md={6} lg={3} xl={3}>
+      <Grid container direction="row" justifyContent="center" xs={12}>
         <Card />
-      </Grid>
-      <Grid item direction="column" justifyContent="center" xs={12} sm={6} md={6} lg={3} xl={3}>
         <Card />
-      </Grid>
-      <Grid item direction="column" justifyContent="center" xs={12} sm={6} md={6} lg={3} xl={3}>
         <Card />
-      </Grid>
-      <Grid item direction="column" justifyContent="center" xs={12} sm={6} md={6} lg={3} xl={3}>
         <Card />
       </Grid>
     </Grid>
