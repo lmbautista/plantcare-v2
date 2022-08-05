@@ -26,16 +26,16 @@ export const Panel = ({ id, title, subtitle, description, children, styles }) =>
         xl={8}
         sx={{ ...defaultStyles.desktop, ...styles }}
       >
-        <Typography fontFamily={'Pacifico'} color="secondary" variant="h1" mb="18px">
+        <Typography fontFamily={'Pacifico'} color="secondary" variant="h2" mb="18px">
           {title}
         </Typography>
         {subtitle && (
-          <Typography variant="h2" sx={{ fontWeight: 'bold' }}>
+          <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
             {subtitle}
           </Typography>
         )}
         {description && (
-          <Typography variant="h5" pt="20px" sx={{ fontWeight: 'light' }}>
+          <Typography variant="h6" pt="20px" sx={{ fontWeight: 'light' }}>
             {description}
           </Typography>
         )}
