@@ -27,9 +27,9 @@ import { mockPlantcare } from '../../utils';
 const gardenStyles = { background: '#F6F3F3' };
 const howToStyles = { background: '#DADFDF' };
 const connectivityStyles = { background: '#F6F3F3' };
+const HEADER_HEIGHT = 64;
 
 export const Plantcares = ({}) => {
-  const headerHeight = '64';
   const styles = useMemo(
     () => ({
       default: {
@@ -76,7 +76,7 @@ export const Plantcares = ({}) => {
       <Button component={Link} to="#" variant="outlined" color="primary" size="large">
         {enLocale.theGarden.new}
       </Button>
-      <AnchorLink style={{ textDecoration: 'none' }} offset={headerHeight} href="#howto">
+      <AnchorLink style={{ textDecoration: 'none' }} offset={HEADER_HEIGHT} href="#howto">
         <Button variant="outlined" color="primary" size="large" underline="none">
           {enLocale.theGarden.howTo}
         </Button>
@@ -264,7 +264,7 @@ export const Plantcares = ({}) => {
             {enLocale.theInstructions.howSetup.stepTwo.descriptionOne}
             <AnchorLink
               style={{ textDecoration: 'none', color: `${Main.palette.primary.main}` }}
-              offset={headerHeight}
+              offset={HEADER_HEIGHT}
               href="#garden"
             >
               <b>{enLocale.theInstructions.howSetup.stepTwo.descriptionTwo}</b>
