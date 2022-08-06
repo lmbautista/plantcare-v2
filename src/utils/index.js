@@ -50,3 +50,22 @@ export const removeSessionCookies = () => {
   Cookies.remove(USER);
   Cookies.remove(TOKEN);
 };
+
+export const mockPlantcare = () => {
+  const wetStatuses = [
+    Math.min(Math.floor(Math.random() * 100) + 60, 100),
+    Math.floor(Math.random() * 60) + 35,
+    Math.floor(Math.random() * 35)
+  ];
+  const names = ['Ficus retusa', 'Lemon cypress', 'Olive tree', 'Elm zelkova'];
+  const mockIdx = Math.floor(Math.random() * 3);
+
+  return {
+    name: names[mockIdx],
+    wet: wetStatuses[mockIdx],
+    plantedAt: '03/03/2022',
+    wateredAt: '03/03/2022 15:35',
+    scheduledAt: '03/03/2022 21:22',
+    wetSyncedAt: '03/03/2022 16:45'
+  };
+};

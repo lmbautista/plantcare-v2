@@ -59,3 +59,14 @@ test('setSessionCookies', () => {
   expect(Cookies.set).toHaveBeenCalledWith('user', 'encryptedValue', { expires: 1 / 48 });
   expect(Cookies.set).toHaveBeenCalledWith('token', 'encryptedValue', { expires: 1 / 48 });
 });
+
+test('mockPlantcare', () => {
+  const plantcare = Utils.mockPlantcare();
+
+  expect(plantcare.name).not.toBeNull();
+  expect(plantcare.wet).not.toBeNull();
+  expect(plantcare.plantedAt).not.toBeNull();
+  expect(plantcare.wateredAt).not.toBeNull();
+  expect(plantcare.scheduledAt).not.toBeNull();
+  expect(plantcare.wetSyncedAt).not.toBeNull();
+});
