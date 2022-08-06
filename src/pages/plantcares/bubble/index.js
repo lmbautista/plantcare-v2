@@ -10,8 +10,8 @@ import Typography from '@mui/material/Typography';
 // Others
 import Main from '../../../themes/main';
 
-const BUBBLE_HEIGHT = 300;
-const BUBBLE_IMG_HEIGHT = 100;
+const BUBBLE_HEIGHT = 280;
+const BUBBLE_IMG_HEIGHT = 90;
 
 export const BubbleCard = ({ id, title, subtitle, icon, background, actions }) => {
   const styles = useMemo(
@@ -84,10 +84,10 @@ export const BubbleCard = ({ id, title, subtitle, icon, background, actions }) =
               </Box>
             </Box>
             <Box sx={styles.cardDetails}>
-              <Typography variant="h4" color="light" sx={{ fontWeight: '400' }}>
+              <Typography variant="h5" color="light" sx={{ fontWeight: '400' }}>
                 {title}
               </Typography>
-              <Typography variant="h6" color="light" sx={{ fontWeight: '300' }}>
+              <Typography variant="subtitle1" color="light" sx={{ fontWeight: '300' }}>
                 {subtitle}
               </Typography>
             </Box>
