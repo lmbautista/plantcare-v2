@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import gardenImg from './images/garden.png';
+import theGardenImg from './images/the-garden.png';
 // UI components
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
@@ -89,8 +89,8 @@ export const Plantcares = ({}) => {
     >
       <Grid item direction="column" justifyContent="center" xs={12}>
         <PanelWithImage
-          image={gardenImg}
-          styles={{ imgStyles: { maxHeight: '35vh' }, minHeight: '1vmin' }}
+          image={theGardenImg}
+          styles={{ imgStyles: { maxHeight: '28vh' }, minHeight: '1vmin' }}
           title={enLocale.theGarden.title}
           subtitle={enLocale.theGarden.subtitle}
           description={enLocale.theGarden.description}
