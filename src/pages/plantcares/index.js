@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import theGardenImg from './images/the-garden.png';
 import theWateringImg from './images/the-watering.png';
+import theConnectivityImg from './images/the-connectivity.png';
 // UI components
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
@@ -24,6 +25,7 @@ import CardExplained from './images/plantcare-explained.png';
 // Bubble
 import defaultImg from './images/plantcare-default.png';
 import wateringImg from './images/watering-icon.png';
+import connectivityImg from './images/connectivity-icon.png';
 import { ReactComponent as EditImg } from './images/edit-icon.svg';
 import { ReactComponent as RemoveImg } from './images/remove-icon.svg';
 // Others
@@ -34,6 +36,7 @@ import { mockPlantcare } from '../../utils';
 const gardenStyles = { background: '#F6F3F3' };
 const howToStyles = { background: '#DADFDF' };
 const wateringStyles = { background: '#F3F5F6' };
+const connectivityStyles = { background: '#F6F5F3' };
 const HEADER_HEIGHT = 64;
 
 export const Plantcares = ({}) => {
@@ -573,6 +576,57 @@ export const Plantcares = ({}) => {
     </Grid>
   );
 
+  const connectivityBubbleProp = () => {
+    const idx = Math.floor(Math.random() * 3) + 1;
+
+    return {
+      title: `Board ${idx}`,
+      subtitle: (
+        <>
+          Last connection at <br />
+          {plantcares[idx].lastConnectionAt}
+        </>
+      ),
+      actions: (
+        <>
+          <Button {...props.actionButton}>
+            <EditImg width="45px" height="45px" />
+          </Button>
+          <Button {...props.actionButton}>
+            <RemoveImg width="45px" height="45px" />
+          </Button>
+        </>
+      ),
+      icon: connectivityImg,
+      background: defaultImg
+    };
+  };
+
+  const connectivity = (
+    <Grid
+      container
+      sx={{ margin: 'auto' }}
+      direction="row"
+      alignItems="center"
+      justifyContent="space-between"
+      maxWidth="xl"
+    >
+      <Grid item direction="column" justifyContent="center" xs={12}>
+        <PanelWithImage
+          image={theConnectivityImg}
+          styles={{ imgStyles: { maxHeight: '28vh' }, minHeight: '1vmin' }}
+          title={enLocale.theConnectivity.title}
+          subtitle={enLocale.theConnectivity.subtitle}
+          description={enLocale.theConnectivity.description}
+        />
+      </Grid>
+      <Grid container direction="row" justifyContent="center" xs={12} mt={4}>
+        <Bubble {...connectivityBubbleProp()} />
+        <Bubble {...connectivityBubbleProp()} />
+      </Grid>
+    </Grid>
+  );
+
   return (
     <span data-testid="plantcares">
       <div id="garden" style={{ ...styles.default, ...gardenStyles }}>
@@ -583,6 +637,9 @@ export const Plantcares = ({}) => {
       </div>
       <div id="watering" style={wateringStyles}>
         <Box sx={{ padding: '30px 0', width: '100%' }}>{watering}</Box>
+      </div>
+      <div id="connectivity" style={connectivityStyles}>
+        <Box sx={{ padding: '30px 0', width: '100%' }}>{connectivity}</Box>
       </div>
     </span>
   );

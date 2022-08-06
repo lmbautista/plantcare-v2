@@ -83,5 +83,11 @@ export default {
     description:
       'Here you could check and manage the current list of pending watering for your plantcares',
     new: 'New watering'
+  },
+  theConnectivity: {
+    title: 'The connectivity',
+    subtitle: 'Physical prototypes activity',
+    description:
+      'Here you could check the latest connections of the prototypes. In that way, we ensure they will work as expected'
   }
 };
