@@ -516,7 +516,7 @@ export const Plantcares = ({}) => {
     </Stack>
   );
 
-  const bubbleProps = () => {
+  const wateringBubbleProp = () => {
     const idx = Math.floor(Math.random() * 3);
 
     return {
@@ -562,13 +562,13 @@ export const Plantcares = ({}) => {
         />
       </Grid>
       <Grid container direction="row" justifyContent="center" xs={12} mt={4}>
-        <Bubble {...bubbleProps()} />
-        <Bubble {...bubbleProps()} />
-        <Bubble {...bubbleProps()} />
-        <Bubble {...bubbleProps()} />
-        <Bubble {...bubbleProps()} />
-        <Bubble {...bubbleProps()} />
-        <Bubble {...bubbleProps()} />
+        <Bubble {...wateringBubbleProp()} />
+        <Bubble {...wateringBubbleProp()} />
+        <Bubble {...wateringBubbleProp()} />
+        <Bubble {...wateringBubbleProp()} />
+        <Bubble {...wateringBubbleProp()} />
+        <Bubble {...wateringBubbleProp()} />
+        <Bubble {...wateringBubbleProp()} />
       </Grid>
     </Grid>
   );
