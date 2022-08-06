@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import PropTypes from 'prop-types';
 // UI components
 import { ThemeProvider } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -22,7 +23,7 @@ import { ReactComponent as WifiImg } from './images/wifi-icon.svg';
 import enLocale from './locales/en.js';
 import Main from '../../../themes/main';
 
-export default function PlantcareCard() {
+export const PlantcareCard = ({ plantcare }) => {
   const styles = useMemo(
     () => ({
       wetStatusColor: (wet) => {
@@ -110,27 +111,13 @@ export default function PlantcareCard() {
     []
   );
 
-  // Mocks BEGIN
-  const wetStatuses = useMemo(
-    () => [
-      Math.min(Math.floor(Math.random() * 100) + 60, 100),
-      Math.floor(Math.random() * 60) + 35,
-      Math.floor(Math.random() * 35)
-    ],
-    []
-  );
-  const names = useMemo(() => ['Ficus retusa', 'Lemon cypress', 'Olive tree', 'Elm zelkova'], []);
-  const mockIdx = Math.floor(Math.random() * 3);
-  const plantcare = {
-    name: names[mockIdx],
-    wet: wetStatuses[mockIdx],
-    plantedAt: '03/03/2022',
-    wateredAt: '03/03/2022 15:35',
-    scheduledAt: '03/03/2022 21:22'
-  };
-  // Mocks END
-  const wetStatusColor = styles.wetStatusColor(wetStatuses[mockIdx]);
+  const wetStatusColor = styles.wetStatusColor(plantcare.wet);
   const typographies = {
+    name: (
+      <Typography variant="h4" color="secondary" sx={{ fontWeight: '400' }}>
+        {plantcare.name}
+      </Typography>
+    ),
     wateredAt: (
       <Typography variant="subtitle1" color="secondary" sx={{ fontWeight: '300' }}>
         {`${enLocale.wateredAt} ${plantcare.wateredAt}`}
@@ -148,7 +135,7 @@ export default function PlantcareCard() {
     ),
     syncedAt: (
       <Typography variant="subtitle1" sx={{ fontWeight: '300' }}>
-        {`${enLocale.syncedAt} 03/03/2022 15:35`}
+        {`${enLocale.syncedAt} ${plantcare.wetSyncedAt}`}
       </Typography>
     ),
     wetStatus: (
@@ -169,11 +156,11 @@ export default function PlantcareCard() {
 
   return (
     <ThemeProvider theme={Main}>
-      <Card sx={{ maxWidth: 325, mt: { xs: 8, sm: 8 }, ml: 'auto', mr: 'auto' }}>
+      <Card sx={{ maxWidth: 325, mt: { xs: 8, sm: 8 }, margin: '20px' }}>
         <Box sx={{ position: 'relative' }}>
           <CardMedia component="img" height="250" image={defaultImg} alt="Plant" />
           <Box sx={styles.cardImageOverlay}>
-            <Box sx={styles.cardImage}>
+            <Box sx={styles.cardImage} data-testid="actions">
               <Button {...props.actionButton}>
                 <EditImg width="45px" height="45px" />
               </Button>
@@ -186,7 +173,7 @@ export default function PlantcareCard() {
             </Box>
           </Box>
           <CardContent sx={{ pt: 5, pb: 5, pr: 3, pl: 3 }}>
-            <List sx={styles.cardDetails}>
+            <List sx={styles.cardDetails} data-testid="details">
               <ListItem sx={{ padding: '0 13px 4px' }}>
                 <ListItemAvatar sx={{ minWidth: 'auto' }}>
                   <WifiImg stroke="#1A2A48" fill="#1A2A48" width="30px" height="30px" />
@@ -194,11 +181,9 @@ export default function PlantcareCard() {
                 <ListItemText primary={typographies.syncedAt} />
               </ListItem>
               <ListItem sx={{ paddingTop: '4px', paddingBottom: '0' }}>
-                <Typography variant="h4" color="secondary" sx={{ fontWeight: '400' }}>
-                  {plantcare.name}
-                </Typography>
+                {typographies.name}
               </ListItem>
-              <ListItem sx={{ paddingTop: '0', paddingBottom: '15px' }}>
+              <ListItem sx={{ paddingTop: '0', paddingBottom: '15px' }} data-testid="wetstatus">
                 <ListItemAvatar sx={{ minWidth: 'auto' }}>
                   <HeartImg
                     stroke={`${wetStatusColor}`}
@@ -234,4 +219,10 @@ export default function PlantcareCard() {
       </Card>
     </ThemeProvider>
   );
-}
+};
+
+export default PlantcareCard;
+
+PlantcareCard.propTypes = {
+  plantcare: PropTypes.object.isRequired
+};
