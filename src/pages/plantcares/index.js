@@ -209,6 +209,96 @@ export const Plantcares = ({}) => {
           </Typography>
         </>
       )
+    },
+    howSetup: {
+      stepOne: {
+        title: (
+          <Typography variant="h4" sx={{ fontWeight: 'medium' }}>
+            {enLocale.theInstructions.howSetup.stepOne.title}
+          </Typography>
+        ),
+        explanaition: (
+          <Typography variant="h6" sx={{ fontWeight: 'light' }}>
+            {enLocale.theInstructions.howSetup.stepOne.descriptionOne}(
+            <a
+              href="https://github.com/lmbautista"
+              style={{
+                color: `${Main.palette.primary.main}`,
+                textDecoration: 'none',
+                fontWeight: 'bold'
+              }}
+              target="_blank"
+            >
+              {enLocale.theInstructions.howSetup.stepOne.githubUser}
+            </a>
+            ).
+            <br />
+            {enLocale.theInstructions.howSetup.stepOne.descriptionTwo}
+          </Typography>
+        )
+      },
+      stepTwo: {
+        title: (
+          <Typography variant="h4" sx={{ fontWeight: 'medium' }}>
+            {enLocale.theInstructions.howSetup.stepTwo.title}
+          </Typography>
+        ),
+        explanaition: (
+          <Typography variant="h6" sx={{ fontWeight: 'light' }}>
+            {enLocale.theInstructions.howSetup.stepTwo.descriptionOne}
+            <AnchorLink
+              style={{ textDecoration: 'none', color: `${Main.palette.primary.main}` }}
+              offset={HEADER_HEIGHT}
+              href="#garden"
+            >
+              <b>{enLocale.theInstructions.howSetup.stepTwo.descriptionTwo}</b>
+            </AnchorLink>
+          </Typography>
+        )
+      },
+      stepThree: {
+        title: (
+          <Typography variant="h4" sx={{ fontWeight: 'medium' }}>
+            {enLocale.theInstructions.howSetup.stepThree.title}
+          </Typography>
+        ),
+        explanaition: (
+          <>
+            <Typography variant="h6" sx={{ fontWeight: 'light' }}>
+              {enLocale.theInstructions.howSetup.stepThree.descriptionOne}
+            </Typography>
+            <ul style={{ margin: '0', padding: '0 0 0 15px' }}>
+              <li>
+                <Typography variant="h6" sx={{ fontWeight: 'light' }}>
+                  {enLocale.theInstructions.howSetup.stepThree.descriptionTwo}
+                </Typography>
+              </li>
+              <li>
+                <Typography variant="h6" sx={{ fontWeight: 'light' }}>
+                  {enLocale.theInstructions.howSetup.stepThree.descriptionThree}
+                </Typography>
+              </li>
+              <li>
+                <Typography variant="h6" sx={{ fontWeight: 'light' }}>
+                  {enLocale.theInstructions.howSetup.stepThree.descriptionFour}
+                </Typography>
+              </li>
+            </ul>
+          </>
+        )
+      },
+      stepFour: {
+        title: (
+          <Typography variant="h4" sx={{ fontWeight: 'medium' }}>
+            {enLocale.theInstructions.howSetup.stepFour.title}
+          </Typography>
+        ),
+        explanaition: (
+          <Typography variant="h6" sx={{ fontWeight: 'light' }}>
+            {enLocale.theInstructions.howSetup.stepFour.description}
+          </Typography>
+        )
+      }
     }
   };
 
@@ -235,26 +325,8 @@ export const Plantcares = ({}) => {
           md={6}
           sx={{ padding: '0 10px' }}
         >
-          <Typography variant="h4" sx={{ fontWeight: 'medium' }}>
-            {enLocale.theInstructions.howSetup.stepOne.title}
-          </Typography>
-          <Typography variant="h6" sx={{ fontWeight: 'light' }}>
-            {enLocale.theInstructions.howSetup.stepOne.descriptionOne}(
-            <a
-              href="https://github.com/lmbautista"
-              style={{
-                color: `${Main.palette.primary.main}`,
-                textDecoration: 'none',
-                fontWeight: 'bold'
-              }}
-              target="_blank"
-            >
-              {enLocale.theInstructions.howSetup.stepOne.githubUser}
-            </a>
-            ).
-            <br />
-            {enLocale.theInstructions.howSetup.stepOne.descriptionTwo}
-          </Typography>
+          {typographies.howSetup.stepOne.title}
+          {typographies.howSetup.stepOne.explanaition}
         </Grid>
       </Grid>
       <Grid
@@ -278,19 +350,8 @@ export const Plantcares = ({}) => {
           md={6}
           sx={{ padding: '0 10px' }}
         >
-          <Typography variant="h4" sx={{ fontWeight: 'medium' }}>
-            {enLocale.theInstructions.howSetup.stepTwo.title}
-          </Typography>
-          <Typography variant="h6" sx={{ fontWeight: 'light' }}>
-            {enLocale.theInstructions.howSetup.stepTwo.descriptionOne}
-            <AnchorLink
-              style={{ textDecoration: 'none', color: `${Main.palette.primary.main}` }}
-              offset={HEADER_HEIGHT}
-              href="#garden"
-            >
-              <b>{enLocale.theInstructions.howSetup.stepTwo.descriptionTwo}</b>
-            </AnchorLink>
-          </Typography>
+          {typographies.howSetup.stepTwo.title}
+          {typographies.howSetup.stepTwo.explanaition}
         </Grid>
       </Grid>
       <Grid
@@ -314,29 +375,8 @@ export const Plantcares = ({}) => {
           md={6}
           sx={{ padding: '0 10px' }}
         >
-          <Typography variant="h4" sx={{ fontWeight: 'medium' }}>
-            {enLocale.theInstructions.howSetup.stepThree.title}
-          </Typography>
-          <Typography variant="h6" sx={{ fontWeight: 'light' }}>
-            {enLocale.theInstructions.howSetup.stepThree.descriptionOne}
-          </Typography>
-          <ul style={{ margin: '0', padding: '0 0 0 15px' }}>
-            <li>
-              <Typography variant="h6" sx={{ fontWeight: 'light' }}>
-                {enLocale.theInstructions.howSetup.stepThree.descriptionTwo}
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="h6" sx={{ fontWeight: 'light' }}>
-                {enLocale.theInstructions.howSetup.stepThree.descriptionThree}
-              </Typography>
-            </li>
-            <li>
-              <Typography variant="h6" sx={{ fontWeight: 'light' }}>
-                {enLocale.theInstructions.howSetup.stepThree.descriptionFour}
-              </Typography>
-            </li>
-          </ul>
+          {typographies.howSetup.stepThree.title}
+          {typographies.howSetup.stepThree.explanaition}
         </Grid>
       </Grid>
       <Grid
@@ -360,16 +400,13 @@ export const Plantcares = ({}) => {
           md={6}
           sx={{ padding: '0 10px' }}
         >
-          <Typography variant="h4" sx={{ fontWeight: 'medium' }}>
-            {enLocale.theInstructions.howSetup.stepFour.title}
-          </Typography>
-          <Typography variant="h6" sx={{ fontWeight: 'light' }}>
-            {enLocale.theInstructions.howSetup.stepFour.description}
-          </Typography>
+          {typographies.howSetup.stepFour.title}
+          {typographies.howSetup.stepFour.explanaition}
         </Grid>
       </Grid>
     </>
   );
+
   const howItWorks = (
     <>
       <Grid item xs={12} md={6} lg={5} display="flex" justifyContent="center" alignItems="center">
