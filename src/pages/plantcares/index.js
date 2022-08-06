@@ -22,6 +22,7 @@ import CardExplained from './images/plantcare-explained.png';
 // Others
 import enLocale from './locales/en.js';
 import Main from '../../themes/main';
+import { mockPlantcare } from '../../utils';
 
 const gardenStyles = { background: '#F6F3F3' };
 const howToStyles = { background: '#DADFDF' };
@@ -65,6 +66,11 @@ export const Plantcares = ({}) => {
     }),
     []
   );
+  const plantcares = useMemo(
+    () => [mockPlantcare(), mockPlantcare(), mockPlantcare(), mockPlantcare()],
+    []
+  );
+
   const gardenButtons = (
     <Stack direction="row" spacing={2} pt={6}>
       <Button component={Link} to="#" variant="outlined" color="primary" size="large">
@@ -102,6 +108,11 @@ export const Plantcares = ({}) => {
         <Card />
         <Card />
         <Card />
+      <Grid container direction="row" justifyContent="center" xs={12} mt={4}>
+        <Card plantcare={plantcares[0]} />
+        <Card plantcare={plantcares[1]} />
+        <Card plantcare={plantcares[2]} />
+        <Card plantcare={plantcares[3]} />
       </Grid>
     </Grid>
   );
