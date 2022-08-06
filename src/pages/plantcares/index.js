@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import theGardenImg from './images/the-garden.png';
+import theWateringImg from './images/the-watering.png';
 // UI components
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
@@ -10,6 +11,7 @@ import { List, ListItem, ListItemAvatar, ListItemText } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 // Components
+import Bubble from './bubble';
 import Card from './card';
 import AnchorLink from 'react-anchor-link-smooth-scroll';
 import PanelWithImage from '../../components/panel-with-image';
@@ -19,6 +21,11 @@ import InstructionsStepTwo from './images/instructions-step-two.png';
 import InstructionsStepThree from './images/instructions-step-three.png';
 import InstructionsStepFour from './images/instructions-step-four.png';
 import CardExplained from './images/plantcare-explained.png';
+// Bubble
+import defaultImg from './images/plantcare-default.png';
+import wateringImg from './images/watering-icon.png';
+import { ReactComponent as EditImg } from './images/edit-icon.svg';
+import { ReactComponent as RemoveImg } from './images/remove-icon.svg';
 // Others
 import enLocale from './locales/en.js';
 import Main from '../../themes/main';
@@ -26,7 +33,7 @@ import { mockPlantcare } from '../../utils';
 
 const gardenStyles = { background: '#F6F3F3' };
 const howToStyles = { background: '#DADFDF' };
-const connectivityStyles = { background: '#F6F3F3' };
+const wateringStyles = { background: '#F6F3F3' };
 const HEADER_HEIGHT = 64;
 
 export const Plantcares = ({}) => {
@@ -61,6 +68,24 @@ export const Plantcares = ({}) => {
             color: Main.palette.secondary.main,
             border: `1px solid ${Main.palette.secondary.main}`
           }
+        }
+      }
+    }),
+    []
+  );
+  const props = useMemo(
+    () => ({
+      actionButton: {
+        color: 'light',
+        variant: 'contained',
+        size: 'large',
+        sx: {
+          margin: '0 5px',
+          borderRadius: '50%',
+          width: '45px',
+          minWidth: '45px',
+          height: '45px',
+          padding: '5px'
         }
       }
     }),
@@ -103,11 +128,6 @@ export const Plantcares = ({}) => {
           children={gardenButtons}
         />
       </Grid>
-      <Grid container direction="row" justifyContent="center" xs={12}>
-        <Card />
-        <Card />
-        <Card />
-        <Card />
       <Grid container direction="row" justifyContent="center" xs={12} mt={4}>
         <Card plantcare={plantcares[0]} />
         <Card plantcare={plantcares[1]} />
@@ -191,6 +211,7 @@ export const Plantcares = ({}) => {
       )
     }
   };
+
   const howSetup = (
     <>
       <Grid
@@ -450,7 +471,70 @@ export const Plantcares = ({}) => {
     </Box>
   );
 
-  const connectivity = <h1>Connectivity</h1>;
+  const wateringButtons = (
+    <Stack direction="row" spacing={2} pt={6}>
+      <Button component={Link} to="#" variant="outlined" color="primary" size="large">
+        {enLocale.theWatering.new}
+      </Button>
+    </Stack>
+  );
+
+  const bubbleProps = () => {
+    const idx = Math.floor(Math.random() * 3);
+
+    return {
+      title: plantcares[idx].name,
+      subtitle: (
+        <>
+          Next watering at <br />
+          {plantcares[idx].scheduledAt}
+        </>
+      ),
+      actions: (
+        <>
+          <Button {...props.actionButton}>
+            <EditImg width="45px" height="45px" />
+          </Button>
+          <Button {...props.actionButton}>
+            <RemoveImg width="45px" height="45px" />
+          </Button>
+        </>
+      ),
+      icon: wateringImg,
+      background: defaultImg
+    };
+  };
+
+  const watering = (
+    <Grid
+      container
+      sx={{ margin: 'auto' }}
+      direction="row"
+      alignItems="center"
+      justifyContent="space-between"
+      maxWidth="xl"
+    >
+      <Grid item direction="column" justifyContent="center" xs={12}>
+        <PanelWithImage
+          image={theWateringImg}
+          styles={{ imgStyles: { maxHeight: '28vh' }, minHeight: '1vmin' }}
+          title={enLocale.theWatering.title}
+          subtitle={enLocale.theWatering.subtitle}
+          description={enLocale.theWatering.description}
+          children={wateringButtons}
+        />
+      </Grid>
+      <Grid container direction="row" justifyContent="center" xs={12} mt={4}>
+        <Bubble {...bubbleProps()} />
+        <Bubble {...bubbleProps()} />
+        <Bubble {...bubbleProps()} />
+        <Bubble {...bubbleProps()} />
+        <Bubble {...bubbleProps()} />
+        <Bubble {...bubbleProps()} />
+        <Bubble {...bubbleProps()} />
+      </Grid>
+    </Grid>
+  );
 
   return (
     <span data-testid="plantcares">
@@ -460,8 +544,8 @@ export const Plantcares = ({}) => {
       <div id="howto" style={howToStyles}>
         <Box sx={{ padding: '30px 0', width: '100%' }}>{howTo}</Box>
       </div>
-      <div id="connectivity" style={connectivityStyles}>
-        <Box sx={{ padding: '30px 0', width: '100%' }}>{connectivity}</Box>
+      <div id="watering" style={wateringStyles}>
+        <Box sx={{ padding: '30px 0', width: '100%' }}>{watering}</Box>
       </div>
     </span>
   );

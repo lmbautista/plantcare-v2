@@ -76,5 +76,12 @@ export default {
         }
       }
     }
+  },
+  theWatering: {
+    title: 'The watering',
+    subtitle: 'Pending watering scheduled',
+    description:
+      'Here you could check and manage the current list of pending watering for your plantcares',
+    new: 'New watering'
   }
 };
