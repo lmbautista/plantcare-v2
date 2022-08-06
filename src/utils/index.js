@@ -66,6 +66,7 @@ export const mockPlantcare = () => {
     plantedAt: '03/03/2022',
     wateredAt: '03/03/2022 15:35',
     scheduledAt: '03/03/2022 21:22',
-    wetSyncedAt: '03/03/2022 16:45'
+    wetSyncedAt: '03/03/2022 16:45',
+    lastConnectionAt: '03/03/2022 16:45'
   };
 };

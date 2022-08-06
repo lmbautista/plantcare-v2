@@ -69,4 +69,5 @@ test('mockPlantcare', () => {
   expect(plantcare.wateredAt).not.toBeNull();
   expect(plantcare.scheduledAt).not.toBeNull();
   expect(plantcare.wetSyncedAt).not.toBeNull();
+  expect(plantcare.lastConnectionAt).not.toBeNull();
 });
