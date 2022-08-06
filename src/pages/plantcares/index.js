@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import gardenImg from './images/garden.png';
 // UI components
@@ -22,46 +23,48 @@ import CardExplained from './images/plantcare-explained.png';
 import enLocale from './locales/en.js';
 import Main from '../../themes/main';
 
-const styles = {
-  default: {
-    minHeight: '95vmin',
-    display: 'flex',
-    alignItems: 'center'
-  },
-  theInstructions: {
-    howSetup: {
-      img: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: { xs: 'center', sm: 'end' },
-        maxHeight: { xs: '50vmin', sm: '22vmin' },
-        paddingRight: { xs: '0', sm: '30px' },
-        marginBottom: { xs: '30px' }
-      }
-    },
-    howItworks: {
-      img: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        maxHeight: '60vh',
-        margin: 'auto'
-      },
-      avatar: {
-        background: '#F4F4F4',
-        color: Main.palette.secondary.main,
-        border: `1px solid ${Main.palette.secondary.main}`
-      }
-    }
-  }
-};
-
 const gardenStyles = { background: '#F6F3F3' };
 const howToStyles = { background: '#DADFDF' };
 const connectivityStyles = { background: '#F6F3F3' };
 
 export const Plantcares = ({}) => {
   const headerHeight = '64';
+  const styles = useMemo(
+    () => ({
+      default: {
+        minHeight: '95vmin',
+        display: 'flex',
+        alignItems: 'center'
+      },
+      theInstructions: {
+        howSetup: {
+          img: {
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: { xs: 'center', sm: 'end' },
+            maxHeight: { xs: '50vmin', sm: '22vmin' },
+            paddingRight: { xs: '0', sm: '30px' },
+            marginBottom: { xs: '30px' }
+          }
+        },
+        howItworks: {
+          img: {
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            maxHeight: '60vh',
+            margin: 'auto'
+          },
+          avatar: {
+            background: '#F4F4F4',
+            color: Main.palette.secondary.main,
+            border: `1px solid ${Main.palette.secondary.main}`
+          }
+        }
+      }
+    }),
+    []
+  );
   const gardenButtons = (
     <Stack direction="row" spacing={2} pt={6}>
       <Button component={Link} to="#" variant="outlined" color="primary" size="large">
