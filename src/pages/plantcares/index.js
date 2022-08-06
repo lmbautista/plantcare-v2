@@ -33,7 +33,7 @@ import { mockPlantcare } from '../../utils';
 
 const gardenStyles = { background: '#F6F3F3' };
 const howToStyles = { background: '#DADFDF' };
-const wateringStyles = { background: '#F6F3F3' };
+const wateringStyles = { background: '#F3F5F6' };
 const HEADER_HEIGHT = 64;
 
 export const Plantcares = ({}) => {
