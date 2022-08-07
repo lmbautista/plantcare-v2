@@ -64,7 +64,7 @@ export const PlantcareCard = ({ plantcare }) => {
         left: 0,
         width: '100%',
         height: '250px',
-        color: 'white'
+        background: 'rgba(0, 0, 0, 0.5)'
       },
       cardImage: {
         height: '60px',
