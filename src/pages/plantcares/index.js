@@ -33,10 +33,6 @@ import enLocale from './locales/en.js';
 import Main from '../../themes/main';
 import { mockPlantcare } from '../../utils';
 
-const gardenStyles = { background: '#F6F3F3' };
-const howToStyles = { background: '#DADFDF' };
-const wateringStyles = { background: '#F3F5F6' };
-const connectivityStyles = { background: '#F6F5F3' };
 const HEADER_HEIGHT = 64;
 
 export const Plantcares = ({}) => {
@@ -47,6 +43,10 @@ export const Plantcares = ({}) => {
         display: 'flex',
         alignItems: 'center'
       },
+      gardenStyles: { background: '#F6F3F3' },
+      wateringStyles: { background: '#F3F5F6' },
+      connectivityStyles: { background: '#F6F5F3' },
+      howToStyles: { background: '#DADFDF' },
       theInstructions: {
         howSetup: {
           img: {
@@ -94,52 +94,6 @@ export const Plantcares = ({}) => {
     }),
     []
   );
-  const plantcares = useMemo(
-    () => [mockPlantcare(), mockPlantcare(), mockPlantcare(), mockPlantcare()],
-    []
-  );
-
-  const gardenButtons = (
-    <Stack direction="row" spacing={2} pt={6}>
-      <Button component={Link} to="#" variant="outlined" color="primary" size="large">
-        {enLocale.theGarden.new}
-      </Button>
-      <AnchorLink style={{ textDecoration: 'none' }} offset={HEADER_HEIGHT} href="#howto">
-        <Button variant="outlined" color="primary" size="large" underline="none">
-          {enLocale.theGarden.howTo}
-        </Button>
-      </AnchorLink>
-    </Stack>
-  );
-
-  const garden = (
-    <Grid
-      container
-      sx={{ margin: 'auto' }}
-      direction="row"
-      alignItems="center"
-      justifyContent="space-between"
-      maxWidth="xl"
-    >
-      <Grid item direction="column" justifyContent="center" xs={12}>
-        <PanelWithImage
-          image={theGardenImg}
-          styles={{ imgStyles: { maxHeight: '28vh' }, minHeight: '1vmin' }}
-          title={enLocale.theGarden.title}
-          subtitle={enLocale.theGarden.subtitle}
-          description={enLocale.theGarden.description}
-          children={gardenButtons}
-        />
-      </Grid>
-      <Grid container direction="row" justifyContent="center" xs={12} mt={4}>
-        <Card plantcare={plantcares[0]} />
-        <Card plantcare={plantcares[1]} />
-        <Card plantcare={plantcares[2]} />
-        <Card plantcare={plantcares[3]} />
-      </Grid>
-    </Grid>
-  );
-
   const typographies = {
     howItWorks: {
       explanaitionOne: (
@@ -304,6 +258,52 @@ export const Plantcares = ({}) => {
       }
     }
   };
+
+  const plantcares = useMemo(
+    () => [mockPlantcare(), mockPlantcare(), mockPlantcare(), mockPlantcare()],
+    []
+  );
+
+  const gardenButtons = (
+    <Stack direction="row" spacing={2} pt={6}>
+      <Button component={Link} to="#" variant="outlined" color="primary" size="large">
+        {enLocale.theGarden.new}
+      </Button>
+      <AnchorLink style={{ textDecoration: 'none' }} offset={HEADER_HEIGHT} href="#howto">
+        <Button variant="outlined" color="primary" size="large" underline="none">
+          {enLocale.theGarden.howTo}
+        </Button>
+      </AnchorLink>
+    </Stack>
+  );
+
+  const garden = (
+    <Grid
+      container
+      sx={{ margin: 'auto' }}
+      direction="row"
+      alignItems="center"
+      justifyContent="space-between"
+      maxWidth="xl"
+    >
+      <Grid item direction="column" justifyContent="center" xs={12}>
+        <PanelWithImage
+          image={theGardenImg}
+          styles={{ imgStyles: { maxHeight: '28vh' }, minHeight: '1vmin' }}
+          title={enLocale.theGarden.title}
+          subtitle={enLocale.theGarden.subtitle}
+          description={enLocale.theGarden.description}
+          children={gardenButtons}
+        />
+      </Grid>
+      <Grid container direction="row" justifyContent="center" xs={12} mt={4}>
+        <Card plantcare={plantcares[0]} />
+        <Card plantcare={plantcares[1]} />
+        <Card plantcare={plantcares[2]} />
+        <Card plantcare={plantcares[3]} />
+      </Grid>
+    </Grid>
+  );
 
   const howSetup = (
     <>
@@ -629,17 +629,17 @@ export const Plantcares = ({}) => {
 
   return (
     <span data-testid="plantcares">
-      <div id="garden" style={{ ...styles.default, ...gardenStyles }}>
-        <Box sx={{ mt: { xs: 5, sm: 8 }, padding: '30px 0', width: '100%' }}>{garden}</Box>
+      <div id="garden" style={{ ...styles.default, ...styles.gardenStyles }} data-testid="garden">
+        <Box sx={{ mt: { xs: 5, sm: 8 }, padding: '50px 0', width: '100%' }}>{garden}</Box>
       </div>
-      <div id="howto" style={howToStyles}>
-        <Box sx={{ padding: '30px 0', width: '100%' }}>{howTo}</Box>
+      <div id="watering" style={styles.wateringStyles} data-testid="watering">
+        <Box sx={{ padding: '50px 0', width: '100%' }}>{watering}</Box>
       </div>
-      <div id="watering" style={wateringStyles}>
-        <Box sx={{ padding: '30px 0', width: '100%' }}>{watering}</Box>
+      <div id="connectivity" style={styles.connectivityStyles} data-testid="connectivity">
+        <Box sx={{ padding: '50px 0', width: '100%' }}>{connectivity}</Box>
       </div>
-      <div id="connectivity" style={connectivityStyles}>
-        <Box sx={{ padding: '30px 0', width: '100%' }}>{connectivity}</Box>
+      <div id="howto" style={styles.howToStyles} data-testid="howto">
+        <Box sx={{ padding: '50px 0', width: '100%' }}>{howTo}</Box>
       </div>
     </span>
   );
