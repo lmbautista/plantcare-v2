@@ -16,5 +16,5 @@ test('load and render component', () => {
   expect(screen.getAllByText(`Synced at ${plantcare.wet_synced_at}`)).toBeDefined();
   expect(screen.getAllByText(`Planted at ${plantcare.planted_at}`)).toBeDefined();
   expect(screen.getAllByText(`Watered at ${plantcare.watered_at}`)).toBeDefined();
-  expect(screen.getAllByText(`Watering at ${plantcare.scheduled_at}`)).toBeDefined();
+  expect(screen.getAllByText(`Watering at ${plantcare.waterings[0].programmed_at}`)).toBeDefined();
 });

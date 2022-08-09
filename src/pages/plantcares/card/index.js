@@ -125,7 +125,7 @@ export const PlantcareCard = ({ plantcare }) => {
     ),
     scheduled_at: (
       <Typography variant="subtitle1" sx={{ fontWeight: '300' }}>
-        {`${enLocale.scheduled_at} ${plantcare.scheduled_at}`}
+        {`${enLocale.scheduled_at} ${plantcare?.waterings[0]?.programmed_at}`}
       </Typography>
     ),
     planted_at: (
@@ -207,12 +207,14 @@ export const PlantcareCard = ({ plantcare }) => {
                 </ListItemAvatar>
                 <ListItemText primary={typographies.watered_at} />
               </ListItem>
-              <ListItem sx={{ padding: '0 13px' }}>
-                <ListItemAvatar sx={{ minWidth: 'auto' }}>
-                  <ScheduledAtImg {...props.listImage} />
-                </ListItemAvatar>
-                <ListItemText primary={typographies.scheduled_at} />
-              </ListItem>
+              {plantcare.waterings?.[0] && (
+                <ListItem sx={{ padding: '0 13px' }}>
+                  <ListItemAvatar sx={{ minWidth: 'auto' }}>
+                    <ScheduledAtImg {...props.listImage} />
+                  </ListItemAvatar>
+                  <ListItemText primary={typographies.scheduled_at} />
+                </ListItem>
+              )}
             </List>
           </CardContent>
         </Box>

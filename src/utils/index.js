@@ -65,7 +65,7 @@ export const mockPlantcare = () => {
     wet: wetStatuses[mockIdx],
     planted_at: '03/03/2022',
     watered_at: '03/03/2022 15:35',
-    scheduled_at: '03/03/2022 21:22',
+    waterings: [{ programmed_at: '03/03/2022 21:22' }],
     wet_synced_at: '03/03/2022 16:45',
     last_connection_at: '03/03/2022 16:45'
   };
