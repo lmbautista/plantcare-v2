@@ -63,10 +63,10 @@ export const mockPlantcare = () => {
   return {
     name: names[mockIdx],
     wet: wetStatuses[mockIdx],
-    plantedAt: '03/03/2022',
-    wateredAt: '03/03/2022 15:35',
-    scheduledAt: '03/03/2022 21:22',
-    wetSyncedAt: '03/03/2022 16:45',
-    lastConnectionAt: '03/03/2022 16:45'
+    planted_at: '03/03/2022',
+    watered_at: '03/03/2022 15:35',
+    scheduled_at: '03/03/2022 21:22',
+    wet_synced_at: '03/03/2022 16:45',
+    last_connection_at: '03/03/2022 16:45'
   };
 };

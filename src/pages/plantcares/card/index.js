@@ -118,24 +118,24 @@ export const PlantcareCard = ({ plantcare }) => {
         {plantcare.name}
       </Typography>
     ),
-    wateredAt: (
+    watered_at: (
       <Typography variant="subtitle1" color="secondary" sx={{ fontWeight: '300' }}>
-        {`${enLocale.wateredAt} ${plantcare.wateredAt}`}
+        {`${enLocale.watered_at} ${plantcare.watered_at}`}
       </Typography>
     ),
-    scheduledAt: (
+    scheduled_at: (
       <Typography variant="subtitle1" sx={{ fontWeight: '300' }}>
-        {`${enLocale.scheduledAt} ${plantcare.scheduledAt}`}
+        {`${enLocale.scheduled_at} ${plantcare.scheduled_at}`}
       </Typography>
     ),
-    plantedAt: (
+    planted_at: (
       <Typography variant="subtitle1" sx={{ fontWeight: '300' }}>
-        {`${enLocale.plantedAt} ${plantcare.plantedAt}`}
+        {`${enLocale.planted_at} ${plantcare.planted_at}`}
       </Typography>
     ),
     syncedAt: (
       <Typography variant="subtitle1" sx={{ fontWeight: '300' }}>
-        {`${enLocale.syncedAt} ${plantcare.wetSyncedAt}`}
+        {`${enLocale.syncedAt} ${plantcare.wet_synced_at}`}
       </Typography>
     ),
     wetStatus: (
@@ -199,19 +199,19 @@ export const PlantcareCard = ({ plantcare }) => {
                 <ListItemAvatar sx={{ minWidth: 'auto' }}>
                   <PlantedAtImg {...props.listImage} />
                 </ListItemAvatar>
-                <ListItemText primary={typographies.plantedAt} />
+                <ListItemText primary={typographies.planted_at} />
               </ListItem>
               <ListItem sx={{ padding: '0 13px' }}>
                 <ListItemAvatar sx={{ minWidth: 'auto' }}>
                   <WateredAtImg {...props.listImage} />
                 </ListItemAvatar>
-                <ListItemText primary={typographies.wateredAt} />
+                <ListItemText primary={typographies.watered_at} />
               </ListItem>
               <ListItem sx={{ padding: '0 13px' }}>
                 <ListItemAvatar sx={{ minWidth: 'auto' }}>
                   <ScheduledAtImg {...props.listImage} />
                 </ListItemAvatar>
-                <ListItemText primary={typographies.scheduledAt} />
+                <ListItemText primary={typographies.scheduled_at} />
               </ListItem>
             </List>
           </CardContent>

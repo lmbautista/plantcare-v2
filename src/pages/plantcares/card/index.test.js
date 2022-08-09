@@ -13,8 +13,8 @@ test('load and render component', () => {
   expect(screen.getByTestId('details')).toBeInTheDocument();
   expect(screen.getByTestId('wetstatus')).toBeInTheDocument();
 
-  expect(screen.getAllByText(`Synced at ${plantcare.wetSyncedAt}`)).toBeDefined();
-  expect(screen.getAllByText(`Planted at ${plantcare.plantedAt}`)).toBeDefined();
-  expect(screen.getAllByText(`Watered at ${plantcare.wateredAt}`)).toBeDefined();
-  expect(screen.getAllByText(`Watering at ${plantcare.scheduledAt}`)).toBeDefined();
+  expect(screen.getAllByText(`Synced at ${plantcare.wet_synced_at}`)).toBeDefined();
+  expect(screen.getAllByText(`Planted at ${plantcare.planted_at}`)).toBeDefined();
+  expect(screen.getAllByText(`Watered at ${plantcare.watered_at}`)).toBeDefined();
+  expect(screen.getAllByText(`Watering at ${plantcare.scheduled_at}`)).toBeDefined();
 });
