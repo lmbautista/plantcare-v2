@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/react';
-import { ContextProvider } from './Context';
+import { UserContextProvider } from './UserContext';
 import App from './App';
 
 test('renders home page', () => {
   render(
-    <ContextProvider>
+    <UserContextProvider>
       <App />
-    </ContextProvider>
+    </UserContextProvider>
   );
 
   expect(screen.getByTestId('header')).toBeInTheDocument();

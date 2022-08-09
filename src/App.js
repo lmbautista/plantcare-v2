@@ -1,7 +1,7 @@
 import { useContext, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Router, Navigate } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
-import { Context } from './Context';
+import { UserContext } from './UserContext';
 
 // UI components
 import { ThemeProvider } from '@mui/material/styles';
@@ -22,7 +22,7 @@ import './App.scss';
 
 export const App = () => {
   const history = createBrowserHistory();
-  const { setCurrentUser } = useContext(Context);
+  const { setCurrentUser } = useContext(UserContext);
   const user = User({ history });
   const userIsLogged = user.isLoggedIn();
 
