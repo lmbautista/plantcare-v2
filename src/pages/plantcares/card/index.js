@@ -140,7 +140,7 @@ export const PlantcareCard = ({ plantcare }) => {
     ),
     wetStatus: (
       <>
-        <Typography variant="h3" sx={{ fontWeight: '400', display: 'inline-block' }}>
+        <Typography variant="h4" sx={{ fontWeight: '400', display: 'inline-block' }}>
           <span style={{ color: wetStatusColor }}>{plantcare.wet}%</span>
         </Typography>
         <Typography
