@@ -195,18 +195,22 @@ export const PlantcareCard = ({ plantcare }) => {
                 </ListItemAvatar>
                 <ListItemText color="secondary" primary={typographies.wetStatus} />
               </ListItem>
-              <ListItem sx={{ padding: '0 13px' }}>
-                <ListItemAvatar sx={{ minWidth: 'auto' }}>
-                  <PlantedAtImg {...props.listImage} />
-                </ListItemAvatar>
-                <ListItemText primary={typographies.planted_at} />
-              </ListItem>
-              <ListItem sx={{ padding: '0 13px' }}>
-                <ListItemAvatar sx={{ minWidth: 'auto' }}>
-                  <WateredAtImg {...props.listImage} />
-                </ListItemAvatar>
-                <ListItemText primary={typographies.watered_at} />
-              </ListItem>
+              {plantcare.planted_at && (
+                <ListItem sx={{ padding: '0 13px' }}>
+                  <ListItemAvatar sx={{ minWidth: 'auto' }}>
+                    <PlantedAtImg {...props.listImage} />
+                  </ListItemAvatar>
+                  <ListItemText primary={typographies.planted_at} />
+                </ListItem>
+              )}
+              {plantcare.watered_at && (
+                <ListItem sx={{ padding: '0 13px' }}>
+                  <ListItemAvatar sx={{ minWidth: 'auto' }}>
+                    <WateredAtImg {...props.listImage} />
+                  </ListItemAvatar>
+                  <ListItemText primary={typographies.watered_at} />
+                </ListItem>
+              )}
               {plantcare.waterings?.[0] && (
                 <ListItem sx={{ padding: '0 13px' }}>
                   <ListItemAvatar sx={{ minWidth: 'auto' }}>
