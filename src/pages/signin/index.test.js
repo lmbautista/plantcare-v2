@@ -4,8 +4,6 @@ import { Route, Router, Routes } from 'react-router-dom';
 import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import axios from 'axios';
 
-import User from '../../components/user';
-
 import Signin from './index.js';
 
 const history = createMemoryHistory();
