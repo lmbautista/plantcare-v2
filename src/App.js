@@ -1,5 +1,8 @@
+import { useContext, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Router, Navigate } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
+import { Context } from './Context';
+
 // UI components
 import { ThemeProvider } from '@mui/material/styles';
 // Components
@@ -19,12 +22,13 @@ import './App.scss';
 
 export const App = () => {
   const history = createBrowserHistory();
-  const {
-    profile: userProfile,
-    isLoggedIn: userLogged,
-    signIn: signInUser,
-    signOut: signOutUser
-  } = User({ history });
+  const { setCurrentUser } = useContext(Context);
+  const user = User({ history });
+  const userIsLogged = user.isLoggedIn();
+
+  useEffect(() => {
+    setCurrentUser(user);
+  }, [JSON.stringify(user)]);
 
   return (
     <>
@@ -32,53 +36,53 @@ export const App = () => {
       <ThemeProvider theme={Main}>
         <BrowserRouter>
           <Header
-            userLogged={userLogged()}
-            userProfile={userProfile()}
-            signOutHandler={signOutUser}
+            userLogged={userIsLogged}
+            userProfile={user.profile()}
+            signOutHandler={user.signOut}
           />
           <Routes>
             <Route
               path={routes.root}
               exac
               element={
-                userLogged() ? <Navigate to={routes.plantcares} /> : <Navigate to={routes.home} />
+                userIsLogged ? <Navigate to={routes.plantcares} /> : <Navigate to={routes.home} />
               }
             />
             <Route
               path={routes.home}
               exact
-              element={userLogged() ? <Navigate to={routes.plantcares} /> : <Home />}
+              element={userIsLogged ? <Navigate to={routes.plantcares} /> : <Home />}
             />
             <Route
               path={routes.signin}
               exact
               element={
-                userLogged() ? (
+                userIsLogged ? (
                   <Navigate to={routes.plantcares} />
                 ) : (
-                  <Signin signInHandler={signInUser} />
+                  <Signin signInHandler={user.signIn} />
                 )
               }
             />
             <Route
               path={routes.signup}
               exact
-              element={userLogged() ? <Navigate to={routes.plantcares} /> : <Signup />}
+              element={userIsLogged ? <Navigate to={routes.plantcares} /> : <Signup />}
             />
             <Route
               path={routes.resetPassword}
               exact
-              element={userLogged() ? <Navigate to={routes.plantcares} /> : <ResetPassword />}
+              element={userIsLogged ? <Navigate to={routes.plantcares} /> : <ResetPassword />}
             />
             <Route
               path={routes.signupConfirmation}
               exact
-              element={userLogged() ? <Navigate to={routes.plantcares} /> : <SignupConfirmation />}
+              element={userIsLogged ? <Navigate to={routes.plantcares} /> : <SignupConfirmation />}
             />
             <Route
               path={routes.plantcares}
               exact
-              element={userLogged() ? <Plantcares /> : <Navigate to={routes.root} />}
+              element={userIsLogged ? <Plantcares /> : <Navigate to={routes.root} />}
             />
           </Routes>
         </BrowserRouter>
