@@ -5,7 +5,8 @@ export default {
     description:
       'Here you could manage each plantcare connected to the board: configure the soil moisture sensors, the waterpumps, check the watering status, schedule a seasonal watering and much more',
     new: 'New plantcare',
-    howTo: 'How to'
+    howTo: 'How to',
+    plantcaresNotFound: 'Plantcares not found'
   },
   theInstructions: {
     howSetup: {

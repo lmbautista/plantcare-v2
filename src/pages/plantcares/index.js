@@ -1,9 +1,13 @@
-import { useMemo } from 'react';
+import { useMemo, useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+
 import theGardenImg from './images/the-garden.png';
 import theWateringImg from './images/the-watering.png';
 import theConnectivityImg from './images/the-connectivity.png';
+import plantcaresNotFoundImg from './images/plantcares-not-found.png';
 // UI components
+import Alert from '@mui/material/Alert';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -30,15 +34,87 @@ import { ReactComponent as EditImg } from './images/edit-icon.svg';
 import { ReactComponent as RemoveImg } from './images/remove-icon.svg';
 // Others
 import enLocale from './locales/en.js';
-import { mockPlantcare } from '../../utils';
+import { UserContext } from '../../UserContext';
 import Statics from './statics';
+
+const httClient = axios.create({
+  baseURL: 'http://dev.api.yourplantcare.com/v1',
+  timeout: 5000
+});
 
 const HEADER_HEIGHT = 64;
 
 export const Plantcares = ({}) => {
-  const plantcares = useMemo(
-    () => [mockPlantcare(), mockPlantcare(), mockPlantcare(), mockPlantcare()],
-    []
+  const { currentUser } = useContext(UserContext);
+  // HTTP component
+  const [plantcares, setPlantcares] = useState([]);
+  const [errorMessage, setErrorMessage] = useState(undefined);
+
+  const getPlantcares = (responseHandler, errorHandler) => {
+    const userToken = currentUser?.profile().token;
+    if (userToken == undefined) {
+      return false;
+    }
+
+    httClient
+      .get('plantcares', {
+        locale: 'en',
+        headers: { Authorization: `Token ${userToken}` }
+      })
+      .then(function (response) {
+        responseHandler(response.data);
+      })
+      .catch(function (error) {
+        if (error.response && error.response.status === 422) {
+          const { message: responseMessage } = error.response.data;
+          errorHandler(responseMessage);
+        } else {
+          const responseMessage = (error.response && error.response.statusText) || error.message;
+          errorHandler(`HTTP error: ${responseMessage}`);
+        }
+      });
+  };
+
+  useEffect(() => {
+    getPlantcares(setPlantcares, setErrorMessage);
+  }, [currentUser && JSON.stringify(currentUser.isLoggedIn())]);
+
+  // HTLM component
+  const renderNotFoundSection = (image, text) => (
+    <Grid
+      container
+      direction="row"
+      justifyContent="center"
+      alignItems="stretch"
+      m="40px auto"
+      maxWidth="lg"
+    >
+      <Grid item>
+        <img src={image} style={{ maxHeight: '20vh', minHeight: '1vmin' }} />
+      </Grid>
+      <Grid item direction="column" sx={styles.notFound.text}>
+        <Typography
+          fontFamily={'Pacifico'}
+          color="secondary"
+          variant="h4"
+          mb="18px"
+          textAlign="center"
+          sx={{ display: { xs: 'flex', lg: 'none' } }}
+        >
+          {text}
+        </Typography>
+        <Typography
+          fontFamily={'Pacifico'}
+          color="secondary"
+          variant="h2"
+          mb="18px"
+          textAlign="center"
+          sx={{ display: { xs: 'none', lg: 'flex' } }}
+        >
+          {text}
+        </Typography>
+      </Grid>
+    </Grid>
   );
 
   const { styles, props, typographies } = useMemo(() => Statics(), []);
@@ -76,10 +152,10 @@ export const Plantcares = ({}) => {
         />
       </Grid>
       <Grid container direction="row" justifyContent="center" xs={12} mt={4}>
-        <Card plantcare={plantcares[0]} />
-        <Card plantcare={plantcares[1]} />
-        <Card plantcare={plantcares[2]} />
-        <Card plantcare={plantcares[3]} />
+        {plantcares.length > 0 &&
+          plantcares.map((plantcare) => <Card key={`${plantcare.name}`} plantcare={plantcare} />)}
+        {plantcares.length === 0 &&
+          renderNotFoundSection(plantcaresNotFoundImg, enLocale.theGarden.plantcaresNotFound)}
       </Grid>
     </Grid>
   );
@@ -302,11 +378,11 @@ export const Plantcares = ({}) => {
     const idx = Math.floor(Math.random() * 3);
 
     return {
-      title: plantcares[idx].name,
+      title: plantcares.length > 0 && plantcares[idx].name,
       subtitle: (
         <>
           Next watering at <br />
-          {plantcares[idx].scheduledAt}
+          {plantcares.length > 0 && plantcares[idx].scheduledAt}
         </>
       ),
       actions: (
@@ -408,6 +484,11 @@ export const Plantcares = ({}) => {
 
   return (
     <span data-testid="plantcares">
+      {errorMessage && (
+        <Alert severity="error" sx={{ mt: 1, mb: 1 }}>
+          {errorMessage}
+        </Alert>
+      )}
       <div id="garden" style={{ ...styles.default, ...styles.gardenStyles }} data-testid="garden">
         <Box sx={{ mt: { xs: 5, sm: 8 }, padding: '50px 0', width: '100%' }}>{garden}</Box>
       </div>
