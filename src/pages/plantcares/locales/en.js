@@ -90,6 +90,7 @@ export default {
     title: 'The connectivity',
     subtitle: 'Physical prototypes activity',
     description:
-      'Here you could check the latest connections of the prototypes. In that way, we ensure they will work as expected'
+      'Here you could check the latest connections of the prototypes. In that way, we ensure they will work as expected',
+    connectionsNotFound: 'Connections not found'
   }
 };

@@ -7,6 +7,7 @@ import theWateringImg from './images/the-watering.png';
 import theConnectivityImg from './images/the-connectivity.png';
 import plantcaresNotFoundImg from './images/plantcares-not-found.png';
 import wateringsNotFoundImg from './images/waterings-not-found.png';
+import connectionsNotFoundImg from './images/connections-not-found.png';
 // UI components
 import Alert from '@mui/material/Alert';
 import Avatar from '@mui/material/Avatar';
@@ -484,8 +485,11 @@ export const Plantcares = ({}) => {
         />
       </Grid>
       <Grid container direction="row" justifyContent="center" xs={12} mt={4}>
-        <Bubble {...connectivityBubbleProp()} />
-        <Bubble {...connectivityBubbleProp()} />
+        {/* <Bubble {...connectivityBubbleProp()} /> */}
+        {renderNotFoundSection(
+          connectionsNotFoundImg,
+          enLocale.theConnectivity.connectionsNotFound
+        )}
       </Grid>
     </Grid>
   );
