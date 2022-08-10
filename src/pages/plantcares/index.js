@@ -6,6 +6,7 @@ import theGardenImg from './images/the-garden.png';
 import theWateringImg from './images/the-watering.png';
 import theConnectivityImg from './images/the-connectivity.png';
 import plantcaresNotFoundImg from './images/plantcares-not-found.png';
+import wateringsNotFoundImg from './images/waterings-not-found.png';
 // UI components
 import Alert from '@mui/material/Alert';
 import Avatar from '@mui/material/Avatar';
@@ -48,6 +49,7 @@ export const Plantcares = ({}) => {
   const { currentUser } = useContext(UserContext);
   // HTTP component
   const [plantcares, setPlantcares] = useState([]);
+  const [waterings, setWaterings] = useState({});
   const [errorMessage, setErrorMessage] = useState(undefined);
 
   const getPlantcares = (responseHandler, errorHandler) => {
@@ -78,6 +80,15 @@ export const Plantcares = ({}) => {
   useEffect(() => {
     getPlantcares(setPlantcares, setErrorMessage);
   }, [currentUser && JSON.stringify(currentUser.isLoggedIn())]);
+
+  useEffect(() => {
+    setWaterings(
+      plantcares.reduce((result, plantcare) => {
+        result[plantcare.name] = plantcare.waterings;
+        return result;
+      }, {})
+    );
+  }, [plantcares]);
 
   // HTLM component
   const renderNotFoundSection = (image, text) => (
@@ -374,31 +385,28 @@ export const Plantcares = ({}) => {
     </Stack>
   );
 
-  const wateringBubbleProp = () => {
-    const idx = Math.floor(Math.random() * 3);
-
-    return {
-      title: plantcares.length > 0 && plantcares[idx].name,
-      subtitle: (
-        <>
-          Next watering at <br />
-          {plantcares.length > 0 && plantcares[idx].scheduledAt}
-        </>
-      ),
-      actions: (
-        <>
-          <Button {...props.actionButton}>
-            <EditImg width="45px" height="45px" />
-          </Button>
-          <Button {...props.actionButton}>
-            <RemoveImg width="45px" height="45px" />
-          </Button>
-        </>
-      ),
-      icon: wateringImg,
-      background: defaultImg
-    };
-  };
+  const wateringBubbleProps = (title, programmedAt) => ({
+    key: `${title}-${programmedAt}`,
+    title,
+    subtitle: (
+      <>
+        Next watering at <br />
+        {programmedAt}
+      </>
+    ),
+    actions: (
+      <>
+        <Button {...props.actionButton}>
+          <EditImg width="45px" height="45px" />
+        </Button>
+        <Button {...props.actionButton}>
+          <RemoveImg width="45px" height="45px" />
+        </Button>
+      </>
+    ),
+    icon: wateringImg,
+    background: defaultImg
+  });
 
   const watering = (
     <Grid
@@ -420,13 +428,13 @@ export const Plantcares = ({}) => {
         />
       </Grid>
       <Grid container direction="row" justifyContent="center" xs={12} mt={4}>
-        <Bubble {...wateringBubbleProp()} />
-        <Bubble {...wateringBubbleProp()} />
-        <Bubble {...wateringBubbleProp()} />
-        <Bubble {...wateringBubbleProp()} />
-        <Bubble {...wateringBubbleProp()} />
-        <Bubble {...wateringBubbleProp()} />
-        <Bubble {...wateringBubbleProp()} />
+        {Object.entries(waterings).map(([plantcareName, plantcareWaterings]) => {
+          return plantcareWaterings.map((watering) => (
+            <Bubble {...wateringBubbleProps(plantcareName, watering.programmed_at)} />
+          ));
+        })}
+        {Object.keys(waterings).length === 0 &&
+          renderNotFoundSection(wateringsNotFoundImg, enLocale.theWatering.wateringsNotFound)}
       </Grid>
     </Grid>
   );
@@ -439,7 +447,7 @@ export const Plantcares = ({}) => {
       subtitle: (
         <>
           Last connection at <br />
-          {plantcares[idx].last_connection_at}
+          {plantcares.length > 0 && plantcares[idx].lastConnectionAt}
         </>
       ),
       actions: (

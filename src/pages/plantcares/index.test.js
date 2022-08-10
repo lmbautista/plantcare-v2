@@ -27,6 +27,7 @@ test('load and render component', () => {
   expect(screen.getByTestId('connectivity')).toBeInTheDocument();
   expect(screen.getByTestId('howto')).toBeInTheDocument();
   expect(screen.getAllByText('Plantcares not found')).toHaveLength(2);
+  expect(screen.getAllByText('Waterings not found')).toHaveLength(2);
   expect(screen.queryByText(plantcares[0].name)).toBeNull();
 });
 
@@ -80,6 +81,8 @@ test('load plantcares successfully', async () => {
   await waitFor(() => {
     expect(axios.get).toHaveBeenCalledWith('plantcares', requestParams);
     expect(screen.queryAllByText('Plantcares not found')).toEqual([]);
-    expect(screen.queryByText(plantcares[0].name)).not.toBeNull();
+    expect(screen.queryAllByText('Waterings not found')).toEqual([]);
+    expect(screen.queryAllByText(plantcares[0].name)).not.toBeNull();
+    expect(screen.queryAllByText(plantcares[0].waterings[0].programmed_at)).not.toBeNull();
   });
 });

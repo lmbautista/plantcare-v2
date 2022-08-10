@@ -83,7 +83,8 @@ export default {
     subtitle: 'Pending watering scheduled',
     description:
       'Here you could check and manage the current list of pending watering for your plantcares',
-    new: 'New watering'
+    new: 'New watering',
+    wateringsNotFound: 'Waterings not found'
   },
   theConnectivity: {
     title: 'The connectivity',
