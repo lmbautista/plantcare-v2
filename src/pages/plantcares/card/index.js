@@ -172,7 +172,7 @@ export const PlantcareCard = ({ plantcare }) => {
               </Button>
             </Box>
           </Box>
-          <CardContent sx={{ pt: 5, pb: 5, pr: 3, pl: 3 }}>
+          <CardContent sx={{ padding: '20px 16px' }}>
             <List sx={styles.cardDetails} data-testid="details">
               <ListItem sx={{ padding: '0 13px 4px' }}>
                 <ListItemAvatar sx={{ minWidth: 'auto' }}>
