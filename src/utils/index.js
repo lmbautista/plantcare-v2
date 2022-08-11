@@ -1,13 +1,13 @@
 import Main from '../themes/main';
 
-export const fieldElementProps = (fieldName, errors, locales) => {
+export const fieldElementProps = (fieldName, errors, locales, options = null) => {
   const helperErrorText = errors && errors[fieldName];
   const fieldNameId = fieldName
     .split(/(?=[A-Z])/)
     .join('-')
     .toLowerCase();
 
-  return {
+  const defaultOptions = {
     name: fieldName,
     label: locales[fieldName],
     color: helperErrorText ? 'error' : 'secondary',
@@ -16,6 +16,9 @@ export const fieldElementProps = (fieldName, errors, locales) => {
     helperText: helperErrorText,
     focused: true
   };
+  const selectOptions = options ? { options } : {};
+
+  return { ...defaultOptions, ...selectOptions };
 };
 
 import Cookies from 'js-cookie';

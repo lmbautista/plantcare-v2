@@ -20,6 +20,28 @@ test('fieldElementProps with errors', () => {
   expect(JSON.stringify(props)).toEqual(JSON.stringify(expectedProps));
 });
 
+test('fieldElementProps with options', () => {
+  const expectedProps = {
+    name: 'fieldName',
+    label: 'Fieldname',
+    color: 'error',
+    inputProps: { 'data-testid': 'field-name-input' },
+    FormHelperTextProps: { style: { color: '#d32f2f', fontWeight: '400' } },
+    helperText: 'error',
+    focused: true,
+    options: [{ a: 1, b: 2 }]
+  };
+
+  const props = Utils.fieldElementProps(
+    'fieldName',
+    { fieldName: 'error' },
+    { fieldName: 'Fieldname' },
+    [{ a: 1, b: 2 }]
+  );
+
+  expect(JSON.stringify(props)).toEqual(JSON.stringify(expectedProps));
+});
+
 const history = jest.fn();
 const responseHTTP = { email: 'lmiguelbautista@gmail.com', api_token: 'abc123' };
 const expectedSession = { user: responseHTTP.email, token: responseHTTP.api_token };
