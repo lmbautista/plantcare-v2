@@ -1,4 +1,5 @@
 import * as Utils from './index';
+import { render, screen } from '@testing-library/react';
 
 test('fieldElementProps with errors', () => {
   const expectedProps = {
@@ -92,4 +93,10 @@ test('mockPlantcare', () => {
   expect(plantcare.waterings[0].programmed_at).not.toBeNull();
   expect(plantcare.wet_synced_at).not.toBeNull();
   expect(plantcare.last_connection_at).not.toBeNull();
+});
+
+test('renderLoading', () => {
+  render(Utils.renderLoading());
+
+  expect(screen.getByRole('img')).toBeInTheDocument();
 });

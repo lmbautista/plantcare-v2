@@ -1,4 +1,6 @@
 import Main from '../themes/main';
+import { Grid } from '@mui/material';
+import LoadingImg from '../images/loading.gif';
 
 export const fieldElementProps = (fieldName, errors, locales, options = null) => {
   const helperErrorText = errors && errors[fieldName];
@@ -73,3 +75,23 @@ export const mockPlantcare = () => {
     last_connection_at: '03/03/2022 16:45'
   };
 };
+
+export const renderLoading = () => (
+  <Grid
+    container
+    direction="row"
+    justifyContent="center"
+    alignItems="stretch"
+    m="40px auto"
+    maxWidth="lg"
+  >
+    <Grid item>
+      <img
+        src={LoadingImg}
+        width="75px"
+        height="75px"
+        style={{ borderRadius: '50%', background: 'white' }}
+      />
+    </Grid>
+  </Grid>
+);
