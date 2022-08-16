@@ -1,3 +1,7 @@
+// Context
+import { useContext } from 'react';
+import { UserContext } from '../UserContext';
+
 import Main from '../themes/main';
 import { Grid } from '@mui/material';
 import LoadingImg from '../images/loading.gif';
@@ -102,3 +106,14 @@ export const renderLoading = () => (
     </Grid>
   </Grid>
 );
+
+export const authHeader = () => {
+  const { currentUser } = useContext(UserContext);
+  const userToken = currentUser?.profile().token;
+
+  if (userToken == undefined) {
+    return {};
+  } else {
+    return { Authorization: `Token ${userToken}` };
+  }
+};

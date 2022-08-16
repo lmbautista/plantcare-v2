@@ -1,5 +1,7 @@
+import React from 'react';
 import * as Utils from './index';
 import { render, screen } from '@testing-library/react';
+import User from '../components/user';
 
 test('fieldElementProps with errors', () => {
   const expectedProps = {
@@ -121,4 +123,14 @@ test('renderLoading', () => {
   render(Utils.renderLoading());
 
   expect(screen.getByRole('img')).toBeInTheDocument();
+});
+
+test('authHeader', () => {
+  const cookieData = { user: 'luihbautista@gmail.com', token: 'abc123' };
+  Utils.getSessionCookies = jest.fn().mockImplementation(() => cookieData);
+
+  const user = User({ history });
+  jest.spyOn(React, 'useContext').mockImplementation(() => ({ currentUser: user }));
+
+  expect(Utils.authHeader()).toEqual({ Authorization: 'Token abc123' });
 });
