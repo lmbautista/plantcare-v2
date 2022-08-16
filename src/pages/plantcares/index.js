@@ -38,6 +38,7 @@ import { ReactComponent as RemoveImg } from './images/remove-icon.svg';
 import enLocale from './locales/en.js';
 import { UserContext } from '../../UserContext';
 import Statics from './statics';
+import { renderLoading } from '../../utils';
 
 const httClient = axios.create({
   baseURL: 'http://dev.api.yourplantcare.com/v1',
@@ -49,6 +50,7 @@ const HEADER_HEIGHT = 64;
 export const Plantcares = ({}) => {
   const { currentUser } = useContext(UserContext);
   // HTTP component
+  const [loading, setLoading] = useState(true);
   const [plantcares, setPlantcares] = useState([]);
   const [waterings, setWaterings] = useState({});
   const [errorMessage, setErrorMessage] = useState(undefined);
@@ -75,6 +77,9 @@ export const Plantcares = ({}) => {
           const responseMessage = (error.response && error.response.statusText) || error.message;
           errorHandler(`HTTP error: ${responseMessage}`);
         }
+      })
+      .finally(function () {
+        setLoading(false);
       });
   };
 
@@ -164,9 +169,12 @@ export const Plantcares = ({}) => {
         />
       </Grid>
       <Grid container direction="row" justifyContent="center" xs={12} mt={4}>
-        {plantcares.length > 0 &&
+        {loading && renderLoading()}
+        {!loading &&
+          plantcares.length > 0 &&
           plantcares.map((plantcare) => <Card key={`${plantcare.name}`} plantcare={plantcare} />)}
-        {plantcares.length === 0 &&
+        {!loading &&
+          plantcares.length === 0 &&
           renderNotFoundSection(plantcaresNotFoundImg, enLocale.theGarden.plantcaresNotFound)}
       </Grid>
     </Grid>
@@ -183,7 +191,7 @@ export const Plantcares = ({}) => {
         maxWidth="lg"
       >
         <Grid item xs={12} sm={4} sx={styles.theInstructions.howSetup.img}>
-          <img src={InstructionsStepOne} alt="instructions-step-one" height={'100%'} />
+          <img src={InstructionsStepOneImg} alt="instructions-step-one" height={'100%'} />
         </Grid>
         <Grid
           item
@@ -429,11 +437,13 @@ export const Plantcares = ({}) => {
         />
       </Grid>
       <Grid container direction="row" justifyContent="center" xs={12} mt={4}>
-        {Object.entries(waterings).map(([plantcareName, plantcareWaterings]) => {
-          return plantcareWaterings.map((watering) => (
-            <Bubble {...wateringBubbleProps(plantcareName, watering.programmed_at)} />
-          ));
-        })}
+        {loading && renderLoading()}
+        {!loading &&
+          Object.entries(waterings).map(([plantcareName, plantcareWaterings]) => {
+            return plantcareWaterings.map((watering) => (
+              <Bubble {...wateringBubbleProps(plantcareName, watering.programmed_at)} />
+            ));
+          })}
         {Object.keys(waterings).length === 0 &&
           renderNotFoundSection(wateringsNotFoundImg, enLocale.theWatering.wateringsNotFound)}
       </Grid>
@@ -486,10 +496,12 @@ export const Plantcares = ({}) => {
       </Grid>
       <Grid container direction="row" justifyContent="center" xs={12} mt={4}>
         {/* <Bubble {...connectivityBubbleProp()} /> */}
-        {renderNotFoundSection(
-          connectionsNotFoundImg,
-          enLocale.theConnectivity.connectionsNotFound
-        )}
+        {loading && renderLoading()}
+        {!loading &&
+          renderNotFoundSection(
+            connectionsNotFoundImg,
+            enLocale.theConnectivity.connectionsNotFound
+          )}
       </Grid>
     </Grid>
   );

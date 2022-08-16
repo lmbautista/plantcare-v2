@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, act, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 import { UserContextProvider } from '../../UserContext.js';
@@ -9,12 +9,18 @@ import User from '../../components/user';
 
 import Plantcares from './index.js';
 
-test('load and render component', () => {
+test('load and render empty component', async () => {
   const history = createMemoryHistory();
   history.push('/plantcares');
 
+  Utils.setSessionCookies({ email: 'lmiguelbautista@gmail.com', api_token: apiToken }, history);
+  const user = User({ history });
+
+  const response = { status: 200, data: [] };
+  axios.get.mockResolvedValueOnce(response);
+
   render(
-    <UserContextProvider>
+    <UserContextProvider user={user}>
       <Router location={history.location} navigator={history}>
         <Plantcares />
       </Router>
@@ -26,9 +32,13 @@ test('load and render component', () => {
   expect(screen.getByTestId('watering')).toBeInTheDocument();
   expect(screen.getByTestId('connectivity')).toBeInTheDocument();
   expect(screen.getByTestId('howto')).toBeInTheDocument();
-  expect(screen.getAllByText('Plantcares not found')).toHaveLength(2);
-  expect(screen.getAllByText('Waterings not found')).toHaveLength(2);
-  expect(screen.queryByText(plantcares[0].name)).toBeNull();
+
+  await waitFor(() => {
+    expect(axios.get).toHaveBeenCalledWith('plantcares', requestParams);
+    expect(screen.getAllByText('Plantcares not found')).toHaveLength(2);
+    expect(screen.getAllByText('Waterings not found')).toHaveLength(2);
+    expect(screen.queryByText(plantcares[0].name)).toBeNull();
+  });
 });
 
 test('initial render prevent loading plantcares', () => {
