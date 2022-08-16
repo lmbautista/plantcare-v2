@@ -2,7 +2,13 @@ import Main from '../themes/main';
 import { Grid } from '@mui/material';
 import LoadingImg from '../images/loading.gif';
 
-export const fieldElementProps = ({ name: fieldName, errors, locales, options = null }) => {
+export const fieldElementProps = ({
+  name: fieldName,
+  errors,
+  locales,
+  options = null,
+  type = null
+}) => {
   const helperErrorText = errors && errors[fieldName];
   const fieldNameId = fieldName
     .split(/(?=[A-Z])/)
@@ -18,9 +24,10 @@ export const fieldElementProps = ({ name: fieldName, errors, locales, options = 
     helperText: helperErrorText,
     focused: true
   };
+  const typeOption = type ? { type } : {};
   const selectOptions = options ? { options } : {};
 
-  return { ...defaultOptions, ...selectOptions };
+  return { ...defaultOptions, ...typeOption, ...selectOptions };
 };
 
 import Cookies from 'js-cookie';

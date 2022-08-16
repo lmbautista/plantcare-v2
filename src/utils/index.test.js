@@ -43,6 +43,28 @@ test('fieldElementProps with options', () => {
   expect(JSON.stringify(props)).toEqual(JSON.stringify(expectedProps));
 });
 
+test('fieldElementProps with type', () => {
+  const expectedProps = {
+    name: 'fieldName',
+    label: 'Fieldname',
+    color: 'error',
+    inputProps: { 'data-testid': 'field-name-input' },
+    FormHelperTextProps: { style: { color: '#d32f2f', fontWeight: '400' } },
+    helperText: 'error',
+    focused: true,
+    type: 'hidden'
+  };
+
+  const props = Utils.fieldElementProps({
+    name: 'fieldName',
+    errors: { fieldName: 'error' },
+    locales: { fieldName: 'Fieldname' },
+    type: 'hidden'
+  });
+
+  expect(JSON.stringify(props)).toEqual(JSON.stringify(expectedProps));
+});
+
 const history = jest.fn();
 const responseHTTP = { email: 'lmiguelbautista@gmail.com', api_token: 'abc123' };
 const expectedSession = { user: responseHTTP.email, token: responseHTTP.api_token };
