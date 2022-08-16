@@ -8,6 +8,11 @@ import theConnectivityImg from './images/the-connectivity.png';
 import plantcaresNotFoundImg from './images/plantcares-not-found.png';
 import wateringsNotFoundImg from './images/waterings-not-found.png';
 import connectionsNotFoundImg from './images/connections-not-found.png';
+import InstructionsStepOneImg from './images/instructions-step-one.png';
+import InstructionsStepTwoImg from './images/instructions-step-two.png';
+import InstructionsStepThreeImg from './images/instructions-step-three.png';
+import InstructionsStepFourImg from './images/instructions-step-four.png';
+import CardExplainedImg from './images/plantcare-explained.png';
 // UI components
 import Alert from '@mui/material/Alert';
 import Avatar from '@mui/material/Avatar';
@@ -23,11 +28,6 @@ import Card from './card';
 import AnchorLink from 'react-anchor-link-smooth-scroll';
 import PanelWithImage from '../../components/panel-with-image';
 import Panel from '../../components/panel';
-import InstructionsStepOne from './images/instructions-step-one.png';
-import InstructionsStepTwo from './images/instructions-step-two.png';
-import InstructionsStepThree from './images/instructions-step-three.png';
-import InstructionsStepFour from './images/instructions-step-four.png';
-import CardExplained from './images/plantcare-explained.png';
 // Bubble
 import defaultImg from './images/plantcare-default.png';
 import wateringImg from './images/watering-icon.png';
@@ -216,7 +216,7 @@ export const Plantcares = ({}) => {
         maxWidth="lg"
       >
         <Grid item xs={12} sm={4} sx={styles.theInstructions.howSetup.img}>
-          <img src={InstructionsStepTwo} alt="instructions-step-two" height={'100%'} />
+          <img src={InstructionsStepTwoImg} alt="instructions-step-two" height={'100%'} />
         </Grid>
         <Grid
           item
@@ -241,7 +241,7 @@ export const Plantcares = ({}) => {
         maxWidth="lg"
       >
         <Grid item xs={12} sm={4} sx={styles.theInstructions.howSetup.img}>
-          <img src={InstructionsStepThree} alt="instructions-step-three" height={'100%'} />
+          <img src={InstructionsStepThreeImg} alt="instructions-step-three" height={'100%'} />
         </Grid>
         <Grid
           item
@@ -266,7 +266,7 @@ export const Plantcares = ({}) => {
         maxWidth="lg"
       >
         <Grid item xs={12} sm={4} sx={styles.theInstructions.howSetup.img}>
-          <img src={InstructionsStepFour} alt="instructions-step-four" height={'100%'} />
+          <img src={InstructionsStepFourImg} alt="instructions-step-four" height={'100%'} />
         </Grid>
         <Grid
           item
@@ -289,7 +289,7 @@ export const Plantcares = ({}) => {
     <>
       <Grid item xs={12} md={6} lg={5} display="flex" justifyContent="center" alignItems="center">
         <img
-          src={CardExplained}
+          src={CardExplainedImg}
           alt="card-explained"
           style={styles.theInstructions.howItworks.img}
         />
