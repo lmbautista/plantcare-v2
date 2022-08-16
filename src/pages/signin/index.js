@@ -69,8 +69,14 @@ export const Signin = ({ signInHandler }) => {
               </Alert>
             )}
 
-            <TextFieldElement {...fieldElementProps('email', errors, formLocales)} required />
-            <PasswordElement {...fieldElementProps('password', errors, formLocales)} required />
+            <TextFieldElement
+              {...fieldElementProps({ name: 'email', errors, locales: formLocales })}
+              required
+            />
+            <PasswordElement
+              {...fieldElementProps({ name: 'password', errors, locales: formLocales })}
+              required
+            />
 
             <Button
               type="submit"

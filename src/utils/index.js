@@ -2,7 +2,7 @@ import Main from '../themes/main';
 import { Grid } from '@mui/material';
 import LoadingImg from '../images/loading.gif';
 
-export const fieldElementProps = (fieldName, errors, locales, options = null) => {
+export const fieldElementProps = ({ name: fieldName, errors, locales, options = null }) => {
   const helperErrorText = errors && errors[fieldName];
   const fieldNameId = fieldName
     .split(/(?=[A-Z])/)

@@ -12,11 +12,11 @@ test('fieldElementProps with errors', () => {
     focused: true
   };
 
-  const props = Utils.fieldElementProps(
-    'fieldName',
-    { fieldName: 'error' },
-    { fieldName: 'Fieldname' }
-  );
+  const props = Utils.fieldElementProps({
+    name: 'fieldName',
+    errors: { fieldName: 'error' },
+    locales: { fieldName: 'Fieldname' }
+  });
 
   expect(JSON.stringify(props)).toEqual(JSON.stringify(expectedProps));
 });
@@ -33,12 +33,12 @@ test('fieldElementProps with options', () => {
     options: [{ a: 1, b: 2 }]
   };
 
-  const props = Utils.fieldElementProps(
-    'fieldName',
-    { fieldName: 'error' },
-    { fieldName: 'Fieldname' },
-    [{ a: 1, b: 2 }]
-  );
+  const props = Utils.fieldElementProps({
+    name: 'fieldName',
+    errors: { fieldName: 'error' },
+    locales: { fieldName: 'Fieldname' },
+    options: [{ a: 1, b: 2 }]
+  });
 
   expect(JSON.stringify(props)).toEqual(JSON.stringify(expectedProps));
 });

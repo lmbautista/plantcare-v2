@@ -75,12 +75,24 @@ export const Signup = () => {
               </Alert>
             )}
 
-            <TextFieldElement {...fieldElementProps('firstName', errors, formLocales)} required />
-            <TextFieldElement {...fieldElementProps('lastName', errors, formLocales)} required />
-            <TextFieldElement {...fieldElementProps('email', errors, formLocales)} required />
-            <PasswordElement {...fieldElementProps('password', errors, formLocales)} required />
+            <TextFieldElement
+              {...fieldElementProps({ name: 'firstName', errors, locales: formLocales })}
+              required
+            />
+            <TextFieldElement
+              {...fieldElementProps({ name: 'lastName', errors, locales: formLocales })}
+              required
+            />
+            <TextFieldElement
+              {...fieldElementProps({ name: 'email', errors, locales: formLocales })}
+              required
+            />
             <PasswordElement
-              {...fieldElementProps('passwordConfirmation', errors, formLocales)}
+              {...fieldElementProps({ name: 'password', errors, locales: formLocales })}
+              required
+            />
+            <PasswordElement
+              {...fieldElementProps({ name: 'passwordConfirmation', errors, locales: formLocales })}
               required
             />
 
