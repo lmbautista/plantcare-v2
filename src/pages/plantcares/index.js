@@ -1,4 +1,4 @@
-import { useMemo, useEffect, useState, useContext } from 'react';
+import { useMemo, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -36,9 +36,8 @@ import { ReactComponent as EditImg } from './images/edit-icon.svg';
 import { ReactComponent as RemoveImg } from './images/remove-icon.svg';
 // Others
 import enLocale from './locales/en.js';
-import { UserContext } from '../../UserContext';
 import Statics from './statics';
-import { loadingFragment } from '../../utils';
+import { loadingFragment, authHeader } from '../../utils';
 
 const httClient = axios.create({
   baseURL: 'http://dev.api.yourplantcare.com/v1',
@@ -47,8 +46,8 @@ const httClient = axios.create({
 
 const HEADER_HEIGHT = 64;
 
-export const Plantcares = ({}) => {
-  const { currentUser } = useContext(UserContext);
+export const Plantcares = ({ }) => {
+  const currentAuthHeader = authHeader();
   // HTTP component
   const [loading, setLoading] = useState(true);
   const [plantcares, setPlantcares] = useState([]);
@@ -56,15 +55,14 @@ export const Plantcares = ({}) => {
   const [errorMessage, setErrorMessage] = useState(undefined);
 
   const getPlantcares = (responseHandler, errorHandler) => {
-    const userToken = currentUser?.profile().token;
-    if (userToken == undefined) {
+    if (currentAuthHeader === null) {
       return false;
     }
 
     httClient
       .get('plantcares', {
         locale: 'en',
-        headers: { Authorization: `Token ${userToken}` }
+        headers: { ...currentAuthHeader }
       })
       .then(function (response) {
         responseHandler(response.data);
@@ -85,7 +83,7 @@ export const Plantcares = ({}) => {
 
   useEffect(() => {
     getPlantcares(setPlantcares, setErrorMessage);
-  }, [currentUser && JSON.stringify(currentUser.isLoggedIn())]);
+  }, [JSON.stringify(currentAuthHeader)]);
 
   useEffect(() => {
     setWaterings(
