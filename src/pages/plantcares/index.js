@@ -38,7 +38,7 @@ import { ReactComponent as RemoveImg } from './images/remove-icon.svg';
 import enLocale from './locales/en.js';
 import { UserContext } from '../../UserContext';
 import Statics from './statics';
-import { renderLoading } from '../../utils';
+import { loadingFragment } from '../../utils';
 
 const httClient = axios.create({
   baseURL: 'http://dev.api.yourplantcare.com/v1',
@@ -169,7 +169,7 @@ export const Plantcares = ({}) => {
         />
       </Grid>
       <Grid container direction="row" justifyContent="center" xs={12} mt={4}>
-        {loading && renderLoading()}
+        {loading && loadingFragment()}
         {!loading &&
           plantcares.length > 0 &&
           plantcares.map((plantcare) => <Card key={`${plantcare.name}`} plantcare={plantcare} />)}
@@ -437,7 +437,7 @@ export const Plantcares = ({}) => {
         />
       </Grid>
       <Grid container direction="row" justifyContent="center" xs={12} mt={4}>
-        {loading && renderLoading()}
+        {loading && loadingFragment()}
         {!loading &&
           Object.entries(waterings).map(([plantcareName, plantcareWaterings]) => {
             return plantcareWaterings.map((watering) => (
@@ -496,7 +496,7 @@ export const Plantcares = ({}) => {
       </Grid>
       <Grid container direction="row" justifyContent="center" xs={12} mt={4}>
         {/* <Bubble {...connectivityBubbleProp()} /> */}
-        {loading && renderLoading()}
+        {loading && loadingFragment()}
         {!loading &&
           renderNotFoundSection(
             connectionsNotFoundImg,

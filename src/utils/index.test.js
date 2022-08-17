@@ -119,8 +119,8 @@ test('mockPlantcare', () => {
   expect(plantcare.last_connection_at).not.toBeNull();
 });
 
-test('renderLoading', () => {
-  render(Utils.renderLoading());
+test('loadingFragment', () => {
+  render(Utils.loadingFragment());
 
   expect(screen.getByRole('img')).toBeInTheDocument();
 });

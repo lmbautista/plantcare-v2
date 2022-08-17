@@ -87,7 +87,7 @@ export const mockPlantcare = () => {
   };
 };
 
-export const renderLoading = () => (
+export const loadingFragment = () => (
   <Grid
     container
     direction="row"
