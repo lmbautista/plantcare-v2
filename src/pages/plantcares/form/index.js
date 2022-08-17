@@ -93,7 +93,7 @@ export const PlantcareForm = ({ plantcare }) => {
       });
   };
 
-  const successMessagePanel = (
+  const successMessageFragment = (
     <Collapse in={isVisibleSuccessMessage}>
       <Alert
         action={
@@ -116,7 +116,7 @@ export const PlantcareForm = ({ plantcare }) => {
     </Collapse>
   );
 
-  const errorMessagePanel = errorMessage && (
+  const errorMessageFragment = errorMessage && (
     <Collapse in={isVisibleErrorMessage}>
       <Alert
         severity="error"
@@ -143,8 +143,8 @@ export const PlantcareForm = ({ plantcare }) => {
   const form = (
     <Grid container direction="row" justifyContent="center" alignItems="stretch" pt="40px">
       <Grid item direction="column" justifyContent="center" xs={12} md={10}>
-        {successMessagePanel}
-        {errorMessagePanel}
+        {successMessageFragment}
+        {errorMessageFragment}
       </Grid>
       <Grid item direction="column" justifyContent="center" xs={12} md={10}>
         <Box
