@@ -46,7 +46,7 @@ const httClient = axios.create({
 
 const HEADER_HEIGHT = 64;
 
-export const Plantcares = ({ }) => {
+export const Plantcares = ({}) => {
   const currentAuthHeader = authHeader();
   // HTTP component
   const [loading, setLoading] = useState(true);
@@ -95,7 +95,7 @@ export const Plantcares = ({ }) => {
   }, [plantcares]);
 
   // HTLM component
-  const renderNotFoundSection = (image, text) => (
+  const notFoundSection = (image, text) => (
     <Grid
       container
       direction="row"
@@ -173,7 +173,7 @@ export const Plantcares = ({ }) => {
           plantcares.map((plantcare) => <Card key={`${plantcare.name}`} plantcare={plantcare} />)}
         {!loading &&
           plantcares.length === 0 &&
-          renderNotFoundSection(plantcaresNotFoundImg, enLocale.theGarden.plantcaresNotFound)}
+          notFoundSection(plantcaresNotFoundImg, enLocale.theGarden.plantcaresNotFound)}
       </Grid>
     </Grid>
   );
@@ -443,7 +443,7 @@ export const Plantcares = ({ }) => {
             ));
           })}
         {Object.keys(waterings).length === 0 &&
-          renderNotFoundSection(wateringsNotFoundImg, enLocale.theWatering.wateringsNotFound)}
+          notFoundSection(wateringsNotFoundImg, enLocale.theWatering.wateringsNotFound)}
       </Grid>
     </Grid>
   );
@@ -496,10 +496,7 @@ export const Plantcares = ({ }) => {
         {/* <Bubble {...connectivityBubbleProp()} /> */}
         {loading && loadingFragment()}
         {!loading &&
-          renderNotFoundSection(
-            connectionsNotFoundImg,
-            enLocale.theConnectivity.connectionsNotFound
-          )}
+          notFoundSection(connectionsNotFoundImg, enLocale.theConnectivity.connectionsNotFound)}
       </Grid>
     </Grid>
   );
