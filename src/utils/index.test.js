@@ -134,3 +134,13 @@ test('authHeader', () => {
 
   expect(Utils.authHeader()).toEqual({ Authorization: 'Token abc123' });
 });
+
+test('authHeader without user session', () => {
+  const cookieData = {};
+  Utils.getSessionCookies = jest.fn().mockImplementation(() => cookieData);
+
+  const user = User({ history });
+  jest.spyOn(React, 'useContext').mockImplementation(() => ({ currentUser: user }));
+
+  expect(Utils.authHeader()).toBeNull();
+});

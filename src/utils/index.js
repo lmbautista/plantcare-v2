@@ -112,7 +112,7 @@ export const authHeader = () => {
   const userToken = currentUser?.profile().token;
 
   if (userToken == undefined) {
-    return {};
+    return null;
   } else {
     return { Authorization: `Token ${userToken}` };
   }
