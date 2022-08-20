@@ -95,7 +95,7 @@ export const Plantcares = ({}) => {
   }, [plantcares]);
 
   // HTLM component
-  const notFoundSection = (image, text) => (
+  const notFoundFragment = (image, text) => (
     <Grid
       container
       direction="row"
@@ -147,7 +147,7 @@ export const Plantcares = ({}) => {
     </Stack>
   );
 
-  const garden = (
+  const gardenFragment = (
     <Grid
       container
       sx={{ margin: 'auto' }}
@@ -173,12 +173,12 @@ export const Plantcares = ({}) => {
           plantcares.map((plantcare) => <Card key={`${plantcare.name}`} plantcare={plantcare} />)}
         {!loading &&
           plantcares.length === 0 &&
-          notFoundSection(plantcaresNotFoundImg, enLocale.theGarden.plantcaresNotFound)}
+          notFoundFragment(plantcaresNotFoundImg, enLocale.theGarden.plantcaresNotFound)}
       </Grid>
     </Grid>
   );
 
-  const howSetup = (
+  const howSetupFragment = (
     <>
       <Grid
         container
@@ -283,7 +283,7 @@ export const Plantcares = ({}) => {
     </>
   );
 
-  const howItWorks = (
+  const howItWorksFragment = (
     <>
       <Grid item xs={12} md={6} lg={5} display="flex" justifyContent="center" alignItems="center">
         <img
@@ -350,7 +350,7 @@ export const Plantcares = ({}) => {
     </>
   );
 
-  const howTo = (
+  const howToFragment = (
     <Box
       sx={{ margin: 'auto' }}
       direction="row"
@@ -364,7 +364,7 @@ export const Plantcares = ({}) => {
         subtitle={enLocale.theInstructions.howSetup.subtitle}
         description={enLocale.theInstructions.howSetup.description}
       />
-      {howSetup}
+      {howSetupFragment}
       <Panel
         styles={{ padding: '64px 0 96px' }}
         title={enLocale.theInstructions.howItworks.title}
@@ -379,7 +379,7 @@ export const Plantcares = ({}) => {
         m="0 auto 40px auto"
         maxWidth="lg"
       >
-        {howItWorks}
+        {howItWorksFragment}
       </Grid>
     </Box>
   );
@@ -415,7 +415,7 @@ export const Plantcares = ({}) => {
     background: defaultImg
   });
 
-  const watering = (
+  const wateringFragment = (
     <Grid
       container
       sx={{ margin: 'auto' }}
@@ -443,7 +443,7 @@ export const Plantcares = ({}) => {
             ));
           })}
         {Object.keys(waterings).length === 0 &&
-          notFoundSection(wateringsNotFoundImg, enLocale.theWatering.wateringsNotFound)}
+          notFoundFragment(wateringsNotFoundImg, enLocale.theWatering.wateringsNotFound)}
       </Grid>
     </Grid>
   );
@@ -474,7 +474,7 @@ export const Plantcares = ({}) => {
     };
   };
 
-  const connectivity = (
+  const connectivityFragment = (
     <Grid
       container
       sx={{ margin: 'auto' }}
@@ -496,7 +496,7 @@ export const Plantcares = ({}) => {
         {/* <Bubble {...connectivityBubbleProp()} /> */}
         {loading && loadingFragment()}
         {!loading &&
-          notFoundSection(connectionsNotFoundImg, enLocale.theConnectivity.connectionsNotFound)}
+          notFoundFragment(connectionsNotFoundImg, enLocale.theConnectivity.connectionsNotFound)}
       </Grid>
     </Grid>
   );
@@ -509,16 +509,16 @@ export const Plantcares = ({}) => {
         </Alert>
       )}
       <div id="garden" style={{ ...styles.default, ...styles.gardenStyles }} data-testid="garden">
-        <Box sx={{ mt: { xs: 5, sm: 8 }, padding: '50px 0', width: '100%' }}>{garden}</Box>
+        <Box sx={{ mt: { xs: 5, sm: 8 }, padding: '50px 0', width: '100%' }}>{gardenFragment}</Box>
       </div>
       <div id="watering" style={styles.wateringStyles} data-testid="watering">
-        <Box sx={{ padding: '50px 0', width: '100%' }}>{watering}</Box>
+        <Box sx={{ padding: '50px 0', width: '100%' }}>{wateringFragment}</Box>
       </div>
       <div id="connectivity" style={styles.connectivityStyles} data-testid="connectivity">
-        <Box sx={{ padding: '50px 0', width: '100%' }}>{connectivity}</Box>
+        <Box sx={{ padding: '50px 0', width: '100%' }}>{connectivityFragment}</Box>
       </div>
       <div id="howto" style={styles.howToStyles} data-testid="howto">
-        <Box sx={{ padding: '50px 0', width: '100%' }}>{howTo}</Box>
+        <Box sx={{ padding: '50px 0', width: '100%' }}>{howToFragment}</Box>
       </div>
     </span>
   );
