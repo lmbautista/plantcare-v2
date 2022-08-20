@@ -1,15 +1,10 @@
 import React from 'react';
-import { createMemoryHistory } from 'history';
-import { Route, Router, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import axios from 'axios';
-import { UserContextProvider } from '../../../UserContext.js';
-import User from '../../../components/user';
-import * as Utils from '../../../utils';
+import { LoggedUserContextProvider } from '../../../test_utils';
 
 import PlantcareForm from './index.js';
-
-const apiToken = 'apiToken';
 
 const App = ({ element }) => (
   <>
@@ -20,18 +15,10 @@ const App = ({ element }) => (
 );
 
 test('load and render new component', () => {
-  const history = createMemoryHistory();
-  history.push('/form');
-
-  Utils.setSessionCookies({ email: 'lmiguelbautista@gmail.com', api_token: apiToken }, history);
-  const user = User({ history });
-
   render(
-    <UserContextProvider user={user}>
-      <Router location={history.location} navigator={history}>
-        <App element={<PlantcareForm />} />
-      </Router>
-    </UserContextProvider>
+    <LoggedUserContextProvider section="/form">
+      <App element={<PlantcareForm />} />
+    </LoggedUserContextProvider>
   );
 
   expect(screen.getAllByText('New plantcare')).toBeDefined();
@@ -40,18 +27,10 @@ test('load and render new component', () => {
 });
 
 test('load and render edit component', () => {
-  const history = createMemoryHistory();
-  history.push('/form');
-
-  Utils.setSessionCookies({ email: 'lmiguelbautista@gmail.com', api_token: apiToken }, history);
-  const user = User({ history });
-
   render(
-    <UserContextProvider user={user}>
-      <Router location={history.location} navigator={history}>
-        <App element={<PlantcareForm plantcare={{ name: 'Ficus' }} />} />
-      </Router>
-    </UserContextProvider>
+    <LoggedUserContextProvider section="/form">
+      <App element={<PlantcareForm plantcare={{ name: 'Ficus' }} />} />
+    </LoggedUserContextProvider>
   );
 
   expect(screen.getAllByText('Edit plantcare')).toBeDefined();
@@ -66,18 +45,10 @@ test('render and submit new form', async () => {
     water_pump_field: 'IN1'
   };
 
-  const history = createMemoryHistory();
-  history.push('/form');
-
-  Utils.setSessionCookies({ email: 'lmiguelbautista@gmail.com', api_token: apiToken }, history);
-  const user = User({ history });
-
   const { container } = render(
-    <UserContextProvider user={user}>
-      <Router location={history.location} navigator={history}>
-        <App element={<PlantcareForm />} />
-      </Router>
-    </UserContextProvider>
+    <LoggedUserContextProvider section="/form">
+      <App element={<PlantcareForm />} />
+    </LoggedUserContextProvider>
   );
 
   console.log(container.innerHTML);

@@ -1,12 +1,9 @@
 import React from 'react';
-import { createMemoryHistory } from 'history';
 import { render, screen, fireEvent } from '@testing-library/react';
-import PlantcareCard from './index.js';
-import { UserContextProvider } from '../../../UserContext.js';
-import User from '../../../components/user';
 import * as Utils from '../../../utils';
+import { LoggedUserContextProvider } from '../../../test_utils';
 
-const apiToken = 'apiToken';
+import PlantcareCard from './index.js';
 
 test('load and render component', () => {
   const plantcare = Utils.mockPlantcare();
@@ -26,16 +23,10 @@ test('load and render component', () => {
 test('render edit component', () => {
   const plantcare = Utils.mockPlantcare();
 
-  const history = createMemoryHistory();
-  history.push('/form');
-
-  Utils.setSessionCookies({ email: 'lmiguelbautista@gmail.com', api_token: apiToken }, history);
-  const user = User({ history });
-
   render(
-    <UserContextProvider user={user}>
+    <LoggedUserContextProvider>
       <PlantcareCard plantcare={plantcare} />
-    </UserContextProvider>
+    </LoggedUserContextProvider>
   );
 
   expect(screen.queryAllByTestId('open-form')).toBeDefined();

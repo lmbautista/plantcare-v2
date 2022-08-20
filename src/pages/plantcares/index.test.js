@@ -4,27 +4,18 @@ import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 import { UserContextProvider } from '../../UserContext.js';
 import axios from 'axios';
-import * as Utils from '../../utils';
-import User from '../../components/user';
+import { LoggedUserContextProvider, USER_API_TOKEN } from '../../test_utils';
 
 import Plantcares from './index.js';
 
 test('load and render empty component', async () => {
-  const history = createMemoryHistory();
-  history.push('/plantcares');
-
-  Utils.setSessionCookies({ email: 'lmiguelbautista@gmail.com', api_token: apiToken }, history);
-  const user = User({ history });
-
   const response = { status: 200, data: [] };
   axios.get.mockResolvedValueOnce(response);
 
   render(
-    <UserContextProvider user={user}>
-      <Router location={history.location} navigator={history}>
-        <Plantcares />
-      </Router>
-    </UserContextProvider>
+    <LoggedUserContextProvider section="/plantcares">
+      <Plantcares />
+    </LoggedUserContextProvider>
   );
 
   expect(screen.getByTestId('plantcares')).toBeInTheDocument();
@@ -56,8 +47,7 @@ test('initial render prevent loading plantcares', () => {
   expect(axios.get).not.toHaveBeenCalledWith('plantcares', { params: requestParams });
 });
 
-const apiToken = 'apiToken';
-const requestParams = { locale: 'en', headers: { Authorization: `Token ${apiToken}` } };
+const requestParams = { locale: 'en', headers: { Authorization: `Token ${USER_API_TOKEN}` } };
 const plantcares = [
   {
     name: 'Ficus retusa',
@@ -71,21 +61,13 @@ const plantcares = [
 ];
 
 test('load plantcares successfully', async () => {
-  const history = createMemoryHistory();
-  history.push('/plantcares');
-
-  Utils.setSessionCookies({ email: 'lmiguelbautista@gmail.com', api_token: apiToken }, history);
-  const user = User({ history });
-
   const response = { status: 200, data: plantcares };
   axios.get.mockResolvedValueOnce(response);
 
   render(
-    <UserContextProvider user={user}>
-      <Router location={history.location} navigator={history}>
-        <Plantcares />
-      </Router>
-    </UserContextProvider>
+    <LoggedUserContextProvider section="/plantcares">
+      <Plantcares />
+    </LoggedUserContextProvider>
   );
 
   await waitFor(() => {
