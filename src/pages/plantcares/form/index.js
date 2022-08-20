@@ -1,32 +1,25 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-
-import formImg from './images/form.png';
 // UI components
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import CloseIcon from '@mui/icons-material/Close';
 import Collapse from '@mui/material/Collapse';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 import { ThemeProvider } from '@mui/material/styles';
-// Components
-import PanelWithImage from '../../../components/panel-with-image';
+
 // Others
 import enLocale from './locales/en.js';
 import Main from '../../../themes/main';
 import { fieldElementProps, authHeader } from '../../../utils';
-import { UserContext } from '../../../UserContext';
 
-import {
-  FormContainer,
-  TextFieldElement,
-  DatePickerElement,
-  SelectElement
-} from 'react-hook-form-mui';
+import { FormContainer, TextFieldElement, SelectElement } from 'react-hook-form-mui';
 
 const httClient = axios.create({
   baseURL: 'http://dev.api.yourplantcare.com/v1',
@@ -141,12 +134,12 @@ export const PlantcareForm = ({ plantcare }) => {
   );
 
   const form = (
-    <Grid container direction="row" justifyContent="center" alignItems="stretch" pt="40px">
-      <Grid item direction="column" justifyContent="center" xs={12} md={10}>
+    <>
+      <Grid item direction="column" justifyContent="center" xs={10}>
         {successMessageFragment}
         {errorMessageFragment}
       </Grid>
-      <Grid item direction="column" justifyContent="center" xs={12} md={10}>
+      <Grid item direction="column" justifyContent="center" xs={10}>
         <Box
           pb="60px"
           sx={{
@@ -184,32 +177,37 @@ export const PlantcareForm = ({ plantcare }) => {
               })}
               required
             />
-            <Button
-              type="submit"
-              color="primary"
-              variant="contained"
-              size="large"
-              sx={{ fontWeight: 'medium' }}
-            >
-              {enLocale.form.submit}
-            </Button>
+            <Stack direction="row" spacing={2} pt={6}>
+              <Button
+                type="submit"
+                color="primary"
+                variant="contained"
+                size="large"
+                sx={{ fontWeight: 'medium' }}
+              >
+                {enLocale.form.submit}
+              </Button>
+            </Stack>
           </FormContainer>
         </Box>
       </Grid>
-    </Grid>
+    </>
   );
 
   return (
     <ThemeProvider theme={Main}>
-      <Box data-testid="plantcare-form" sx={{ mt: { xs: 5, sm: 8 }, padding: '30px' }}>
-        <PanelWithImage
-          image={formImg}
-          title={title}
-          subtitle={subtitle}
-          styles={{ textAlign: 'center' }}
-        >
+      <Box data-testid="plantcare-form">
+        <Grid container direction="row" justifyContent="center" alignItems="stretch" pt="40px">
+          <Grid item direction="column" justifyContent="center" xs={10}>
+            <Typography fontFamily={'Pacifico'} color="secondary" variant="h3" mb="18px">
+              {title}
+            </Typography>
+            <Typography variant="h5" sx={{ fontWeight: 'bold', marginBottom: '20px' }}>
+              {subtitle}
+            </Typography>
+          </Grid>
           {form}
-        </PanelWithImage>
+        </Grid>
       </Box>
     </ThemeProvider>
   );
