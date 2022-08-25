@@ -22,7 +22,7 @@ import { ReactComponent as WifiImg } from './images/wifi-icon.svg';
 import Statics from './statics';
 import Main from '../../../themes/main';
 
-export const PlantcareCard = ({ plantcare }) => {
+export const PlantcareCard = ({ plantcare, onEditHandler }) => {
   const { styles, props, typographies } = useMemo(() => Statics({ plantcare }), [plantcare]);
   const wetStatusColor = styles.colorForWetStatus(plantcare.wet);
 
@@ -35,9 +35,9 @@ export const PlantcareCard = ({ plantcare }) => {
             <Box sx={styles.cardImage} data-testid="actions">
               <Button
                 {...props.actionButton}
-                data-testid="open-form"
+                data-testid="edit-button"
                 onClick={() => {
-                  setIsVisibleForm(true);
+                  onEditHandler();
                 }}
               >
                 <EditImg width="45px" height="45px" />
@@ -108,5 +108,10 @@ export const PlantcareCard = ({ plantcare }) => {
 export default PlantcareCard;
 
 PlantcareCard.propTypes = {
-  plantcare: PropTypes.object.isRequired
+  plantcare: PropTypes.object.isRequired,
+  onEditHandler: PropTypes.func
+};
+
+PlantcareCard.defaultProps = {
+  onEditHandler: () => {}
 };

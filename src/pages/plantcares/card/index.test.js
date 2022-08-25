@@ -17,4 +17,6 @@ test('load and render component', () => {
   expect(screen.getAllByText(`Planted at ${plantcare.planted_at}`)).toBeDefined();
   expect(screen.getAllByText(`Watered at ${plantcare.watered_at}`)).toBeDefined();
   expect(screen.getAllByText(`Watering at ${plantcare.waterings[0].programmed_at}`)).toBeDefined();
+
+  expect(screen.queryAllByTestId('edit-button')).toBeDefined();
 });
