@@ -1,12 +1,11 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import * as Utils from '../../../utils';
-import { LoggedUserContextProvider } from '../../../test_utils';
-
+import { render, screen } from '@testing-library/react';
 import PlantcareCard from './index.js';
 
+import { mockPlantcare } from '../../../utils';
+
 test('load and render component', () => {
-  const plantcare = Utils.mockPlantcare();
+  const plantcare = mockPlantcare();
 
   render(<PlantcareCard plantcare={plantcare} />);
 
@@ -18,22 +17,4 @@ test('load and render component', () => {
   expect(screen.getAllByText(`Planted at ${plantcare.planted_at}`)).toBeDefined();
   expect(screen.getAllByText(`Watered at ${plantcare.watered_at}`)).toBeDefined();
   expect(screen.getAllByText(`Watering at ${plantcare.waterings[0].programmed_at}`)).toBeDefined();
-});
-
-test('render edit component', () => {
-  const plantcare = Utils.mockPlantcare();
-
-  render(
-    <LoggedUserContextProvider>
-      <PlantcareCard plantcare={plantcare} />
-    </LoggedUserContextProvider>
-  );
-
-  expect(screen.queryAllByTestId('open-form')).toBeDefined();
-
-  const editButton = screen.queryAllByTestId('open-form')[0];
-  fireEvent(editButton, new MouseEvent('click', { bubbles: true, cancelable: true }));
-
-  expect(screen.queryAllByTestId('form')[0]).toBeVisible();
-  expect(screen.queryAllByTestId('close-form')[0]).toBeVisible();
 });
