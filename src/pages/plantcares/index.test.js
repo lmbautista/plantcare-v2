@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 import { UserContextProvider } from '../../UserContext.js';
@@ -76,5 +76,26 @@ test('load plantcares successfully', async () => {
     expect(screen.queryAllByText('Waterings not found')).toEqual([]);
     expect(screen.queryAllByText(plantcares[0].name)).not.toBeNull();
     expect(screen.queryAllByText(plantcares[0].waterings[0].programmed_at)).not.toBeNull();
+  });
+});
+
+test('load plantcares and render edit component', async () => {
+  const response = { status: 200, data: plantcares };
+  axios.get.mockResolvedValueOnce(response);
+
+  render(
+    <LoggedUserContextProvider section="/plantcares">
+      <Plantcares />
+    </LoggedUserContextProvider>
+  );
+
+  await waitFor(() => {
+    expect(screen.queryAllByTestId('edit-button')).toBeDefined();
+
+    const editButton = screen.queryAllByTestId('edit-button')[0];
+    fireEvent(editButton, new MouseEvent('click', { bubbles: true, cancelable: true }));
+
+    expect(screen.queryAllByTestId('form')[0]).toBeVisible();
+    expect(screen.queryAllByTestId('close-form')[0]).toBeVisible();
   });
 });

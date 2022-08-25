@@ -25,6 +25,7 @@ import Typography from '@mui/material/Typography';
 // Components
 import Bubble from './bubble';
 import Card from './card';
+import FormCard from './form-card';
 import AnchorLink from 'react-anchor-link-smooth-scroll';
 import PanelWithImage from '../../components/panel-with-image';
 import Panel from '../../components/panel';
@@ -53,6 +54,15 @@ export const Plantcares = ({}) => {
   const [plantcares, setPlantcares] = useState([]);
   const [waterings, setWaterings] = useState({});
   const [errorMessage, setErrorMessage] = useState(undefined);
+  const [editionVisibility, setEditionVisibility] = useState({});
+
+  const toggleEdition = (plantcare) => {
+    const { id } = plantcare;
+    const visibility = (editionVisibility[id] !== undefined && !editionVisibility[id]) ?? false;
+    console.log('toggling plantcare ' + plantcare.name + ' to visibility ' + visibility);
+
+    setEditionVisibility((value) => ({ ...value, [id]: visibility }));
+  };
 
   const getPlantcares = (responseHandler, errorHandler) => {
     if (currentAuthHeader === null) {
@@ -92,7 +102,8 @@ export const Plantcares = ({}) => {
         return result;
       }, {})
     );
-  }, [plantcares]);
+    plantcares.map((plantcare) => toggleEdition(plantcare));
+  }, [JSON.stringify(plantcares)]);
 
   // HTLM component
   const notFoundFragment = (image, text) => (
@@ -131,12 +142,11 @@ export const Plantcares = ({}) => {
       </Grid>
     </Grid>
   );
-
   const { styles, props, typographies } = useMemo(() => Statics(), []);
 
   const gardenButtons = (
     <Stack direction="row" spacing={2} pt={6}>
-      <Button component={Link} to="#" variant="outlined" color="primary" size="large">
+      <Button onClick={() => {}} to="#" variant="outlined" color="primary" size="large">
         {enLocale.theGarden.new}
       </Button>
       <AnchorLink style={{ textDecoration: 'none' }} offset={HEADER_HEIGHT} href="#howto">
@@ -170,7 +180,24 @@ export const Plantcares = ({}) => {
         {loading && loadingFragment()}
         {!loading &&
           plantcares.length > 0 &&
-          plantcares.map((plantcare) => <Card key={`${plantcare.name}`} plantcare={plantcare} />)}
+          plantcares.map((plantcare) => (
+            <>
+              {!editionVisibility[plantcare.id] && (
+                <Card
+                  key={`${plantcare.name}`}
+                  plantcare={plantcare}
+                  onEditHandler={() => toggleEdition(plantcare)}
+                />
+              )}
+              {editionVisibility[plantcare.id] && (
+                <FormCard
+                  key={`${plantcare.name}`}
+                  plantcare={plantcare}
+                  onCloseHandler={() => toggleEdition(plantcare)}
+                />
+              )}
+            </>
+          ))}
         {!loading &&
           plantcares.length === 0 &&
           notFoundFragment(plantcaresNotFoundImg, enLocale.theGarden.plantcaresNotFound)}
