@@ -79,7 +79,7 @@ test('load plantcares successfully', async () => {
   });
 });
 
-test('load plantcares and render edit component', async () => {
+test('load plantcares and render edit plantcare component', async () => {
   const response = { status: 200, data: plantcares };
   axios.get.mockResolvedValueOnce(response);
 
@@ -92,8 +92,29 @@ test('load plantcares and render edit component', async () => {
   await waitFor(() => {
     expect(screen.queryAllByTestId('edit-button')).toBeDefined();
 
-    const editButton = screen.queryAllByTestId('edit-button')[0];
-    fireEvent(editButton, new MouseEvent('click', { bubbles: true, cancelable: true }));
+    const editPlantcareButton = screen.queryAllByTestId('edit-button')[0];
+    fireEvent(editPlantcareButton, new MouseEvent('click', { bubbles: true, cancelable: true }));
+
+    expect(screen.queryAllByTestId('form')[0]).toBeVisible();
+    expect(screen.queryAllByTestId('close-form')[0]).toBeVisible();
+  });
+});
+
+test('load plantcares and render new plantcare component', async () => {
+  const response = { status: 200, data: plantcares };
+  axios.get.mockResolvedValueOnce(response);
+
+  render(
+    <LoggedUserContextProvider section="/plantcares">
+      <Plantcares />
+    </LoggedUserContextProvider>
+  );
+
+  await waitFor(() => {
+    expect(screen.queryAllByTestId('new-plantcare-button')[0]).toBeDefined();
+
+    const newPlantcareButton = screen.queryAllByTestId('new-plantcare-button')[0];
+    fireEvent(newPlantcareButton, new MouseEvent('click', { bubbles: true, cancelable: true }));
 
     expect(screen.queryAllByTestId('form')[0]).toBeVisible();
     expect(screen.queryAllByTestId('close-form')[0]).toBeVisible();

@@ -54,12 +54,13 @@ export const Plantcares = ({}) => {
   const [plantcares, setPlantcares] = useState([]);
   const [waterings, setWaterings] = useState({});
   const [errorMessage, setErrorMessage] = useState(undefined);
+  const [creationVisibility, setCreationVisibility] = useState(false);
   const [editionVisibility, setEditionVisibility] = useState({});
 
+  const toggleCreation = () => setCreationVisibility((value) => !value);
   const toggleEdition = (plantcare) => {
     const { id } = plantcare;
     const visibility = (editionVisibility[id] !== undefined && !editionVisibility[id]) ?? false;
-    console.log('toggling plantcare ' + plantcare.name + ' to visibility ' + visibility);
 
     setEditionVisibility((value) => ({ ...value, [id]: visibility }));
   };
@@ -146,7 +147,14 @@ export const Plantcares = ({}) => {
 
   const gardenButtons = (
     <Stack direction="row" spacing={2} pt={6}>
-      <Button onClick={() => {}} to="#" variant="outlined" color="primary" size="large">
+      <Button
+        onClick={() => toggleCreation()}
+        to="#"
+        variant="outlined"
+        color="primary"
+        size="large"
+        data-testid="new-plantcare-button"
+      >
         {enLocale.theGarden.new}
       </Button>
       <AnchorLink style={{ textDecoration: 'none' }} offset={HEADER_HEIGHT} href="#howto">
@@ -178,6 +186,7 @@ export const Plantcares = ({}) => {
       </Grid>
       <Grid container direction="row" justifyContent="center" xs={12} mt={4}>
         {loading && loadingFragment()}
+        {creationVisibility && <FormCard onCloseHandler={() => toggleCreation()} />}
         {!loading &&
           plantcares.length > 0 &&
           plantcares.map((plantcare) => (
