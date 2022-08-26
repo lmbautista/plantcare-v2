@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import PlantcareCard from './index.js';
 
 import { mockPlantcare } from '../../../test_utils';
@@ -20,3 +20,18 @@ test('load and render component', () => {
 
   expect(screen.queryAllByTestId('edit-button')).toBeDefined();
 });
+
+test('load and call onEditHandler', () => {
+  const plantcare = mockPlantcare();
+  const onEditHandler = jest.fn();
+
+  render(<PlantcareCard plantcare={plantcare} onEditHandler={onEditHandler} />);
+
+  expect(screen.getByTestId('edit-button')).toBeInTheDocument();
+
+  const editButton = screen.getByTestId('edit-button');
+  fireEvent(editButton, new MouseEvent('click', { bubbles: true, cancelable: true }));
+
+  expect(onEditHandler).toHaveBeenCalledTimes(1);
+});
+
