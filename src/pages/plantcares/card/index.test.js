@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import PlantcareCard from './index.js';
 
-import { mockPlantcare } from '../../../utils';
+import { mockPlantcare } from '../../../test_utils';
 
 test('load and render component', () => {
   const plantcare = mockPlantcare();

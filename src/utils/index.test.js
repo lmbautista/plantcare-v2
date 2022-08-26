@@ -107,18 +107,6 @@ test('setSessionCookies', () => {
   expect(Cookies.set).toHaveBeenCalledWith('token', 'encryptedValue', { expires: 1 / 48 });
 });
 
-test('mockPlantcare', () => {
-  const plantcare = Utils.mockPlantcare();
-
-  expect(plantcare.name).not.toBeNull();
-  expect(plantcare.wet).not.toBeNull();
-  expect(plantcare.planted_at).not.toBeNull();
-  expect(plantcare.watered_at).not.toBeNull();
-  expect(plantcare.waterings[0].programmed_at).not.toBeNull();
-  expect(plantcare.wet_synced_at).not.toBeNull();
-  expect(plantcare.last_connection_at).not.toBeNull();
-});
-
 test('loadingFragment', () => {
   render(Utils.loadingFragment());
 

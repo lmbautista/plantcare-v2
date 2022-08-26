@@ -4,7 +4,7 @@ import BubbleCard from './index.js';
 
 import backgroundImg from './test/images/plantcare-default.png';
 import iconImg from './test/images/watering-icon.png';
-import { mockPlantcare } from '../../../utils';
+import { mockPlantcare } from '../../../test_utils';
 
 test('load and render component', () => {
   const plantcare = mockPlantcare();

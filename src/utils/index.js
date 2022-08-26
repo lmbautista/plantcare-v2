@@ -67,26 +67,6 @@ export const removeSessionCookies = () => {
   Cookies.remove(TOKEN);
 };
 
-export const mockPlantcare = () => {
-  const wetStatuses = [
-    Math.min(Math.floor(Math.random() * 100) + 60, 100),
-    Math.floor(Math.random() * 60) + 35,
-    Math.floor(Math.random() * 35)
-  ];
-  const names = ['Ficus retusa', 'Lemon cypress', 'Olive tree', 'Elm zelkova'];
-  const mockIdx = Math.floor(Math.random() * 3);
-
-  return {
-    name: names[mockIdx],
-    wet: wetStatuses[mockIdx],
-    planted_at: '03/03/2022',
-    watered_at: '03/03/2022 15:35',
-    waterings: [{ programmed_at: '03/03/2022 21:22' }],
-    wet_synced_at: '03/03/2022 16:45',
-    last_connection_at: '03/03/2022 16:45'
-  };
-};
-
 export const loadingFragment = () => (
   <Grid
     container
