@@ -11,7 +11,7 @@ import Form from '../form';
 import Statics from './statics';
 import Main from '../../../themes/main';
 
-export const FormCard = ({ plantcare, onCloseHandler }) => {
+export const FormCard = ({ plantcare, onCloseHandler, onSubmitHandler }) => {
   const { styles, props } = useMemo(() => Statics(), []);
 
   return (
@@ -29,7 +29,7 @@ export const FormCard = ({ plantcare, onCloseHandler }) => {
               <CloseIcon fontSize="inherit" />
             </Button>
           </Box>
-          <Form plantcare={plantcare} />
+          <Form plantcare={plantcare} onSubmitHandler={onSubmitHandler} />
         </Box>
       </Card>
     </ThemeProvider>
@@ -40,10 +40,12 @@ export default FormCard;
 
 FormCard.propTypes = {
   plantcare: PropTypes.object,
-  onCloseHandler: PropTypes.func
+  onCloseHandler: PropTypes.func,
+  onSubmitHandler: PropTypes.func
 };
 
 FormCard.defaultProps = {
   plantcare: {},
-  onCloseHandler: () => {}
+  onCloseHandler: () => {},
+  onSubmitHandler: () => {}
 };

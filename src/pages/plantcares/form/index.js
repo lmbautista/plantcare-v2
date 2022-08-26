@@ -42,7 +42,7 @@ const waterPumpOptions = [
   { title: `${enLocale.waterPump} 4`, id: 'IN4' }
 ];
 
-export const PlantcareForm = ({ plantcare }) => {
+export const PlantcareForm = ({ plantcare, onSubmitHandler }) => {
   const currentAuthHeader = authHeader();
   const [isVisibleSuccessMessage, setVisibleSuccessMessage] = useState(false);
   const [isVisibleErrorMessage, setVisibleErrorMessage] = useState(false);
@@ -72,6 +72,7 @@ export const PlantcareForm = ({ plantcare }) => {
       .request({ method, url, data, headers })
       .then(function () {
         setVisibleSuccessMessage(true);
+        onSubmitHandler();
       })
       .catch(function (error) {
         if (error.response && error.response.status === 422) {
@@ -216,9 +217,11 @@ export const PlantcareForm = ({ plantcare }) => {
 export default PlantcareForm;
 
 PlantcareForm.propTypes = {
-  plantcare: PropTypes.object
+  plantcare: PropTypes.object,
+  onSubmitHandler: PropTypes.func
 };
 
 PlantcareForm.defaultProps = {
-  plantcare: {}
+  plantcare: {},
+  onSubmitHandler: () => {}
 };

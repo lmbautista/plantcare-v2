@@ -49,6 +49,7 @@ const HEADER_HEIGHT = 64;
 
 export const Plantcares = ({}) => {
   const currentAuthHeader = authHeader();
+  const { styles, props, typographies } = useMemo(() => Statics(), []);
   // HTTP component
   const [loading, setLoading] = useState(true);
   const [plantcares, setPlantcares] = useState([]);
@@ -65,6 +66,10 @@ export const Plantcares = ({}) => {
     setEditionVisibility((value) => ({ ...value, [id]: visibility }));
   };
 
+  const reloadPlantcares = (timeout) =>
+    setTimeout(function () {
+      getPlantcares(setPlantcares, setErrorMessage);
+    }, timeout);
   const getPlantcares = (responseHandler, errorHandler) => {
     if (currentAuthHeader === null) {
       return false;
@@ -103,10 +108,11 @@ export const Plantcares = ({}) => {
         return result;
       }, {})
     );
-    plantcares.map((plantcare) => toggleEdition(plantcare));
+    plantcares.map((plantcare) =>
+      setEditionVisibility((value) => ({ ...value, [plantcare.id]: false }))
+    );
   }, [JSON.stringify(plantcares)]);
 
-  // HTLM component
   const notFoundFragment = (image, text) => (
     <Grid
       container
@@ -143,7 +149,6 @@ export const Plantcares = ({}) => {
       </Grid>
     </Grid>
   );
-  const { styles, props, typographies } = useMemo(() => Statics(), []);
 
   const gardenButtons = (
     <Stack direction="row" spacing={2} pt={6}>
@@ -186,7 +191,12 @@ export const Plantcares = ({}) => {
       </Grid>
       <Grid container direction="row" justifyContent="center" xs={12} mt={4}>
         {loading && loadingFragment()}
-        {creationVisibility && <FormCard onCloseHandler={() => toggleCreation()} />}
+        {creationVisibility && (
+          <FormCard
+            onCloseHandler={() => toggleCreation()}
+            onSubmitHandler={() => reloadPlantcares(100)}
+          />
+        )}
         {!loading &&
           plantcares.length > 0 &&
           plantcares.map((plantcare) => (
@@ -203,6 +213,7 @@ export const Plantcares = ({}) => {
                   key={`${plantcare.name}`}
                   plantcare={plantcare}
                   onCloseHandler={() => toggleEdition(plantcare)}
+                  onSubmitHandler={() => reloadPlantcares(5000)}
                 />
               )}
             </>
