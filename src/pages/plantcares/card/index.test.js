@@ -35,3 +35,16 @@ test('load and call onEditHandler', () => {
   expect(onEditHandler).toHaveBeenCalledTimes(1);
 });
 
+test('load and call onRemoveHandler', () => {
+  const plantcare = mockPlantcare();
+  const onRemoveHandler = jest.fn();
+
+  render(<PlantcareCard plantcare={plantcare} onRemoveHandler={onRemoveHandler} />);
+
+  expect(screen.getByTestId('remove-button')).toBeInTheDocument();
+
+  const removeButton = screen.getByTestId('remove-button');
+  fireEvent(removeButton, new MouseEvent('click', { bubbles: true, cancelable: true }));
+
+  expect(onRemoveHandler).toHaveBeenCalledTimes(1);
+});

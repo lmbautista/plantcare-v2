@@ -22,7 +22,7 @@ import { ReactComponent as WifiImg } from './images/wifi-icon.svg';
 import Statics from './statics';
 import Main from '../../../themes/main';
 
-export const PlantcareCard = ({ plantcare, onEditHandler }) => {
+export const PlantcareCard = ({ plantcare, onEditHandler, onRemoveHandler }) => {
   const { styles, props, typographies } = useMemo(() => Statics({ plantcare }), [plantcare]);
   const wetStatusColor = styles.colorForWetStatus(plantcare.wet);
 
@@ -45,7 +45,7 @@ export const PlantcareCard = ({ plantcare, onEditHandler }) => {
               <Button {...props.actionButton}>
                 <ScheduleImg width="45px" height="45px" />
               </Button>
-              <Button {...props.actionButton}>
+              <Button {...props.actionButton} data-testid="remove-button" onClick={onRemoveHandler}>
                 <RemoveImg width="45px" height="45px" />
               </Button>
             </Box>
@@ -109,9 +109,11 @@ export default PlantcareCard;
 
 PlantcareCard.propTypes = {
   plantcare: PropTypes.object.isRequired,
-  onEditHandler: PropTypes.func
+  onEditHandler: PropTypes.func,
+  onRemoveHandler: PropTypes.func
 };
 
 PlantcareCard.defaultProps = {
-  onEditHandler: () => {}
+  onEditHandler: () => {},
+  onRemoveHandler: () => {}
 };
