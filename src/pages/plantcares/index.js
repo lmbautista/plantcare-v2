@@ -51,7 +51,7 @@ export const Plantcares = ({}) => {
   const currentAuthHeader = authHeader();
   const { styles, props, typographies } = useMemo(() => Statics(), []);
   // HTTP component
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [plantcares, setPlantcares] = useState([]);
   const [waterings, setWaterings] = useState({});
   const [errorMessage, setErrorMessage] = useState(undefined);
@@ -75,6 +75,7 @@ export const Plantcares = ({}) => {
       return false;
     }
 
+    setLoading(true);
     httClient
       .get('plantcares', {
         locale: 'en',
