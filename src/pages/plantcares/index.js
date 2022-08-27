@@ -70,7 +70,7 @@ export const Plantcares = ({}) => {
     setTimeout(function () {
       getPlantcares(setPlantcares, setErrorMessage);
     }, timeout);
-  const getPlantcares = (responseHandler, errorHandler) => {
+  const getPlantcares = (onSuccessHandler, onErrorHandler) => {
     if (currentAuthHeader === null) {
       return false;
     }
@@ -81,15 +81,16 @@ export const Plantcares = ({}) => {
         headers: { ...currentAuthHeader }
       })
       .then(function (response) {
-        responseHandler(response.data);
+        onSuccessHandler(response.data);
       })
       .catch(function (error) {
         if (error.response && error.response.status === 422) {
           const { message: responseMessage } = error.response.data;
-          errorHandler(responseMessage);
+          onErrorHandler(responseMessage);
         } else {
           const responseMessage = (error.response && error.response.statusText) || error.message;
           errorHandler(`HTTP error: ${responseMessage}`);
+          onErrorHandler(`HTTP error: ${responseMessage}`);
         }
       })
       .finally(function () {
