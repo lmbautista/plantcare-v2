@@ -48,3 +48,27 @@ test('deletePlantcare', () => {
 
   expect(mockHttpRequest).toHaveBeenNthCalledWith(1, requestParams);
 });
+
+test('getPlantcare', () => {
+  const headers = { Authorization: 'Token asi0o12309djknsdoi8' };
+  const onSuccessHandler = jest.fn();
+  const onErrorHandler = jest.fn();
+  const plantcareId = 1;
+  const params = { id: plantcareId, headers, onSuccessHandler, onErrorHandler };
+  const requestParams = {
+    method: 'GET',
+    url: `plantcares/${plantcareId}`,
+    headers,
+    data: {},
+    onSuccessHandler,
+    onErrorHandler,
+    onFinishHandler: undefined
+  };
+
+  const mockHttpRequest = jest.fn();
+  ApiClient.httpRequest = mockHttpRequest;
+
+  PlantcaresApiClient.getPlantcare(params);
+
+  expect(mockHttpRequest).toHaveBeenNthCalledWith(1, requestParams);
+});
