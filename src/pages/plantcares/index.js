@@ -65,6 +65,12 @@ export const Plantcares = ({}) => {
     setTimeout(function () {
       getPlantcares();
     }, timeout);
+  const removePlantcare = (plantcare) => {
+    setPlantcares((value) => {
+      delete value[plantcare.id];
+      return value;
+    });
+  };
 
   const getPlantcares = () => {
     if (currentAuthHeader === null) {
@@ -78,6 +84,50 @@ export const Plantcares = ({}) => {
 
     setLoading(true);
     PlantcaresApiClient.getPlantcares({
+      headers,
+      onSuccessHandler,
+      onErrorHandler,
+      onFinishHandler
+    });
+  };
+
+  const getPlantcare = (id) => {
+    if (currentAuthHeader === null) {
+      return false;
+    }
+    const onSuccessHandler = updatePlantcare;
+    const onErrorHandler = setErrorMessage;
+    const onFinishHandler = () => {
+      toggleEdition(plantcares[id]);
+      setLoading(false);
+    };
+    const headers = currentAuthHeader;
+
+    setLoading(true);
+    PlantcaresApiClient.getPlantcare({
+      id,
+      headers,
+      onSuccessHandler,
+      onErrorHandler,
+      onFinishHandler
+    });
+  };
+
+  const deletePlantcare = (plantcare) => {
+    if (currentAuthHeader === null) {
+      return false;
+    }
+
+    const onSuccessHandler = removePlantcare(plantcare);
+    const onErrorHandler = setErrorMessage;
+    const onFinishHandler = () => {
+      setLoading(false);
+    };
+    const headers = currentAuthHeader;
+
+    setLoading(true);
+    PlantcaresApiClient.deletePlantcare({
+      id: plantcare.id,
       headers,
       onSuccessHandler,
       onErrorHandler,
@@ -194,6 +244,7 @@ export const Plantcares = ({}) => {
                   key={`${plantcare.name}`}
                   plantcare={plantcare}
                   onEditHandler={() => toggleEdition(plantcare)}
+                  onRemoveHandler={() => deletePlantcare(plantcare)}
                 />
               )}
               {editionVisibility[plantcare.id] && (

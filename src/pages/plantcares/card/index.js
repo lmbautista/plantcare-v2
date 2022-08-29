@@ -28,7 +28,7 @@ export const PlantcareCard = ({ plantcare, onEditHandler, onRemoveHandler }) => 
 
   return (
     <ThemeProvider theme={Main}>
-      <Card sx={styles.card}>
+      <Card sx={styles.card} data-testid="plantcare-card">
         <Box sx={{ position: 'relative' }}>
           <CardMedia component="img" height="250" image={defaultImg} alt="Plant" />
           <Box sx={styles.cardOverlay}>

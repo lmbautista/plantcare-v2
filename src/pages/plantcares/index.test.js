@@ -9,19 +9,19 @@ import * as PlantcaresApiClient from '../../api-client/plantcares';
 
 import Plantcares from './index.js';
 
-afterEach(() => jest.clearAllMocks());
+beforeEach(() => jest.clearAllMocks());
 
-const plantcares = [
-  {
-    name: 'Ficus retusa',
-    wet: 35.2,
-    planted_at: '03/03/2022',
-    watered_at: '03/03/2022 15:35',
-    waterings: [{ programmed_at: '03/03/2022 21:22' }],
-    wet_synced_at: '03/03/2022 16:45',
-    last_connection_at: '03/03/2022 16:45'
-  }
-];
+const plantcare = {
+  id: 1,
+  name: 'Ficus retusa',
+  wet: 35.2,
+  planted_at: '03/03/2022',
+  watered_at: '03/03/2022 15:35',
+  waterings: [{ programmed_at: '03/03/2022 21:22' }],
+  wet_synced_at: '03/03/2022 16:45',
+  last_connection_at: '03/03/2022 16:45'
+};
+const plantcares = [plantcare];
 
 test('load and render empty component', async () => {
   const response = { status: 200, data: [] };
@@ -75,7 +75,7 @@ test('load plantcares and render edit plantcare component', async () => {
   );
 
   await waitFor(() => {
-    expect(screen.queryAllByTestId('edit-button')).toBeDefined();
+    expect(screen.queryAllByTestId('edit-button')).not.toEqual([]);
 
     const editPlantcareButton = screen.queryAllByTestId('edit-button')[0];
     fireEvent(editPlantcareButton, new MouseEvent('click', { bubbles: true, cancelable: true }));
@@ -96,13 +96,37 @@ test('load plantcares and render new plantcare component', async () => {
   );
 
   await waitFor(() => {
-    expect(screen.queryAllByTestId('new-plantcare-button')[0]).toBeDefined();
+    expect(screen.queryAllByTestId('new-plantcare-button')[0]).not.toEqual([]);
 
     const newPlantcareButton = screen.queryAllByTestId('new-plantcare-button')[0];
     fireEvent(newPlantcareButton, new MouseEvent('click', { bubbles: true, cancelable: true }));
 
     expect(screen.queryAllByTestId('form')[0]).toBeVisible();
     expect(screen.queryAllByTestId('close-form')[0]).toBeVisible();
+  });
+});
+
+test('delete plantcares successfully', async () => {
+  const getPlantcaresResponse = { status: 200, data: plantcares };
+  const deletePlantcareResponse = { status: 200, data: plantcares };
+  axios.request.mockResolvedValueOnce(getPlantcaresResponse);
+  axios.request.mockResolvedValueOnce(deletePlantcareResponse);
+  axios.request.mockResolvedValueOnce({ status: 200, data: [] });
+
+  render(
+    <LoggedUserContextProvider section="/plantcares">
+      <Plantcares />
+    </LoggedUserContextProvider>
+  );
+
+  await waitFor(() => {
+    expect(screen.queryAllByTestId('plantcare-card')).toHaveLength(1);
+    expect(screen.queryAllByTestId('remove-button')).not.toEqual([]);
+
+    const deletePlantcareButton = screen.queryAllByTestId('remove-button')[0];
+    fireEvent(deletePlantcareButton, new MouseEvent('click', { bubbles: true, cancelable: true }));
+
+    expect(screen.queryAllByTestId('plantcare-card')).toHaveLength(0);
   });
 });
 
