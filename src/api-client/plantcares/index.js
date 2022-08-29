@@ -13,3 +13,23 @@ export const getPlantcares = ({ headers, onSuccessHandler, onErrorHandler, onFin
 
   ApiClient.httpRequest(params);
 };
+
+export const deletePlantcare = ({
+  id,
+  headers,
+  onSuccessHandler,
+  onErrorHandler,
+  onFinishHandler
+}) => {
+  const params = {
+    method: 'DELETE',
+    url: `plantcares/${id}`,
+    data: {},
+    headers,
+    onSuccessHandler,
+    onErrorHandler,
+    onFinishHandler
+  };
+
+  ApiClient.httpRequest(params);
+};
