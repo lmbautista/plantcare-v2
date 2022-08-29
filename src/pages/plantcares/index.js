@@ -70,10 +70,12 @@ export const Plantcares = ({}) => {
     );
   };
 
-  const reloadPlantcares = (timeout) =>
-    setTimeout(function () {
-      getPlantcares();
-    }, timeout);
+  const updatePlantcare = (plantcare) => {
+    setPlantcares((value) => {
+      value[plantcare.id] = plantcare;
+      return value;
+    });
+  };
 
   const removePlantcare = (plantcare) => {
     setPlantcares((value) => {
@@ -240,10 +242,7 @@ export const Plantcares = ({}) => {
       <Grid container direction="row" justifyContent="center" xs={12} mt={4}>
         {loading && loadingFragment()}
         {creationVisibility && (
-          <FormCard
-            onCloseHandler={() => toggleCreation()}
-            onSubmitHandler={() => reloadPlantcares(100)}
-          />
+          <FormCard onCloseHandler={() => toggleCreation()} onSubmitHandler={getPlantcares} />
         )}
         {!loading &&
           Object.values(plantcares).length > 0 &&
@@ -262,7 +261,7 @@ export const Plantcares = ({}) => {
                   key={`${plantcare.name}`}
                   plantcare={plantcare}
                   onCloseHandler={() => toggleEdition(plantcare)}
-                  onSubmitHandler={() => reloadPlantcares(5000)}
+                  onSubmitHandler={() => getPlantcare(plantcare.id)}
                 />
               )}
             </>
