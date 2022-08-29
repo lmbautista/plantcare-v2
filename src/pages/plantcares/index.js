@@ -1,6 +1,5 @@
 import { useMemo, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 
 import theGardenImg from './images/the-garden.png';
 import theWateringImg from './images/the-watering.png';
@@ -39,11 +38,7 @@ import { ReactComponent as RemoveImg } from './images/remove-icon.svg';
 import enLocale from './locales/en.js';
 import Statics from './statics';
 import { loadingFragment, authHeader } from '../../utils';
-
-const httClient = axios.create({
-  baseURL: 'http://dev.api.yourplantcare.com/v1',
-  timeout: 5000
-});
+import * as PlantcaresApiClient from '../../api-client/plantcares';
 
 const HEADER_HEIGHT = 64;
 
@@ -68,39 +63,30 @@ export const Plantcares = ({}) => {
 
   const reloadPlantcares = (timeout) =>
     setTimeout(function () {
-      getPlantcares(setPlantcares, setErrorMessage);
+      getPlantcares();
     }, timeout);
-  const getPlantcares = (onSuccessHandler, onErrorHandler) => {
+
+  const getPlantcares = () => {
     if (currentAuthHeader === null) {
       return false;
     }
 
+    const onSuccessHandler = setPlantcares;
+    const onErrorHandler = setErrorMessage;
+    const onFinishHandler = () => setLoading(false);
+    const headers = currentAuthHeader;
+
     setLoading(true);
-    httClient
-      .get('plantcares', {
-        locale: 'en',
-        headers: { ...currentAuthHeader }
-      })
-      .then(function (response) {
-        onSuccessHandler(response.data);
-      })
-      .catch(function (error) {
-        if (error.response && error.response.status === 422) {
-          const { message: responseMessage } = error.response.data;
-          onErrorHandler(responseMessage);
-        } else {
-          const responseMessage = (error.response && error.response.statusText) || error.message;
-          errorHandler(`HTTP error: ${responseMessage}`);
-          onErrorHandler(`HTTP error: ${responseMessage}`);
-        }
-      })
-      .finally(function () {
-        setLoading(false);
-      });
+    PlantcaresApiClient.getPlantcares({
+      headers,
+      onSuccessHandler,
+      onErrorHandler,
+      onFinishHandler
+    });
   };
 
   useEffect(() => {
-    getPlantcares(setPlantcares, setErrorMessage);
+    getPlantcares();
   }, [JSON.stringify(currentAuthHeader)]);
 
   useEffect(() => {
@@ -221,7 +207,7 @@ export const Plantcares = ({}) => {
             </>
           ))}
         {!loading &&
-          plantcares.length === 0 &&
+          Object.entries(plantcares).length === 0 &&
           notFoundFragment(plantcaresNotFoundImg, enLocale.theGarden.plantcaresNotFound)}
       </Grid>
     </Grid>
