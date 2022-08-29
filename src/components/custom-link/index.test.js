@@ -25,7 +25,7 @@ const App = () => (
   </>
 );
 
-beforeEach(() => jest.resetAllMocks());
+beforeEach(() => jest.clearAllMocks());
 
 test('load and render active component', () => {
   const history = createMemoryHistory();

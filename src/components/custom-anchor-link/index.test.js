@@ -13,7 +13,7 @@ const testProps = {
   onClickHandler
 };
 
-beforeEach(() => jest.resetAllMocks());
+beforeEach(() => jest.clearAllMocks());
 
 test('load and render active component', () => {
   window.scroll = jest.fn();
