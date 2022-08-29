@@ -106,6 +106,76 @@ test('load plantcares and render new plantcare component', async () => {
   });
 });
 
+test('load plantcares and create plantcare', async () => {
+  const response = { status: 200, data: plantcares };
+  axios.request.mockResolvedValueOnce({ status: 200, data: [] }); // GET plantcares
+  axios.request.mockResolvedValueOnce({ status: 201, data: {} }); // POST plantcare
+  axios.request.mockResolvedValueOnce(response); // GET plantcares
+
+  render(
+    <LoggedUserContextProvider section="/plantcares">
+      <Plantcares />
+    </LoggedUserContextProvider>
+  );
+
+  expect(screen.queryAllByTestId('plantcare-card')).toHaveLength(0);
+
+  const newPlantcareButton = screen.queryAllByTestId('new-plantcare-button')[0];
+  fireEvent(newPlantcareButton, new MouseEvent('click', { bubbles: true, cancelable: true }));
+
+  const nameInput = screen.getAllByTestId('name-input')[0];
+  const wetSensorFieldInput = screen.getAllByTestId('wet-sensor-field-input')[0];
+  const waterPumpFieldInput = screen.getAllByTestId('water-pump-field-input')[0];
+
+  fireEvent.change(nameInput, { target: { value: 'Ficus' } });
+  fireEvent.change(wetSensorFieldInput, { target: { value: 'A0' } });
+  fireEvent.change(waterPumpFieldInput, { target: { value: 'IN1' } });
+
+  const submitButton = screen.getAllByText('Submit')[0];
+  submitButton.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+
+  await waitFor(() => {
+    expect(screen.queryAllByTestId('plantcare-card')).toHaveLength(1);
+  });
+});
+
+test('load plantcares and update plantcare', async () => {
+  const newPlantcareName = 'Ficus EDITED';
+  axios.request.mockResolvedValueOnce({ status: 200, data: plantcares }); // GET plantcares
+  axios.request.mockResolvedValueOnce({ status: 201, data: {} }); // PUT plantcare
+  axios.request.mockResolvedValueOnce({
+    status: 200,
+    data: { ...plantcare, name: newPlantcareName }
+  }); // GET plantcare
+
+  render(
+    <LoggedUserContextProvider section="/plantcares">
+      <Plantcares />
+    </LoggedUserContextProvider>
+  );
+
+  await waitFor(() => {
+    expect(screen.queryAllByTestId('plantcare-card')).toHaveLength(1);
+
+    const editButton = screen.queryAllByTestId('edit-button')[0];
+    fireEvent(editButton, new MouseEvent('click', { bubbles: true, cancelable: true }));
+
+    const nameInput = screen.getAllByTestId('name-input')[0];
+    fireEvent.change(nameInput, { target: { value: newPlantcareName } });
+
+    const wetSensorFieldInput = screen.getAllByTestId('wet-sensor-field-input')[0];
+    fireEvent.change(wetSensorFieldInput, { target: { value: 'A0' } });
+
+    const waterPumpFieldInput = screen.getAllByTestId('water-pump-field-input')[0];
+    fireEvent.change(waterPumpFieldInput, { target: { value: 'IN1' } });
+
+    const submitButton = screen.getAllByText('Submit')[0];
+    submitButton.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+  });
+
+  expect(screen.getByText(newPlantcareName)).toBeDefined();
+});
+
 test('delete plantcares successfully', async () => {
   const getPlantcaresResponse = { status: 200, data: plantcares };
   const deletePlantcareResponse = { status: 200, data: plantcares };
