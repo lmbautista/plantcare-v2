@@ -61,10 +61,20 @@ export const Plantcares = ({}) => {
     setEditionVisibility((value) => ({ ...value, [id]: visibility }));
   };
 
+  const savePlantcares = (plantcares) => {
+    setPlantcares(
+      plantcares.reduce((result, plantcare) => {
+        result[plantcare.id] = plantcare;
+        return result;
+      }, {})
+    );
+  };
+
   const reloadPlantcares = (timeout) =>
     setTimeout(function () {
       getPlantcares();
     }, timeout);
+
   const removePlantcare = (plantcare) => {
     setPlantcares((value) => {
       delete value[plantcare.id];
@@ -77,7 +87,7 @@ export const Plantcares = ({}) => {
       return false;
     }
 
-    const onSuccessHandler = setPlantcares;
+    const onSuccessHandler = savePlantcares;
     const onErrorHandler = setErrorMessage;
     const onFinishHandler = () => setLoading(false);
     const headers = currentAuthHeader;
@@ -141,12 +151,12 @@ export const Plantcares = ({}) => {
 
   useEffect(() => {
     setWaterings(
-      plantcares.reduce((result, plantcare) => {
+      Object.values(plantcares).reduce((result, plantcare) => {
         result[plantcare.name] = plantcare.waterings;
         return result;
       }, {})
     );
-    plantcares.map((plantcare) =>
+    Object.values(plantcares).map((plantcare) =>
       setEditionVisibility((value) => ({ ...value, [plantcare.id]: false }))
     );
   }, [JSON.stringify(plantcares)]);
@@ -236,8 +246,8 @@ export const Plantcares = ({}) => {
           />
         )}
         {!loading &&
-          plantcares.length > 0 &&
-          plantcares.map((plantcare) => (
+          Object.values(plantcares).length > 0 &&
+          Object.values(plantcares).map((plantcare) => (
             <>
               {!editionVisibility[plantcare.id] && (
                 <Card
@@ -542,7 +552,7 @@ export const Plantcares = ({}) => {
       subtitle: (
         <>
           Last connection at <br />
-          {plantcares.length > 0 && plantcares[idx].lastConnectionAt}
+          {Object.values(plantcares).length > 0 && Object.values(plantcares)[idx].lastConnectionAt}
         </>
       ),
       actions: (
