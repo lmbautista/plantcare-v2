@@ -34,6 +34,46 @@ export const getPlantcare = ({
   ApiClient.httpRequest(params);
 };
 
+export const createPlantcare = ({
+  data,
+  headers,
+  onSuccessHandler,
+  onErrorHandler,
+  onFinishHandler
+}) => {
+  const params = {
+    method: 'POST',
+    url: 'plantcares',
+    data,
+    headers,
+    onSuccessHandler,
+    onErrorHandler,
+    onFinishHandler
+  };
+
+  ApiClient.httpRequest(params);
+};
+
+export const updatePlantcare = ({
+  data,
+  headers,
+  onSuccessHandler,
+  onErrorHandler,
+  onFinishHandler
+}) => {
+  const params = {
+    method: 'PUT',
+    url: `plantcares/${data.id}`,
+    data,
+    headers,
+    onSuccessHandler,
+    onErrorHandler,
+    onFinishHandler
+  };
+
+  ApiClient.httpRequest(params);
+};
+
 export const deletePlantcare = ({
   id,
   headers,
