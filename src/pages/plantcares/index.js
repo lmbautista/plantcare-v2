@@ -172,13 +172,13 @@ export const Plantcares = ({}) => {
       maxWidth="lg"
     >
       <Grid item>
-        <img src={image} style={{ maxHeight: '20vh', minHeight: '1vmin' }} />
+        <img src={image} style={{ maxHeight: '6vh', minHeight: '1vmin' }} />
       </Grid>
       <Grid item direction="column" sx={styles.notFound.text}>
         <Typography
           fontFamily={'Pacifico'}
           color="secondary"
-          variant="h4"
+          variant="h5"
           mb="18px"
           textAlign="center"
           sx={{ display: { xs: 'flex', lg: 'none' } }}
@@ -188,7 +188,7 @@ export const Plantcares = ({}) => {
         <Typography
           fontFamily={'Pacifico'}
           color="secondary"
-          variant="h2"
+          variant="h4"
           mb="18px"
           textAlign="center"
           sx={{ display: { xs: 'none', lg: 'flex' } }}
