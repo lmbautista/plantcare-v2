@@ -2,8 +2,9 @@ import * as ApiClient from '..';
 
 import * as PlantcaresApiClient from '.';
 
+const headers = { Authorization: 'Token asi0o12309djknsdoi8' };
+
 test('getPlantcares', () => {
-  const headers = { Authorization: 'Token asi0o12309djknsdoi8' };
   const onSuccessHandler = jest.fn();
   const onErrorHandler = jest.fn();
   const params = { headers, onSuccessHandler, onErrorHandler };
@@ -26,7 +27,6 @@ test('getPlantcares', () => {
 });
 
 test('deletePlantcare', () => {
-  const headers = { Authorization: 'Token asi0o12309djknsdoi8' };
   const onSuccessHandler = jest.fn();
   const onErrorHandler = jest.fn();
   const plantcareId = 1;
@@ -50,7 +50,6 @@ test('deletePlantcare', () => {
 });
 
 test('getPlantcare', () => {
-  const headers = { Authorization: 'Token asi0o12309djknsdoi8' };
   const onSuccessHandler = jest.fn();
   const onErrorHandler = jest.fn();
   const plantcareId = 1;
@@ -74,7 +73,6 @@ test('getPlantcare', () => {
 });
 
 test('createPlantcare', () => {
-  const headers = { Authorization: 'Token asi0o12309djknsdoi8' };
   const data = { name: 'Ficus' };
   const onSuccessHandler = jest.fn();
   const onErrorHandler = jest.fn();
@@ -99,7 +97,6 @@ test('createPlantcare', () => {
 });
 
 test('updatePlantcare', () => {
-  const headers = { Authorization: 'Token asi0o12309djknsdoi8' };
   const plantcareId = 1;
   const data = { id: plantcareId, name: 'Ficus' };
   const onSuccessHandler = jest.fn();
