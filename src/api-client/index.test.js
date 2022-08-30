@@ -66,8 +66,8 @@ test('httpRequest fails', async () => {
       data: {}
     }
   };
-  const errorMessage = `HTTP error: ${errorResponse.response.statusText}`;
-
+  const responseMessage = `HTTP error: ${errorResponse.response.statusText}`;
+  const errorDetails = { responseMessage };
   axios.request.mockRejectedValue(errorResponse);
 
   jest.mock('../utils', () => jest.fn(() => {}));
@@ -85,7 +85,7 @@ test('httpRequest fails', async () => {
   await waitFor(() => {
     expect(axios.request).toHaveBeenCalledWith(requestParams);
     expect(onSuccessHandler).toHaveBeenCalledTimes(0);
-    expect(onErrorHandler).toHaveBeenNthCalledWith(1, errorMessage);
+    expect(onErrorHandler).toHaveBeenNthCalledWith(1, errorDetails);
     expect(onFinishHandler).toHaveBeenCalledTimes(1);
   });
 });

@@ -89,7 +89,7 @@ export const Plantcares = ({}) => {
     }
 
     const onSuccessHandler = savePlantcares;
-    const onErrorHandler = setErrorMessage;
+    const onErrorHandler = ({ responseMessage }) => setErrorMessage(responseMessage);
     const onFinishHandler = () => setLoading(false);
     const headers = currentAuthHeader;
 
@@ -107,7 +107,7 @@ export const Plantcares = ({}) => {
       return false;
     }
     const onSuccessHandler = updatePlantcare;
-    const onErrorHandler = setErrorMessage;
+    const onErrorHandler = ({ responseMessage }) => setErrorMessage(responseMessage);
     const onFinishHandler = () => {
       toggleEdition(plantcares[id]);
       setLoading(false);
@@ -130,7 +130,7 @@ export const Plantcares = ({}) => {
     }
 
     const onSuccessHandler = removePlantcare(plantcare);
-    const onErrorHandler = setErrorMessage;
+    const onErrorHandler = ({ responseMessage }) => setErrorMessage(responseMessage);
     const onFinishHandler = () => {
       setLoading(false);
     };

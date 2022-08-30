@@ -1,16 +1,18 @@
 import axios from 'axios';
 
-const getErrorMessage = (error) => {
-  let errorMessage;
+const getErrorDetails = (error) => {
+  let responseMessage;
+  let responseErrors;
 
   if (error.response && error.response.status === 422) {
-    errorMessage = error.response.data.message;
+    responseMessage = error.response.data.message;
+    responseErrors = error.response.data.errors;
   } else {
     const message = (error.response && error.response.statusText) || error.message;
-    errorMessage = `HTTP error: ${message}`;
+    responseMessage = `HTTP error: ${message}`;
   }
 
-  return errorMessage;
+  return { responseMessage, responseErrors };
 };
 
 const httpClient = axios.create({
@@ -35,8 +37,8 @@ export const httpRequest = (params) => {
       onSuccessHandler(response.data);
     })
     .catch(function (error) {
-      const errorMessage = getErrorMessage(error);
-      onErrorHandler(errorMessage);
+      const errorDetails = getErrorDetails(error);
+      onErrorHandler(errorDetails);
     })
     .finally(function () {
       onFinishHandler();
