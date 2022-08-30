@@ -26,7 +26,6 @@ import Bubble from './bubble';
 import Card from './card';
 import FormCard from './form-card';
 import AnchorLink from 'react-anchor-link-smooth-scroll';
-import PanelWithImage from '../../components/panel-with-image';
 import Panel from '../../components/panel';
 // Bubble
 import defaultImg from './images/plantcare-default.png';
@@ -201,7 +200,12 @@ export const Plantcares = ({}) => {
   );
 
   const gardenButtons = (
-    <Stack direction="row" spacing={2} pt={6}>
+    <Stack
+      direction="row"
+      spacing={2}
+      pt={6}
+      sx={{ justifyContent: { xs: 'center', sm: 'flex-start' } }}
+    >
       <Button
         onClick={() => toggleCreation()}
         to="#"
@@ -229,17 +233,25 @@ export const Plantcares = ({}) => {
       justifyContent="space-between"
       maxWidth="xl"
     >
-      <Grid item direction="column" justifyContent="center" xs={12}>
-        <PanelWithImage
-          image={theGardenImg}
-          styles={{ imgStyles: { maxHeight: '28vh' }, minHeight: '1vmin' }}
-          title={enLocale.theGarden.title}
-          subtitle={enLocale.theGarden.subtitle}
-          description={enLocale.theGarden.description}
-          children={gardenButtons}
-        />
+      <Grid
+        container
+        direction="row"
+        justifyContent="center"
+        alignItems="center"
+        m="0 auto 40px auto"
+        maxWidth="lg"
+      >
+        <Grid item xs={12} sm={4} sx={styles.theGarden.imgContainer}>
+          <img src={theGardenImg} alt="garden-img" style={styles.theGarden.img} />
+        </Grid>
+        <Grid item xs={12} sm={6} md={6} sx={styles.theGarden.details}>
+          {typographies.theGarden.title}
+          {typographies.theGarden.subtitle}
+          {typographies.theGarden.description}
+          {gardenButtons}
+        </Grid>
       </Grid>
-      <Grid container direction="row" justifyContent="center" xs={12} mt={4}>
+      <Grid container direction="row" justifyContent="space-evenly">
         {loading && loadingFragment()}
         {creationVisibility && (
           <FormCard onCloseHandler={() => toggleCreation()} onSubmitHandler={getPlantcares} />
@@ -519,15 +531,23 @@ export const Plantcares = ({}) => {
       justifyContent="space-between"
       maxWidth="xl"
     >
-      <Grid item direction="column" justifyContent="center" xs={12}>
-        <PanelWithImage
-          image={theWateringImg}
-          styles={{ imgStyles: { maxHeight: '28vh' }, minHeight: '1vmin' }}
-          title={enLocale.theWatering.title}
-          subtitle={enLocale.theWatering.subtitle}
-          description={enLocale.theWatering.description}
-          children={wateringButtons}
-        />
+      <Grid
+        container
+        direction="row"
+        justifyContent="center"
+        alignItems="center"
+        m="0 auto 40px auto"
+        maxWidth="lg"
+      >
+        <Grid item xs={12} sm={4} sx={styles.theWatering.imgContainer}>
+          <img src={theWateringImg} alt="watering-img" style={styles.theWatering.img} />
+        </Grid>
+        <Grid item xs={12} sm={6} md={6} sx={styles.theWatering.details}>
+          {typographies.theWatering.title}
+          {typographies.theWatering.subtitle}
+          {typographies.theWatering.description}
+          {wateringButtons}
+        </Grid>
       </Grid>
       <Grid container direction="row" justifyContent="center" xs={12} mt={4}>
         {loading && loadingFragment()}
@@ -578,14 +598,23 @@ export const Plantcares = ({}) => {
       justifyContent="space-between"
       maxWidth="xl"
     >
-      <Grid item direction="column" justifyContent="center" xs={12}>
-        <PanelWithImage
-          image={theConnectivityImg}
-          styles={{ imgStyles: { maxHeight: '28vh' }, minHeight: '1vmin' }}
-          title={enLocale.theConnectivity.title}
-          subtitle={enLocale.theConnectivity.subtitle}
-          description={enLocale.theConnectivity.description}
-        />
+      <Grid
+        container
+        direction="row"
+        justifyContent="center"
+        alignItems="center"
+        m="0 auto 40px auto"
+        maxWidth="lg"
+      >
+        <Grid item xs={12} sm={4} sx={styles.theConnectivity.imgContainer}>
+          <img src={theConnectivityImg} alt="connectiviy-img" style={styles.theConnectivity.img} />
+        </Grid>
+        <Grid item xs={12} sm={6} md={6} sx={styles.theConnectivity.details}>
+          {typographies.theConnectivity.title}
+          {typographies.theConnectivity.subtitle}
+          {typographies.theConnectivity.description}
+          {wateringButtons}
+        </Grid>
       </Grid>
       <Grid container direction="row" justifyContent="center" xs={12} mt={4}>
         {/* <Bubble {...connectivityBubbleProp()} /> */}
