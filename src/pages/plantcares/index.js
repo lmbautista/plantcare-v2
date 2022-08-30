@@ -199,6 +199,27 @@ export const Plantcares = ({}) => {
     </Grid>
   );
 
+  const sectionHeaderFragment = (section, image, buttons = <></>) => (
+    <Grid
+      container
+      direction="row"
+      justifyContent="center"
+      alignItems="center"
+      m="0 auto 40px auto"
+      maxWidth="lg"
+    >
+      <Grid item xs={12} sm={4} sx={styles.sectionHeader.imgContainer}>
+        <img src={image} alt={`${section}-img`} style={styles.sectionHeader.img} />
+      </Grid>
+      <Grid item xs={12} sm={6} md={6} sx={styles.sectionHeader.details}>
+        {typographies[section].title}
+        {typographies[section].subtitle}
+        {typographies[section].description}
+        {buttons}
+      </Grid>
+    </Grid>
+  );
+
   const gardenButtons = (
     <Stack
       direction="row"
@@ -233,24 +254,7 @@ export const Plantcares = ({}) => {
       justifyContent="space-between"
       maxWidth="xl"
     >
-      <Grid
-        container
-        direction="row"
-        justifyContent="center"
-        alignItems="center"
-        m="0 auto 40px auto"
-        maxWidth="lg"
-      >
-        <Grid item xs={12} sm={4} sx={styles.theGarden.imgContainer}>
-          <img src={theGardenImg} alt="garden-img" style={styles.theGarden.img} />
-        </Grid>
-        <Grid item xs={12} sm={6} md={6} sx={styles.theGarden.details}>
-          {typographies.theGarden.title}
-          {typographies.theGarden.subtitle}
-          {typographies.theGarden.description}
-          {gardenButtons}
-        </Grid>
-      </Grid>
+      {sectionHeaderFragment('theGarden', theGardenImg, gardenButtons)}
       <Grid container direction="row" justifyContent="space-evenly">
         {loading && loadingFragment()}
         {creationVisibility && (
@@ -531,24 +535,7 @@ export const Plantcares = ({}) => {
       justifyContent="space-between"
       maxWidth="xl"
     >
-      <Grid
-        container
-        direction="row"
-        justifyContent="center"
-        alignItems="center"
-        m="0 auto 40px auto"
-        maxWidth="lg"
-      >
-        <Grid item xs={12} sm={4} sx={styles.theWatering.imgContainer}>
-          <img src={theWateringImg} alt="watering-img" style={styles.theWatering.img} />
-        </Grid>
-        <Grid item xs={12} sm={6} md={6} sx={styles.theWatering.details}>
-          {typographies.theWatering.title}
-          {typographies.theWatering.subtitle}
-          {typographies.theWatering.description}
-          {wateringButtons}
-        </Grid>
-      </Grid>
+      {sectionHeaderFragment('theWatering', theWateringImg, wateringButtons)}
       <Grid container direction="row" justifyContent="center" xs={12} mt={4}>
         {loading && loadingFragment()}
         {!loading &&
@@ -598,24 +585,7 @@ export const Plantcares = ({}) => {
       justifyContent="space-between"
       maxWidth="xl"
     >
-      <Grid
-        container
-        direction="row"
-        justifyContent="center"
-        alignItems="center"
-        m="0 auto 40px auto"
-        maxWidth="lg"
-      >
-        <Grid item xs={12} sm={4} sx={styles.theConnectivity.imgContainer}>
-          <img src={theConnectivityImg} alt="connectiviy-img" style={styles.theConnectivity.img} />
-        </Grid>
-        <Grid item xs={12} sm={6} md={6} sx={styles.theConnectivity.details}>
-          {typographies.theConnectivity.title}
-          {typographies.theConnectivity.subtitle}
-          {typographies.theConnectivity.description}
-          {wateringButtons}
-        </Grid>
-      </Grid>
+      {sectionHeaderFragment('theConnectivity', theConnectivityImg)}
       <Grid container direction="row" justifyContent="center" xs={12} mt={4}>
         {/* <Bubble {...connectivityBubbleProp()} /> */}
         {loading && loadingFragment()}

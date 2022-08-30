@@ -24,45 +24,7 @@ export const Statics = () => {
         justifyContent: 'center'
       }
     },
-    theGarden: {
-      imgContainer: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: { xs: 'center', sm: 'end' },
-        maxHeight: { xs: '48vh', sm: '28vh' },
-        paddingRight: { xs: '0', sm: '60px' },
-        marginBottom: { xs: '30px' },
-        marginTop: { xs: '30px', sm: 0 }
-      },
-      img: { maxHeight: '28vh', maxWidth: '100%' },
-      details: {
-        display: 'flex',
-        justifyContent: 'center',
-        flexDirection: 'column',
-        padding: { xs: '30px 10px 0', sm: '0 10px' },
-        textAlign: { xs: 'center', sm: 'inherit' }
-      }
-    },
-    theWatering: {
-      imgContainer: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: { xs: 'center', sm: 'end' },
-        maxHeight: { xs: '48vh', sm: '28vh' },
-        paddingRight: { xs: '0', sm: '60px' },
-        marginBottom: { xs: '30px' },
-        marginTop: { xs: '30px', sm: 0 }
-      },
-      img: { maxHeight: '28vh', maxWidth: '100%' },
-      details: {
-        display: 'flex',
-        justifyContent: 'center',
-        flexDirection: 'column',
-        padding: { xs: '30px 10px 0', sm: '0 10px' },
-        textAlign: { xs: 'center', sm: 'inherit' }
-      }
-    },
-    theConnectivity: {
+    sectionHeader: {
       imgContainer: {
         display: 'flex',
         alignItems: 'center',
