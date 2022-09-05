@@ -283,11 +283,11 @@ export const Plantcares = ({}) => {
     </Grid>
   );
 
-  const sectionHeaderFragment = (section, image, buttons = <></>) => (
+  const sectionHeaderFragment = ({ section, image, buttons = <></> }) => (
     <Grid
       container
       direction="row"
-      justifyContent="center"
+      justifyContent="space-around"
       alignItems="center"
       m="0 auto 40px auto"
       maxWidth="lg"
@@ -404,7 +404,7 @@ export const Plantcares = ({}) => {
       justifyContent="space-between"
       maxWidth="xl"
     >
-      {sectionHeaderFragment('theGarden', theGardenImg, gardenButtons)}
+      {sectionHeaderFragment({ section: 'theGarden', image: theGardenImg, buttons: gardenButtons })}
       <Grid
         container
         direction="row"
@@ -698,7 +698,11 @@ export const Plantcares = ({}) => {
       justifyContent="space-between"
       maxWidth="xl"
     >
-      {sectionHeaderFragment('theWatering', theWateringImg, wateringButtons)}
+      {sectionHeaderFragment({
+        section: 'theWatering',
+        image: theWateringImg,
+        buttons: wateringButtons
+      })}
       <Grid container direction="row" justifyContent="center" xs={12} mt={4}>
         {loading && loadingFragment()}
         {!loading &&
@@ -748,7 +752,7 @@ export const Plantcares = ({}) => {
       justifyContent="space-between"
       maxWidth="xl"
     >
-      {sectionHeaderFragment('theConnectivity', theConnectivityImg)}
+      {sectionHeaderFragment({ section: 'theConnectivity', image: theConnectivityImg })}
       <Grid container direction="row" justifyContent="center" xs={12} mt={4}>
         {/* <Bubble {...connectivityBubbleProp()} /> */}
         {loading && loadingFragment()}
