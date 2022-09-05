@@ -124,13 +124,13 @@ export const Statics = ({ plantcare }) => {
     ),
     syncedAt: (
       <Typography variant="subtitle1" sx={{ fontWeight: '300' }}>
-        {`${enLocale.syncedAt} ${plantcare.wet_synced_at}`}
+        {`${enLocale.syncedAt} ${plantcare.wet_synced_at ?? '-'}`}
       </Typography>
     ),
     wetStatus: (
       <>
         <Typography variant="h4" sx={{ fontWeight: '400', display: 'inline-block' }}>
-          <span style={{ color: wetStatusColor }}>{plantcare.wet}%</span>
+          <span style={{ color: wetStatusColor }}>{plantcare.wet ?? '0.0'}%</span>
         </Typography>
         <Typography
           variant="h6"
