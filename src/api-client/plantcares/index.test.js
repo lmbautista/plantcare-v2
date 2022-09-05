@@ -73,16 +73,15 @@ test('getPlantcare', () => {
 });
 
 test('createPlantcare', () => {
-  const data = { name: 'Ficus' };
+  const data = { name: 'Ficus', waterPumpId: 'IN1', wetSensorId: 'A1' };
   const onSuccessHandler = jest.fn();
   const onErrorHandler = jest.fn();
-  const plantcareId = 1;
   const params = { data, headers, onSuccessHandler, onErrorHandler };
   const requestParams = {
     method: 'POST',
     url: 'plantcares',
     headers,
-    data,
+    data: { name: data.name, water_pump_id: data.waterPumpId, wet_sensor_id: data.wetSensorId },
     onSuccessHandler,
     onErrorHandler,
     onFinishHandler: undefined
@@ -98,7 +97,7 @@ test('createPlantcare', () => {
 
 test('updatePlantcare', () => {
   const plantcareId = 1;
-  const data = { id: plantcareId, name: 'Ficus' };
+  const data = { id: plantcareId, name: 'Ficus', waterPumpId: 'IN1', wetSensorId: 'A1' };
   const onSuccessHandler = jest.fn();
   const onErrorHandler = jest.fn();
   const params = { data, headers, onSuccessHandler, onErrorHandler };
@@ -106,7 +105,12 @@ test('updatePlantcare', () => {
     method: 'PUT',
     url: `plantcares/${plantcareId}`,
     headers,
-    data,
+    data: {
+      id: plantcareId,
+      name: data.name,
+      water_pump_id: data.waterPumpId,
+      wet_sensor_id: data.wetSensorId
+    },
     onSuccessHandler,
     onErrorHandler,
     onFinishHandler: undefined
