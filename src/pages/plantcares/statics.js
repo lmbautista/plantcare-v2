@@ -43,6 +43,20 @@ export const Statics = () => {
         textAlign: { xs: 'center', sm: 'inherit' }
       }
     },
+    card: {
+      maxWidth: 325,
+      height: 578,
+      mt: { xs: 8, sm: 8 },
+      margin: '20px'
+    },
+    cardForm: {
+      position: 'absolute',
+      top: '10px',
+      right: '10px',
+      width: '100%',
+      height: '100px',
+      textAlign: 'right'
+    },
     theInstructions: {
       howSetup: {
         img: {

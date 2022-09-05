@@ -107,10 +107,9 @@ test('load plantcares and render new plantcare component', async () => {
 });
 
 test('load plantcares and create plantcare', async () => {
-  const response = { status: 200, data: plantcares };
   axios.request.mockResolvedValueOnce({ status: 200, data: [] }); // GET plantcares
   axios.request.mockResolvedValueOnce({ status: 201, data: {} }); // POST plantcare
-  axios.request.mockResolvedValueOnce(response); // GET plantcares
+  axios.request.mockResolvedValueOnce({ status: 200, data: plantcares }); // GET plantcares
 
   render(
     <LoggedUserContextProvider section="/plantcares">
@@ -136,17 +135,17 @@ test('load plantcares and create plantcare', async () => {
 
   await waitFor(() => {
     expect(screen.queryAllByTestId('plantcare-card')).toHaveLength(1);
+    expect(screen.queryByText('Congratulations, everything worked fine!')).toBeDefined();
   });
 });
 
 test('load plantcares and update plantcare', async () => {
   const newPlantcareName = 'Ficus EDITED';
   axios.request.mockResolvedValueOnce({ status: 200, data: plantcares }); // GET plantcares
-  axios.request.mockResolvedValueOnce({ status: 201, data: {} }); // PUT plantcare
   axios.request.mockResolvedValueOnce({
     status: 200,
     data: { ...plantcare, name: newPlantcareName }
-  }); // GET plantcare
+  }); // PUT plantcare
 
   render(
     <LoggedUserContextProvider section="/plantcares">
@@ -174,6 +173,7 @@ test('load plantcares and update plantcare', async () => {
   });
 
   expect(screen.getByText(newPlantcareName)).toBeDefined();
+  expect(screen.queryByText('Congratulations, everything worked fine!')).toBeDefined();
 });
 
 test('delete plantcares successfully', async () => {
@@ -197,6 +197,7 @@ test('delete plantcares successfully', async () => {
     fireEvent(deletePlantcareButton, new MouseEvent('click', { bubbles: true, cancelable: true }));
 
     expect(screen.queryAllByTestId('plantcare-card')).toHaveLength(0);
+    expect(screen.queryByText('Congratulations, everything worked fine!')).toBeDefined();
   });
 });
 

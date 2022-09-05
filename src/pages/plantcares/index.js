@@ -14,17 +14,23 @@ import InstructionsStepFourImg from './images/instructions-step-four.png';
 import CardExplainedImg from './images/plantcare-explained.png';
 // UI components
 import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CloseIcon from '@mui/icons-material/Close';
+import Collapse from '@mui/material/Collapse';
 import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
 import { List, ListItem, ListItemAvatar, ListItemText } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import { ThemeProvider } from '@mui/material/styles';
 // Components
 import Bubble from './bubble';
-import Card from './card';
-import FormCard from './form-card';
+import PlantcareCard from './card';
+import Form from './form';
 import AnchorLink from 'react-anchor-link-smooth-scroll';
 import Panel from '../../components/panel';
 // Bubble
@@ -35,10 +41,11 @@ import { ReactComponent as EditImg } from './images/edit-icon.svg';
 import { ReactComponent as RemoveImg } from './images/remove-icon.svg';
 // Others
 import enLocale from './locales/en.js';
+import enFormLocale from './form/locales/en.js';
 import Statics from './statics';
 import { loadingFragment, authHeader } from '../../utils';
 import * as PlantcaresApiClient from '../../api-client/plantcares';
-
+import Main from '../../themes/main';
 const HEADER_HEIGHT = 64;
 
 export const Plantcares = ({}) => {
@@ -48,16 +55,21 @@ export const Plantcares = ({}) => {
   const [loading, setLoading] = useState(false);
   const [plantcares, setPlantcares] = useState([]);
   const [waterings, setWaterings] = useState({});
+  const [isVisibleErrorMessage, setVisibleErrorMessage] = useState(false);
   const [errorMessage, setErrorMessage] = useState(undefined);
+  const [errors, setErrors] = useState(undefined);
+  const [isVisibleSuccessMessage, setVisibleSuccessMessage] = useState(false);
+  const [successMessageTitle, setSuccessMessageTitle] = useState(undefined);
+  const [successMessage, setSuccessMessage] = useState(undefined);
   const [creationVisibility, setCreationVisibility] = useState(false);
   const [editionVisibility, setEditionVisibility] = useState({});
 
   const toggleCreation = () => setCreationVisibility((value) => !value);
-  const toggleEdition = (plantcare) => {
-    const { id } = plantcare;
-    const visibility = (editionVisibility[id] !== undefined && !editionVisibility[id]) ?? false;
+  const toggleEdition = (plantcareId) => {
+    const visibility =
+      (editionVisibility[plantcareId] !== undefined && !editionVisibility[plantcareId]) ?? false;
 
-    setEditionVisibility((value) => ({ ...value, [id]: visibility }));
+    setEditionVisibility((value) => ({ ...value, [plantcareId]: visibility }));
   };
 
   const savePlantcares = (plantcares) => {
@@ -69,9 +81,9 @@ export const Plantcares = ({}) => {
     );
   };
 
-  const updatePlantcare = (plantcare) => {
+  const refreshPlantcare = (plantcare) => {
     setPlantcares((value) => {
-      value[plantcare.id] = plantcare;
+      value[plantcare.id] = { ...value[plantcare.id], ...plantcare };
       return value;
     });
   };
@@ -91,10 +103,74 @@ export const Plantcares = ({}) => {
     const onSuccessHandler = savePlantcares;
     const onErrorHandler = ({ responseMessage }) => setErrorMessage(responseMessage);
     const onFinishHandler = () => setLoading(false);
-    const headers = currentAuthHeader;
+    const headers = { ...currentAuthHeader };
 
     setLoading(true);
     PlantcaresApiClient.getPlantcares({
+      headers,
+      onSuccessHandler,
+      onErrorHandler,
+      onFinishHandler
+    });
+  };
+
+  const createPlantcare = (data) => {
+    if (currentAuthHeader === null) {
+      return false;
+    }
+
+    const onSuccessHandler = () => {
+      setSuccessMessageTitle(enFormLocale.new.success.title);
+      setSuccessMessage(enFormLocale.new.success.description);
+      getPlantcares();
+      setVisibleSuccessMessage(true);
+    };
+    const onErrorHandler = ({ responseMessage, responseErrors }) => {
+      setErrorMessage(responseMessage);
+      setErrors(responseErrors);
+      setVisibleErrorMessage(true);
+    };
+    const onFinishHandler = () => {
+      toggleCreation();
+      setLoading(false);
+    };
+    const headers = { ...currentAuthHeader };
+
+    setLoading(true);
+    PlantcaresApiClient.createPlantcare({
+      data,
+      headers,
+      onSuccessHandler,
+      onErrorHandler,
+      onFinishHandler
+    });
+  };
+
+  const updatePlantcare = (data) => {
+    if (currentAuthHeader === null) {
+      return false;
+    }
+
+    const onSuccessHandler = (plantcare) => {
+      setSuccessMessageTitle(enFormLocale.edit.success.title);
+      setSuccessMessage(enFormLocale.edit.success.description);
+      refreshPlantcare(plantcare);
+      setVisibleSuccessMessage(true);
+    };
+    const onErrorHandler = ({ responseMessage, responseErrors }) => {
+      setErrorMessage(responseMessage);
+      setErrors(responseErrors);
+      setVisibleErrorMessage(true);
+    };
+    const onFinishHandler = () => {
+      toggleEdition(data.id);
+      setLoading(false);
+    };
+    const headers = { ...currentAuthHeader };
+
+    setLoading(true);
+    PlantcaresApiClient.updatePlantcare({
+      data,
       headers,
       onSuccessHandler,
       onErrorHandler,
@@ -106,13 +182,13 @@ export const Plantcares = ({}) => {
     if (currentAuthHeader === null) {
       return false;
     }
-    const onSuccessHandler = updatePlantcare;
+    const onSuccessHandler = refreshPlantcare;
     const onErrorHandler = ({ responseMessage }) => setErrorMessage(responseMessage);
     const onFinishHandler = () => {
-      toggleEdition(plantcares[id]);
+      toggleEdition(id);
       setLoading(false);
     };
-    const headers = currentAuthHeader;
+    const headers = { ...currentAuthHeader };
 
     setLoading(true);
     PlantcaresApiClient.getPlantcare({
@@ -129,12 +205,20 @@ export const Plantcares = ({}) => {
       return false;
     }
 
-    const onSuccessHandler = removePlantcare(plantcare);
-    const onErrorHandler = ({ responseMessage }) => setErrorMessage(responseMessage);
+    const onSuccessHandler = () => {
+      setSuccessMessageTitle(enLocale.theGarden.remove.success.title);
+      setSuccessMessage(enLocale.theGarden.remove.success.description);
+      setVisibleSuccessMessage(true);
+      removePlantcare(plantcare);
+    };
+    const onErrorHandler = ({ responseMessage }) => {
+      setErrorMessage(responseMessage);
+      setVisibleErrorMessage(true);
+    };
     const onFinishHandler = () => {
       setLoading(false);
     };
-    const headers = currentAuthHeader;
+    const headers = { ...currentAuthHeader };
 
     setLoading(true);
     PlantcaresApiClient.deletePlantcare({
@@ -220,6 +304,72 @@ export const Plantcares = ({}) => {
     </Grid>
   );
 
+  const formCardFragment = ({ plantcare, onCloseHandler, onSubmitHandler }) => (
+    <Card sx={styles.card}>
+      <Box data-testid="form" sx={{ position: 'relative' }}>
+        <Box sx={styles.cardForm}>
+          <Button
+            {...props.actionButton}
+            data-testid="close-form"
+            onClick={() => {
+              onCloseHandler();
+            }}
+          >
+            <CloseIcon fontSize="inherit" />
+          </Button>
+        </Box>
+        <Form plantcare={plantcare} onSubmitHandler={onSubmitHandler} errors={errors} />
+      </Box>
+    </Card>
+  );
+
+  const successMessageFragment = (
+    <Collapse in={isVisibleSuccessMessage}>
+      <Alert
+        action={
+          <IconButton
+            aria-label="close"
+            color="inherit"
+            size="small"
+            onClick={() => {
+              setVisibleSuccessMessage(false);
+            }}
+          >
+            <CloseIcon fontSize="inherit" />
+          </IconButton>
+        }
+        sx={{ mb: 2 }}
+      >
+        <AlertTitle>{successMessageTitle}</AlertTitle>
+        {successMessage}
+      </Alert>
+    </Collapse>
+  );
+
+  const errorMessageFragment = errorMessage && (
+    <Collapse in={isVisibleErrorMessage}>
+      <Alert
+        severity="error"
+        action={
+          <IconButton
+            aria-label="close"
+            color="inherit"
+            size="small"
+            onClick={() => {
+              setVisibleErrorMessage(false);
+            }}
+          >
+            <CloseIcon fontSize="inherit" />
+          </IconButton>
+        }
+        sx={{ mb: 2 }}
+      >
+        <AlertTitle>{enFormLocale.somethingWentWrong}</AlertTitle>
+        {errorMessage}
+      </Alert>
+    </Collapse>
+  );
+
   const gardenButtons = (
     <Stack
       direction="row"
@@ -255,31 +405,44 @@ export const Plantcares = ({}) => {
       maxWidth="xl"
     >
       {sectionHeaderFragment('theGarden', theGardenImg, gardenButtons)}
+      <Grid
+        container
+        direction="row"
+        justifyContent="center"
+        alignItems="center"
+        maxWidth="md"
+        sx={{ margin: { xs: '0 10px', sm: 'auto' } }}
+      >
+        <Grid item xs={12}>
+          {errorMessageFragment}
+          {successMessageFragment}
+        </Grid>
+      </Grid>
       <Grid container direction="row" justifyContent="space-evenly">
         {loading && loadingFragment()}
-        {creationVisibility && (
-          <FormCard onCloseHandler={() => toggleCreation()} onSubmitHandler={getPlantcares} />
-        )}
+        {creationVisibility &&
+          formCardFragment({
+            onCloseHandler: toggleCreation,
+            onSubmitHandler: createPlantcare
+          })}
         {!loading &&
           Object.values(plantcares).length > 0 &&
           Object.values(plantcares).map((plantcare) => (
             <>
               {!editionVisibility[plantcare.id] && (
-                <Card
-                  key={`${plantcare.name}`}
+                <PlantcareCard
+                  key={`card-${plantcare.name}`}
                   plantcare={plantcare}
-                  onEditHandler={() => toggleEdition(plantcare)}
+                  onEditHandler={() => toggleEdition(plantcare.id)}
                   onRemoveHandler={() => deletePlantcare(plantcare)}
                 />
               )}
-              {editionVisibility[plantcare.id] && (
-                <FormCard
-                  key={`${plantcare.name}`}
-                  plantcare={plantcare}
-                  onCloseHandler={() => toggleEdition(plantcare)}
-                  onSubmitHandler={() => getPlantcare(plantcare.id)}
-                />
-              )}
+              {editionVisibility[plantcare.id] &&
+                formCardFragment({
+                  plantcare,
+                  onCloseHandler: () => toggleEdition(plantcare.id),
+                  onSubmitHandler: updatePlantcare
+                })}
             </>
           ))}
         {!loading &&
@@ -596,25 +759,24 @@ export const Plantcares = ({}) => {
   );
 
   return (
-    <span data-testid="plantcares">
-      {errorMessage && (
-        <Alert severity="error" sx={{ mt: 1, mb: 1 }}>
-          {errorMessage}
-        </Alert>
-      )}
-      <div id="garden" style={{ ...styles.default, ...styles.gardenStyles }} data-testid="garden">
-        <Box sx={{ mt: { xs: 5, sm: 8 }, padding: '50px 0', width: '100%' }}>{gardenFragment}</Box>
-      </div>
-      <div id="watering" style={styles.wateringStyles} data-testid="watering">
-        <Box sx={{ padding: '50px 0', width: '100%' }}>{wateringFragment}</Box>
-      </div>
-      <div id="connectivity" style={styles.connectivityStyles} data-testid="connectivity">
-        <Box sx={{ padding: '50px 0', width: '100%' }}>{connectivityFragment}</Box>
-      </div>
-      <div id="howto" style={styles.howToStyles} data-testid="howto">
-        <Box sx={{ padding: '50px 0', width: '100%' }}>{howToFragment}</Box>
-      </div>
-    </span>
+    <ThemeProvider theme={Main}>
+      <span data-testid="plantcares">
+        <div id="garden" style={{ ...styles.default, ...styles.gardenStyles }} data-testid="garden">
+          <Box sx={{ mt: { xs: 5, sm: 8 }, padding: '50px 0', width: '100%' }}>
+            {gardenFragment}
+          </Box>
+        </div>
+        <div id="watering" style={styles.wateringStyles} data-testid="watering">
+          <Box sx={{ padding: '50px 0', width: '100%' }}>{wateringFragment}</Box>
+        </div>
+        <div id="connectivity" style={styles.connectivityStyles} data-testid="connectivity">
+          <Box sx={{ padding: '50px 0', width: '100%' }}>{connectivityFragment}</Box>
+        </div>
+        <div id="howto" style={styles.howToStyles} data-testid="howto">
+          <Box sx={{ padding: '50px 0', width: '100%' }}>{howToFragment}</Box>
+        </div>
+      </span>
+    </ThemeProvider>
   );
 };
 
