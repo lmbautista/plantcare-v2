@@ -47,8 +47,8 @@ export const PlantcareForm = ({ plantcare, errors, onSubmitHandler }) => {
           <FormContainer
             defaultValues={{
               name: plantcare.name,
-              wetSensorField: plantcare.wet_sensor_field,
-              waterPumpField: plantcare.water_pump_field
+              wetSensorField: plantcare.wet_sensor_field ?? undefined,
+              waterPumpField: plantcare.water_pump_field ?? undefined
             }}
             onSuccess={(data) => onSubmitHandler({ ...data, id: plantcare.id })}
             sx={{ display: 'flex', flexDirection: 'column' }}

@@ -42,6 +42,25 @@ test('load and render edit component', () => {
   expect(screen.getAllByText('Submit')).toBeDefined();
 });
 
+test('load and render edit component with null fields', () => {
+  render(
+    <LoggedUserContextProvider section="/form">
+      <App
+        element={
+          <PlantcareForm
+            plantcare={{ name: 'Ficus', water_pump_field: null }}
+            onSubmitHandler={onSubmitHandler}
+          />
+        }
+      />
+    </LoggedUserContextProvider>
+  );
+
+  expect(screen.getAllByText('Edit plantcare')).toBeDefined();
+  expect(screen.getAllByText('Apply changes to the current configuration')).toBeDefined();
+  expect(screen.getAllByText('Submit')).toBeDefined();
+});
+
 test('render and submit new form', async () => {
   const formParams = {
     id: undefined,
