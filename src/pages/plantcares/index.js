@@ -1,10 +1,8 @@
-import { useMemo, useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import theGardenImg from './images/the-garden.png';
 import theWateringImg from './images/the-watering.png';
 import theConnectivityImg from './images/the-connectivity.png';
-import plantcaresNotFoundImg from './images/plantcares-not-found.png';
 import wateringsNotFoundImg from './images/waterings-not-found.png';
 import connectionsNotFoundImg from './images/connections-not-found.png';
 import InstructionsStepOneImg from './images/instructions-step-one.png';
@@ -13,27 +11,19 @@ import InstructionsStepThreeImg from './images/instructions-step-three.png';
 import InstructionsStepFourImg from './images/instructions-step-four.png';
 import CardExplainedImg from './images/plantcare-explained.png';
 // UI components
-import Alert from '@mui/material/Alert';
-import AlertTitle from '@mui/material/AlertTitle';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import CloseIcon from '@mui/icons-material/Close';
-import Collapse from '@mui/material/Collapse';
 import Grid from '@mui/material/Grid';
-import IconButton from '@mui/material/IconButton';
 import { List, ListItem, ListItemAvatar, ListItemText } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { ThemeProvider } from '@mui/material/styles';
 // Components
-import Bubble from './bubble';
-import PlantcareCard from './card';
-import Form from './form';
-import AnchorLink from 'react-anchor-link-smooth-scroll';
+import TheGarden from './the-garden';
 import Panel from '../../components/panel';
 // Bubble
+import Bubble from './bubble';
 import defaultImg from './images/plantcare-default.png';
 import wateringImg from './images/watering-icon.png';
 import connectivityImg from './images/connectivity-icon.png';
@@ -41,416 +31,75 @@ import { ReactComponent as EditImg } from './images/edit-icon.svg';
 import { ReactComponent as RemoveImg } from './images/remove-icon.svg';
 // Others
 import enLocale from './locales/en.js';
-import enFormLocale from './form/locales/en.js';
 import Statics from './statics';
-import { loadingFragment, authHeader } from '../../utils';
-import * as PlantcaresApiClient from '../../api-client/plantcares';
+import { loadingFragment } from '../../utils';
 import Main from '../../themes/main';
-const HEADER_HEIGHT = 64;
+
+const { styles, props, typographies } = Statics();
+
+export const notFoundFragment = (image, text) => (
+  <Grid
+    container
+    direction="row"
+    justifyContent="center"
+    alignItems="stretch"
+    m="40px auto"
+    maxWidth="lg"
+  >
+    <Grid item>
+      <img src={image} style={{ maxHeight: '6vh', minHeight: '1vmin' }} />
+    </Grid>
+    <Grid item direction="column" sx={styles.notFound.text}>
+      <Typography
+        fontFamily={'Pacifico'}
+        color="secondary"
+        variant="h5"
+        mb="18px"
+        textAlign="center"
+        sx={{ display: { xs: 'flex', lg: 'none' } }}
+      >
+        {text}
+      </Typography>
+      <Typography
+        fontFamily={'Pacifico'}
+        color="secondary"
+        variant="h4"
+        mb="18px"
+        textAlign="center"
+        sx={{ display: { xs: 'none', lg: 'flex' } }}
+      >
+        {text}
+      </Typography>
+    </Grid>
+  </Grid>
+);
+
+export const sectionHeaderFragment = ({ section, image, buttons = <></> }) => (
+  <Grid
+    container
+    direction="row"
+    justifyContent="space-around"
+    alignItems="center"
+    m="0 auto 40px auto"
+    maxWidth="lg"
+  >
+    <Grid item xs={12} sm={4} sx={styles.sectionHeader.imgContainer}>
+      <img src={image} alt={`${section}-img`} style={styles.sectionHeader.img} />
+    </Grid>
+    <Grid item xs={12} sm={6} md={6} sx={styles.sectionHeader.details}>
+      {typographies[section].title}
+      {typographies[section].subtitle}
+      {typographies[section].description}
+      {buttons}
+    </Grid>
+  </Grid>
+);
 
 export const Plantcares = ({}) => {
-  const currentAuthHeader = authHeader();
-  const { styles, props, typographies } = useMemo(() => Statics(), []);
   // HTTP component
-  const [loading, setLoading] = useState(false);
-  const [plantcares, setPlantcares] = useState([]);
-  const [waterings, setWaterings] = useState({});
-  const [isVisibleErrorMessage, setVisibleErrorMessage] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(undefined);
-  const [errors, setErrors] = useState(undefined);
-  const [isVisibleSuccessMessage, setVisibleSuccessMessage] = useState(false);
-  const [successMessageTitle, setSuccessMessageTitle] = useState(undefined);
-  const [successMessage, setSuccessMessage] = useState(undefined);
-  const [creationVisibility, setCreationVisibility] = useState(false);
-  const [editionVisibility, setEditionVisibility] = useState({});
-
-  const toggleCreation = () => setCreationVisibility((value) => !value);
-  const toggleEdition = (plantcareId) => {
-    const visibility =
-      (editionVisibility[plantcareId] !== undefined && !editionVisibility[plantcareId]) ?? false;
-
-    setEditionVisibility((value) => ({ ...value, [plantcareId]: visibility }));
-  };
-
-  const savePlantcares = (plantcares) => {
-    setPlantcares(
-      plantcares.reduce((result, plantcare) => {
-        result[plantcare.id] = plantcare;
-        return result;
-      }, {})
-    );
-  };
-
-  const refreshPlantcare = (plantcare) => {
-    setPlantcares((value) => {
-      value[plantcare.id] = { ...value[plantcare.id], ...plantcare };
-      return value;
-    });
-  };
-
-  const removePlantcare = (plantcare) => {
-    setPlantcares((value) => {
-      delete value[plantcare.id];
-      return value;
-    });
-  };
-
-  const getPlantcares = () => {
-    if (currentAuthHeader === null) {
-      return false;
-    }
-
-    const onSuccessHandler = savePlantcares;
-    const onErrorHandler = ({ responseMessage }) => setErrorMessage(responseMessage);
-    const onFinishHandler = () => setLoading(false);
-    const headers = { ...currentAuthHeader };
-
-    setLoading(true);
-    PlantcaresApiClient.getPlantcares({
-      headers,
-      onSuccessHandler,
-      onErrorHandler,
-      onFinishHandler
-    });
-  };
-
-  const createPlantcare = (data) => {
-    if (currentAuthHeader === null) {
-      return false;
-    }
-
-    const onSuccessHandler = () => {
-      setSuccessMessageTitle(enFormLocale.new.success.title);
-      setSuccessMessage(enFormLocale.new.success.description);
-      getPlantcares();
-      setVisibleSuccessMessage(true);
-    };
-    const onErrorHandler = ({ responseMessage, responseErrors }) => {
-      setErrorMessage(responseMessage);
-      setErrors(responseErrors);
-      setVisibleErrorMessage(true);
-    };
-    const onFinishHandler = () => {
-      toggleCreation();
-      setLoading(false);
-    };
-    const headers = { ...currentAuthHeader };
-
-    setLoading(true);
-    PlantcaresApiClient.createPlantcare({
-      data,
-      headers,
-      onSuccessHandler,
-      onErrorHandler,
-      onFinishHandler
-    });
-  };
-
-  const updatePlantcare = (data) => {
-    if (currentAuthHeader === null) {
-      return false;
-    }
-
-    const onSuccessHandler = (plantcare) => {
-      setSuccessMessageTitle(enFormLocale.edit.success.title);
-      setSuccessMessage(enFormLocale.edit.success.description);
-      refreshPlantcare(plantcare);
-      setVisibleSuccessMessage(true);
-    };
-    const onErrorHandler = ({ responseMessage, responseErrors }) => {
-      setErrorMessage(responseMessage);
-      setErrors(responseErrors);
-      setVisibleErrorMessage(true);
-    };
-    const onFinishHandler = () => {
-      toggleEdition(data.id);
-      setLoading(false);
-    };
-    const headers = { ...currentAuthHeader };
-
-    setLoading(true);
-    PlantcaresApiClient.updatePlantcare({
-      data,
-      headers,
-      onSuccessHandler,
-      onErrorHandler,
-      onFinishHandler
-    });
-  };
-
-  const getPlantcare = (id) => {
-    if (currentAuthHeader === null) {
-      return false;
-    }
-    const onSuccessHandler = refreshPlantcare;
-    const onErrorHandler = ({ responseMessage }) => setErrorMessage(responseMessage);
-    const onFinishHandler = () => {
-      toggleEdition(id);
-      setLoading(false);
-    };
-    const headers = { ...currentAuthHeader };
-
-    setLoading(true);
-    PlantcaresApiClient.getPlantcare({
-      id,
-      headers,
-      onSuccessHandler,
-      onErrorHandler,
-      onFinishHandler
-    });
-  };
-
-  const deletePlantcare = (plantcare) => {
-    if (currentAuthHeader === null) {
-      return false;
-    }
-
-    const onSuccessHandler = () => {
-      setSuccessMessageTitle(enLocale.theGarden.remove.success.title);
-      setSuccessMessage(enLocale.theGarden.remove.success.description);
-      setVisibleSuccessMessage(true);
-      removePlantcare(plantcare);
-    };
-    const onErrorHandler = ({ responseMessage }) => {
-      setErrorMessage(responseMessage);
-      setVisibleErrorMessage(true);
-    };
-    const onFinishHandler = () => {
-      setLoading(false);
-    };
-    const headers = { ...currentAuthHeader };
-
-    setLoading(true);
-    PlantcaresApiClient.deletePlantcare({
-      id: plantcare.id,
-      headers,
-      onSuccessHandler,
-      onErrorHandler,
-      onFinishHandler
-    });
-  };
-
-  useEffect(() => {
-    getPlantcares();
-  }, [JSON.stringify(currentAuthHeader)]);
-
-  useEffect(() => {
-    setWaterings(
-      Object.values(plantcares).reduce((result, plantcare) => {
-        result[plantcare.name] = plantcare.waterings;
-        return result;
-      }, {})
-    );
-    Object.values(plantcares).map((plantcare) =>
-      setEditionVisibility((value) => ({ ...value, [plantcare.id]: false }))
-    );
-  }, [JSON.stringify(plantcares)]);
-
-  const notFoundFragment = (image, text) => (
-    <Grid
-      container
-      direction="row"
-      justifyContent="center"
-      alignItems="stretch"
-      m="40px auto"
-      maxWidth="lg"
-    >
-      <Grid item>
-        <img src={image} style={{ maxHeight: '6vh', minHeight: '1vmin' }} />
-      </Grid>
-      <Grid item direction="column" sx={styles.notFound.text}>
-        <Typography
-          fontFamily={'Pacifico'}
-          color="secondary"
-          variant="h5"
-          mb="18px"
-          textAlign="center"
-          sx={{ display: { xs: 'flex', lg: 'none' } }}
-        >
-          {text}
-        </Typography>
-        <Typography
-          fontFamily={'Pacifico'}
-          color="secondary"
-          variant="h4"
-          mb="18px"
-          textAlign="center"
-          sx={{ display: { xs: 'none', lg: 'flex' } }}
-        >
-          {text}
-        </Typography>
-      </Grid>
-    </Grid>
-  );
-
-  const sectionHeaderFragment = ({ section, image, buttons = <></> }) => (
-    <Grid
-      container
-      direction="row"
-      justifyContent="space-around"
-      alignItems="center"
-      m="0 auto 40px auto"
-      maxWidth="lg"
-    >
-      <Grid item xs={12} sm={4} sx={styles.sectionHeader.imgContainer}>
-        <img src={image} alt={`${section}-img`} style={styles.sectionHeader.img} />
-      </Grid>
-      <Grid item xs={12} sm={6} md={6} sx={styles.sectionHeader.details}>
-        {typographies[section].title}
-        {typographies[section].subtitle}
-        {typographies[section].description}
-        {buttons}
-      </Grid>
-    </Grid>
-  );
-
-  const formCardFragment = ({ plantcare, onCloseHandler, onSubmitHandler }) => (
-    <Card sx={styles.card}>
-      <Box data-testid="form" sx={{ position: 'relative' }}>
-        <Box sx={styles.cardForm}>
-          <Button
-            {...props.actionButton}
-            data-testid="close-form"
-            onClick={() => {
-              onCloseHandler();
-            }}
-          >
-            <CloseIcon fontSize="inherit" />
-          </Button>
-        </Box>
-        <Form plantcare={plantcare} onSubmitHandler={onSubmitHandler} errors={errors} />
-      </Box>
-    </Card>
-  );
-
-  const successMessageFragment = (
-    <Collapse in={isVisibleSuccessMessage}>
-      <Alert
-        action={
-          <IconButton
-            aria-label="close"
-            color="inherit"
-            size="small"
-            onClick={() => {
-              setVisibleSuccessMessage(false);
-            }}
-          >
-            <CloseIcon fontSize="inherit" />
-          </IconButton>
-        }
-        sx={{ mb: 2 }}
-      >
-        <AlertTitle>{successMessageTitle}</AlertTitle>
-        {successMessage}
-      </Alert>
-    </Collapse>
-  );
-
-  const errorMessageFragment = errorMessage && (
-    <Collapse in={isVisibleErrorMessage}>
-      <Alert
-        severity="error"
-        action={
-          <IconButton
-            aria-label="close"
-            color="inherit"
-            size="small"
-            onClick={() => {
-              setVisibleErrorMessage(false);
-            }}
-          >
-            <CloseIcon fontSize="inherit" />
-          </IconButton>
-        }
-        sx={{ mb: 2 }}
-      >
-        <AlertTitle>{enFormLocale.somethingWentWrong}</AlertTitle>
-        {errorMessage}
-      </Alert>
-    </Collapse>
-  );
-
-  const gardenButtons = (
-    <Stack
-      direction="row"
-      spacing={2}
-      pt={6}
-      sx={{ justifyContent: { xs: 'center', sm: 'flex-start' } }}
-    >
-      <Button
-        onClick={() => toggleCreation()}
-        to="#"
-        variant="outlined"
-        color="primary"
-        size="large"
-        data-testid="new-plantcare-button"
-      >
-        {enLocale.theGarden.new}
-      </Button>
-      <AnchorLink style={{ textDecoration: 'none' }} offset={HEADER_HEIGHT} href="#howto">
-        <Button variant="outlined" color="primary" size="large" underline="none">
-          {enLocale.theGarden.howTo}
-        </Button>
-      </AnchorLink>
-    </Stack>
-  );
-
-  const gardenFragment = (
-    <Grid
-      container
-      sx={{ margin: 'auto' }}
-      direction="row"
-      alignItems="center"
-      justifyContent="space-between"
-      maxWidth="xl"
-    >
-      {sectionHeaderFragment({ section: 'theGarden', image: theGardenImg, buttons: gardenButtons })}
-      <Grid
-        container
-        direction="row"
-        justifyContent="center"
-        alignItems="center"
-        maxWidth="md"
-        sx={{ margin: { xs: '0 10px', sm: 'auto' } }}
-      >
-        <Grid item xs={12}>
-          {errorMessageFragment}
-          {successMessageFragment}
-        </Grid>
-      </Grid>
-      <Grid container direction="row" justifyContent="space-evenly">
-        {loading && loadingFragment()}
-        {creationVisibility &&
-          formCardFragment({
-            onCloseHandler: toggleCreation,
-            onSubmitHandler: createPlantcare
-          })}
-        {!loading &&
-          Object.values(plantcares).length > 0 &&
-          Object.values(plantcares).map((plantcare) => (
-            <>
-              {!editionVisibility[plantcare.id] && (
-                <PlantcareCard
-                  key={`card-${plantcare.name}`}
-                  plantcare={plantcare}
-                  onEditHandler={() => toggleEdition(plantcare.id)}
-                  onRemoveHandler={() => deletePlantcare(plantcare)}
-                />
-              )}
-              {editionVisibility[plantcare.id] &&
-                formCardFragment({
-                  plantcare,
-                  onCloseHandler: () => toggleEdition(plantcare.id),
-                  onSubmitHandler: updatePlantcare
-                })}
-            </>
-          ))}
-        {!loading &&
-          Object.entries(plantcares).length === 0 &&
-          notFoundFragment(plantcaresNotFoundImg, enLocale.theGarden.plantcaresNotFound)}
-      </Grid>
-    </Grid>
-  );
+  const [loading] = useState(false);
+  const [plantcares] = useState({});
+  const [waterings] = useState({});
 
   const howSetupFragment = (
     <>
@@ -767,7 +416,7 @@ export const Plantcares = ({}) => {
       <span data-testid="plantcares">
         <div id="garden" style={{ ...styles.default, ...styles.gardenStyles }} data-testid="garden">
           <Box sx={{ mt: { xs: 5, sm: 8 }, padding: '50px 0', width: '100%' }}>
-            {gardenFragment}
+            <TheGarden />
           </Box>
         </div>
         <div id="watering" style={styles.wateringStyles} data-testid="watering">
