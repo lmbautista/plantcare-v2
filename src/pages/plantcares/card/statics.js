@@ -103,7 +103,7 @@ export const Statics = ({ plantcare }) => {
   const wetStatusColor = styles.colorForWetStatus(plantcare.wet);
   const typographies = {
     name: (
-      <Typography variant="h4" color="secondary" sx={{ fontWeight: '400' }}>
+      <Typography variant="h5" color="secondary" sx={{ fontWeight: '400' }}>
         {plantcare.name}
       </Typography>
     ),
