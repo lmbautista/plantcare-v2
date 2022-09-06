@@ -16,11 +16,11 @@ import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import { ThemeProvider } from '@mui/material/styles';
 // Components
-import Form from './form';
+import Form from './plantcare-form';
 import PlantcareCard from './card';
 // Others
 import enLocale from './locales/en.js';
-import enFormLocale from './form/locales/en.js';
+import enFormLocale from './plantcare-form/locales/en.js';
 import Statics from './statics';
 import { loadingFragment, authHeader } from '../../utils';
 import * as PlantcaresApiClient from '../../api-client/plantcares';
