@@ -80,10 +80,10 @@ export const WateringForm = ({ watering, errors, onSubmitHandler }) => {
         </Typography>
         <FormContainer
           defaultValues={{
-            durationAmount: watering.duration_amount ?? undefined,
-            durationUnit: watering.duration_unit ?? undefined,
-            waterPumpId: watering.water_pump_id ?? undefined,
-            programmedAt: watering.programmed_at ?? undefined
+            durationAmount: watering.durationAmount ?? undefined,
+            durationUnit: watering.durationUnit ?? undefined,
+            waterPumpId: watering.waterPumpId ?? undefined,
+            programmedAt: watering.programmedAt ?? undefined
           }}
           onSuccess={(data) => onSubmitHandler({ ...data, id: watering.id })}
           sx={{ display: 'flex', flexDirection: 'column' }}
