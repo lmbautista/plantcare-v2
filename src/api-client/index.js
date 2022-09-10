@@ -1,5 +1,7 @@
 import axios from 'axios';
 import enLocale from './locales/en.js';
+import snakecaseKeys from 'snakecase-keys';
+import camelcaseKeys from 'camelcase-keys-deep';
 
 const getErrorCodeMessage = (error) => {
   const is5xxError = (errorCode) => errorCode.match(/5[0-9]{2}$/i) !== null;
@@ -42,14 +44,16 @@ export const httpRequest = (params) => {
     onErrorHandler,
     onFinishHandler = () => {}
   } = params;
+  const normalizedData = snakecaseKeys(data);
 
   httpClient
-    .request({ method, url, data, headers })
+    .request({ method, url, data: normalizedData, headers })
     .then(function (response) {
-      onSuccessHandler(response.data);
+      onSuccessHandler(camelcaseKeys(response.data));
     })
     .catch(function (error) {
-      const errorDetails = getErrorDetails(error);
+      const normalizedError = camelcaseKeys(error);
+      const errorDetails = getErrorDetails(normalizedError);
       onErrorHandler(errorDetails);
     })
     .finally(function () {

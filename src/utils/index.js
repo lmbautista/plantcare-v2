@@ -6,6 +6,8 @@ import Main from '../themes/main';
 import { Grid } from '@mui/material';
 import LoadingImg from '../images/loading.gif';
 
+};
+
 export const fieldElementProps = ({
   name: fieldName,
   errors,

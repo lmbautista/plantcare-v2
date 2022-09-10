@@ -10,8 +10,14 @@ test('httpRequest success', async () => {
   const formParams = {
     id: plantcareId,
     name: 'Ficus',
-    wet_sensor_field: 'A0',
-    water_pump_field: 'IN1'
+    wetSensorField: 'A0',
+    waterPumpField: 'IN1'
+  };
+  const requestData = {
+    id: formParams.id,
+    name: formParams.name,
+    wet_sensor_field: formParams.wetSensorField,
+    water_pump_field: formParams.waterPumpField
   };
   const method = 'PUT';
   const url = `plantcares/${plantcareId}`;
@@ -20,8 +26,10 @@ test('httpRequest success', async () => {
   const onSuccessHandler = jest.fn(() => {});
   const onErrorHandler = jest.fn(() => {});
   const onFinishHandler = jest.fn(() => {});
-  const response = { response: { data: {} } };
-  const requestParams = { data, headers, method, url };
+  const response = {
+    data: { name: 'Ficus', wet_sensor_field: 'A0', water_pump_field: 'IN1' }
+  };
+  const requestParams = { data: requestData, headers, method, url };
 
   axios.request.mockResolvedValue(response);
 
@@ -37,7 +45,11 @@ test('httpRequest success', async () => {
 
   await waitFor(() => {
     expect(axios.request).toHaveBeenCalledWith(requestParams);
-    expect(onSuccessHandler).toHaveBeenNthCalledWith(1, response.data);
+    expect(onSuccessHandler).toHaveBeenNthCalledWith(1, {
+      name: 'Ficus',
+      wetSensorField: 'A0',
+      waterPumpField: 'IN1'
+    });
     expect(onErrorHandler).toHaveBeenCalledTimes(0);
     expect(onFinishHandler).toHaveBeenCalledTimes(1);
   });
@@ -109,7 +121,7 @@ test('httpRequest fails with error 422', async () => {
   const errorResponse = {
     response: {
       status: 422,
-      data: { message: 'Invalid resource', errors: { water_pump_id: 'blank' } }
+      data: { message: 'Invalid resource', errors: { waterPumpId: 'blank' } }
     }
   };
   const responseMessage = errorResponse.response.data.message;
