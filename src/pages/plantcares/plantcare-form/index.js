@@ -14,19 +14,19 @@ import { fieldElementProps } from '../../../utils';
 import { FormContainer, TextFieldElement, SelectElement } from 'react-hook-form-mui';
 
 const wetSensorOptions = [
-  { title: `${enLocale.wetSensor} 1`, id: 'A0' },
-  { title: `${enLocale.wetSensor} 2`, id: 'A1' },
-  { title: `${enLocale.wetSensor} 3`, id: 'A2' },
-  { title: `${enLocale.wetSensor} 4`, id: 'A3' },
-  { title: `${enLocale.wetSensor} 5`, id: 'A4' },
-  { title: `${enLocale.wetSensor} 6`, id: 'A5' }
+  { label: `${enLocale.wetSensor} 1`, id: 'A0' },
+  { label: `${enLocale.wetSensor} 2`, id: 'A1' },
+  { label: `${enLocale.wetSensor} 3`, id: 'A2' },
+  { label: `${enLocale.wetSensor} 4`, id: 'A3' },
+  { label: `${enLocale.wetSensor} 5`, id: 'A4' },
+  { label: `${enLocale.wetSensor} 6`, id: 'A5' }
 ];
 
 const waterPumpOptions = [
-  { title: `${enLocale.waterPump} 1`, id: 'IN1' },
-  { title: `${enLocale.waterPump} 2`, id: 'IN2' },
-  { title: `${enLocale.waterPump} 3`, id: 'IN3' },
-  { title: `${enLocale.waterPump} 4`, id: 'IN4' }
+  { label: `${enLocale.waterPump} 1`, id: 'IN1' },
+  { label: `${enLocale.waterPump} 2`, id: 'IN2' },
+  { label: `${enLocale.waterPump} 3`, id: 'IN3' },
+  { label: `${enLocale.waterPump} 4`, id: 'IN4' }
 ];
 
 export const PlantcareForm = ({ plantcare, errors, onSubmitHandler }) => {
