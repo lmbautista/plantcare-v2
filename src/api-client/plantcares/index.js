@@ -1,5 +1,4 @@
 import * as ApiClient from '..';
-import snakecaseKeys from 'snakecase-keys';
 
 export const getPlantcares = ({ headers, onSuccessHandler, onErrorHandler, onFinishHandler }) => {
   const params = {
@@ -42,11 +41,10 @@ export const createPlantcare = ({
   onErrorHandler,
   onFinishHandler
 }) => {
-  const requestParams = snakecaseKeys(data);
   const params = {
     method: 'POST',
     url: 'plantcares',
-    data: requestParams,
+    data,
     headers,
     onSuccessHandler,
     onErrorHandler,
@@ -63,11 +61,10 @@ export const updatePlantcare = ({
   onErrorHandler,
   onFinishHandler
 }) => {
-  const requestParams = snakecaseKeys(data);
   const params = {
     method: 'PUT',
     url: `plantcares/${data.id}`,
-    data: requestParams,
+    data,
     headers,
     onSuccessHandler,
     onErrorHandler,

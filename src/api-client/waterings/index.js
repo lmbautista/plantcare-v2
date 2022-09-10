@@ -1,5 +1,4 @@
 import * as ApiClient from '..';
-import snakecaseKeys from 'snakecase-keys';
 
 export const getWaterings = ({ headers, onSuccessHandler, onErrorHandler, onFinishHandler }) => {
   const params = {
@@ -36,11 +35,10 @@ export const createWatering = ({
   onErrorHandler,
   onFinishHandler
 }) => {
-  const requestParams = snakecaseKeys(data);
   const params = {
     method: 'POST',
     url: 'waterings',
-    data: requestParams,
+    data,
     headers,
     onSuccessHandler,
     onErrorHandler,
@@ -57,11 +55,10 @@ export const updateWatering = ({
   onErrorHandler,
   onFinishHandler
 }) => {
-  const requestParams = snakecaseKeys(data);
   const params = {
     method: 'PUT',
     url: `waterings/${data.id}`,
-    data: requestParams,
+    data,
     headers,
     onSuccessHandler,
     onErrorHandler,

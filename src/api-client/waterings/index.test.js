@@ -81,7 +81,7 @@ test('createWatering', () => {
     method: 'POST',
     url: 'waterings',
     headers,
-    data: { name: data.name, water_pump_id: data.waterPumpId, wet_sensor_id: data.wetSensorId },
+    data,
     onSuccessHandler,
     onErrorHandler,
     onFinishHandler: undefined
@@ -105,12 +105,7 @@ test('updateWatering', () => {
     method: 'PUT',
     url: `waterings/${plantcareId}`,
     headers,
-    data: {
-      id: plantcareId,
-      name: data.name,
-      water_pump_id: data.waterPumpId,
-      wet_sensor_id: data.wetSensorId
-    },
+    data,
     onSuccessHandler,
     onErrorHandler,
     onFinishHandler: undefined
