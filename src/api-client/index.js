@@ -1,15 +1,27 @@
 import axios from 'axios';
+import enLocale from './locales/en.js';
+
+const getErrorCodeMessage = (error) => {
+  const is5xxError = (errorCode) => errorCode.match(/5[0-9]{2}$/i) !== null;
+
+  const errorCode = error.response.status.toString();
+  const normalizedErrorCode = is5xxError(errorCode) ? '5xx' : errorCode;
+
+  return enLocale.httpErrors[normalizedErrorCode];
+};
 
 const getErrorDetails = (error) => {
   let responseMessage;
   let responseErrors;
-
-  if (error.response && error.response.status === 422) {
+  if (error.response === undefined) {
+    responseMessage = `HTTP error: ${error.message}`;
+  } else if (error.response.status === 404) {
+    responseMessage = error.response.statusText;
+  } else if (error.response.status === 422) {
     responseMessage = error.response.data.message;
     responseErrors = error.response.data.errors;
   } else {
-    const message = (error.response && error.response.statusText) || error.message;
-    responseMessage = `HTTP error: ${message}`;
+    responseMessage = [getErrorCodeMessage(error), error.response.statusText].join(': ');
   }
 
   return { responseMessage, responseErrors };

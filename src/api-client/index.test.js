@@ -43,7 +43,7 @@ test('httpRequest success', async () => {
   });
 });
 
-test('httpRequest fails', async () => {
+test('httpRequest fails with error 404', async () => {
   const plantcareId = 1;
   const formParams = {
     id: plantcareId,
@@ -66,8 +66,148 @@ test('httpRequest fails', async () => {
       data: {}
     }
   };
-  const responseMessage = `HTTP error: ${errorResponse.response.statusText}`;
-  const errorDetails = { responseMessage };
+  const responseMessage = errorResponse.response.statusText;
+  const errorDetails = { responseMessage, responseErrors: undefined };
+  axios.request.mockRejectedValue(errorResponse);
+
+  jest.mock('../utils', () => jest.fn(() => {}));
+
+  ApiClient.httpRequest({
+    method,
+    url,
+    headers,
+    data,
+    onSuccessHandler,
+    onErrorHandler,
+    onFinishHandler
+  });
+
+  await waitFor(() => {
+    expect(axios.request).toHaveBeenCalledWith(requestParams);
+    expect(onSuccessHandler).toHaveBeenCalledTimes(0);
+    expect(onErrorHandler).toHaveBeenNthCalledWith(1, errorDetails);
+    expect(onFinishHandler).toHaveBeenCalledTimes(1);
+  });
+});
+
+test('httpRequest fails with error 422', async () => {
+  const plantcareId = 1;
+  const formParams = {
+    id: plantcareId,
+    name: 'Ficus',
+    wet_sensor_field: 'A0',
+    water_pump_field: 'IN1'
+  };
+  const method = 'PUT';
+  const url = `plantcares/${plantcareId}`;
+  const data = { ...formParams };
+  const headers = { Authorization: 'Token asi0o12309djknsdoi8' };
+  const onSuccessHandler = jest.fn(() => {});
+  const onErrorHandler = jest.fn(() => {});
+  const onFinishHandler = jest.fn(() => {});
+  const requestParams = { data, headers, method, url };
+  const errorResponse = {
+    response: {
+      status: 422,
+      data: { message: 'Invalid resource', errors: { water_pump_id: 'blank' } }
+    }
+  };
+  const responseMessage = errorResponse.response.data.message;
+  const errorDetails = {
+    responseMessage,
+    responseErrors: { ...errorResponse.response.data.errors }
+  };
+  axios.request.mockRejectedValue(errorResponse);
+
+  jest.mock('../utils', () => jest.fn(() => {}));
+
+  ApiClient.httpRequest({
+    method,
+    url,
+    headers,
+    data,
+    onSuccessHandler,
+    onErrorHandler,
+    onFinishHandler
+  });
+
+  await waitFor(() => {
+    expect(axios.request).toHaveBeenCalledWith(requestParams);
+    expect(onSuccessHandler).toHaveBeenCalledTimes(0);
+    expect(onErrorHandler).toHaveBeenNthCalledWith(1, errorDetails);
+    expect(onFinishHandler).toHaveBeenCalledTimes(1);
+  });
+});
+
+test('httpRequest fails with client error', async () => {
+  const plantcareId = 1;
+  const formParams = {
+    id: plantcareId,
+    name: 'Ficus',
+    wet_sensor_field: 'A0',
+    water_pump_field: 'IN1'
+  };
+  const method = 'PUT';
+  const url = `plantcares/${plantcareId}`;
+  const data = { ...formParams };
+  const headers = { Authorization: 'Token asi0o12309djknsdoi8' };
+  const onSuccessHandler = jest.fn(() => {});
+  const onErrorHandler = jest.fn(() => {});
+  const onFinishHandler = jest.fn(() => {});
+  const requestParams = { data, headers, method, url };
+  const errorResponse = { message: 'timeout of 5000ms exceeded' };
+  const errorDetails = {
+    responseMessage: `HTTP error: ${errorResponse.message}`,
+    responseErrors: undefined
+  };
+  axios.request.mockRejectedValue(errorResponse);
+
+  jest.mock('../utils', () => jest.fn(() => {}));
+
+  ApiClient.httpRequest({
+    method,
+    url,
+    headers,
+    data,
+    onSuccessHandler,
+    onErrorHandler,
+    onFinishHandler
+  });
+
+  await waitFor(() => {
+    expect(axios.request).toHaveBeenCalledWith(requestParams);
+    expect(onSuccessHandler).toHaveBeenCalledTimes(0);
+    expect(onErrorHandler).toHaveBeenNthCalledWith(1, errorDetails);
+    expect(onFinishHandler).toHaveBeenCalledTimes(1);
+  });
+});
+
+test('httpRequest fails with error 500', async () => {
+  const plantcareId = 1;
+  const formParams = {
+    id: plantcareId,
+    name: 'Ficus',
+    wet_sensor_field: 'A0',
+    water_pump_field: 'IN1'
+  };
+  const method = 'PUT';
+  const url = `plantcares/${plantcareId}`;
+  const data = { ...formParams };
+  const headers = { Authorization: 'Token asi0o12309djknsdoi8' };
+  const onSuccessHandler = jest.fn(() => {});
+  const onErrorHandler = jest.fn(() => {});
+  const onFinishHandler = jest.fn(() => {});
+  const requestParams = { data, headers, method, url };
+  const errorResponse = {
+    response: {
+      status: 500,
+      statusText: 'Internal Server Error'
+    }
+  };
+  const errorDetails = {
+    responseMessage: `Ops! There server reported a problem: ${errorResponse.response.statusText}`,
+    responseErrors: undefined
+  };
   axios.request.mockRejectedValue(errorResponse);
 
   jest.mock('../utils', () => jest.fn(() => {}));
