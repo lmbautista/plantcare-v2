@@ -6,6 +6,14 @@ import Main from '../themes/main';
 import { Grid } from '@mui/material';
 import LoadingImg from '../images/loading.gif';
 
+const getErrorMessages = (errors, fieldName) => {
+  if (JSON.stringify(errors) === JSON.stringify({})) {
+    return undefined;
+  } else {
+    const errorsPayload = errors[fieldName] || errors[fieldName.replace('Id', '')] || [];
+
+    return errorsPayload.map((errorPayload) => errorPayload.error).join(', ');
+  }
 };
 
 export const fieldElementProps = ({
@@ -15,7 +23,7 @@ export const fieldElementProps = ({
   options = null,
   type = null
 }) => {
-  const helperErrorText = errors && errors[fieldName];
+  const errorMessages = getErrorMessages(errors, fieldName);
   const fieldNameId = fieldName
     .split(/(?=[A-Z])/)
     .join('-')
@@ -24,10 +32,10 @@ export const fieldElementProps = ({
   const defaultOptions = {
     name: fieldName,
     label: locales[fieldName],
-    color: helperErrorText ? 'error' : 'secondary',
+    color: errorMessages ? 'error' : 'secondary',
     inputProps: { 'data-testid': `${fieldNameId}-input` },
     FormHelperTextProps: { style: { color: `${Main.palette.error.main}`, fontWeight: '400' } },
-    helperText: helperErrorText,
+    helperText: errorMessages,
     focused: true
   };
   const typeOption = type ? { type } : {};
@@ -69,25 +77,32 @@ export const removeSessionCookies = () => {
   Cookies.remove(TOKEN);
 };
 
-export const loadingFragment = () => (
-  <Grid
-    container
-    direction="row"
-    justifyContent="center"
-    alignItems="stretch"
-    m="40px auto"
-    maxWidth="lg"
-  >
-    <Grid item>
-      <img
-        src={LoadingImg}
-        width="75px"
-        height="75px"
-        style={{ borderRadius: '50%', background: 'white' }}
-      />
+export const loadingFragment = (format = 'default') => {
+  const formats = {
+    default: { width: '75px', height: '75px', margin: '40px auto' },
+    small: { width: '40px', height: '40px', margin: '14.5px auto' }
+  };
+
+  return (
+    <Grid
+      container
+      direction="row"
+      justifyContent="center"
+      alignItems="stretch"
+      m={formats[format].margin}
+      maxWidth="lg"
+    >
+      <Grid item>
+        <img
+          src={LoadingImg}
+          width={formats[format].width}
+          height={formats[format].height}
+          style={{ borderRadius: '50%', background: 'white' }}
+        />
+      </Grid>
     </Grid>
-  </Grid>
-);
+  );
+};
 
 export const authHeader = () => {
   const { currentUser } = useContext(UserContext);

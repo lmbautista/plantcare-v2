@@ -16,8 +16,28 @@ test('fieldElementProps with errors', () => {
 
   const props = Utils.fieldElementProps({
     name: 'fieldName',
-    errors: { fieldName: 'error' },
+    errors: { fieldName: [{ error: 'error' }] },
     locales: { fieldName: 'Fieldname' }
+  });
+
+  expect(JSON.stringify(props)).toEqual(JSON.stringify(expectedProps));
+});
+
+test('fieldElementProps with errors in Id field', () => {
+  const expectedProps = {
+    name: 'fieldNameId',
+    label: 'Fieldname',
+    color: 'error',
+    inputProps: { 'data-testid': 'field-name-id-input' },
+    FormHelperTextProps: { style: { color: '#d32f2f', fontWeight: '400' } },
+    helperText: 'error',
+    focused: true
+  };
+
+  const props = Utils.fieldElementProps({
+    name: 'fieldNameId',
+    errors: { fieldName: [{ error: 'error' }] },
+    locales: { fieldNameId: 'Fieldname' }
   });
 
   expect(JSON.stringify(props)).toEqual(JSON.stringify(expectedProps));
@@ -37,7 +57,7 @@ test('fieldElementProps with options', () => {
 
   const props = Utils.fieldElementProps({
     name: 'fieldName',
-    errors: { fieldName: 'error' },
+    errors: { fieldName: [{ error: 'error' }] },
     locales: { fieldName: 'Fieldname' },
     options: [{ a: 1, b: 2 }]
   });
@@ -59,7 +79,7 @@ test('fieldElementProps with type', () => {
 
   const props = Utils.fieldElementProps({
     name: 'fieldName',
-    errors: { fieldName: 'error' },
+    errors: { fieldName: [{ error: 'error' }] },
     locales: { fieldName: 'Fieldname' },
     type: 'hidden'
   });
